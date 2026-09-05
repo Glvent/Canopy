@@ -10,9 +10,9 @@ nimble test
 nimble examples
 ```
 
-`import canopy` provides rendering, geometry, styles, text, buffers, widgets, terminal management and backends. Import `canopy/input` explicitly for input; applications own their event loop. Focused imports such as `canopy/layout` and `canopy/buffer` are supported.
+`import canopy` provides rendering, geometry, styles, text, buffers, widgets, terminal management and backends. Import `canopy/runtime/terminal/input` explicitly for input; applications own their event loop. Focused imports such as `canopy/core/layout/index` and `canopy/core/rendering/buffer` are supported.
 
-Import `canopy/animation` for the native [animation toolkit](docs/animation.md): typed tweens, easing, timelines, springs, buffer transitions and shared reduced motion. Run `nim r examples/animations.nim` for the interactive gallery.
+Import `canopy/ui/animation/index` for the native [animation toolkit](docs/animation.md): typed tweens, easing, timelines, springs, buffer transitions and shared reduced motion. Run `nim r examples/animations.nim` for the interactive gallery.
 
 See [the accepted plan](PLAN.md), [milestone checklist](docs/milestones.md), [shared interfaces](docs/interfaces.md), [reference generation](docs/reference.md), [upstream inventory](docs/upstream-inventory.md), and [validation record](docs/validation.md). API documentation: `nimble docs`.
 

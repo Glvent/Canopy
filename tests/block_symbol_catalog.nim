@@ -1,3 +1,4 @@
+## Expected merged border symbols for block widget regression checks.
 # Generated adapter for independently evaluated Rust constants.
 proc checkCatalog(catalog:JsonNode) =
   check catalog["BarFull"].getStr == BarFull

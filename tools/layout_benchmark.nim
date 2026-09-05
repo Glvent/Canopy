@@ -1,9 +1,14 @@
+## Native layout solver benchmark; release build recommended.
 import std/[monotimes, times, strformat]
-import canopy/[geometry, layout]
+
+import canopy/core/layout/geometry
+import canopy/core/layout/index as layout
 
 let arrangement = horizontal([length(8), minLength(3), percentage(20), ratio(1, 7),
                          maxLength(15), fill(2), fill(1), length(4)]).withSpacing(1)
+# The checksum only keeps the solver's results live so the loop is not optimized away.
 var checksum = 0
+# Measure the solver itself first, then the cache hit path with a warmed entry.
 setLayoutCacheSize(0)
 let start = getMonoTime()
 for i in 0..<1000:

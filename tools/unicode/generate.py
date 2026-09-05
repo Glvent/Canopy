@@ -8,7 +8,7 @@ root = pathlib.Path(__file__).resolve().parents[2]
 registry = pathlib.Path(sys.argv[1]) if len(sys.argv)>1 else next((pathlib.Path.home()/".cargo/registry/src").glob("*"))
 seg = registry/"unicode-segmentation-1.13.3"
 width = registry/"unicode-width-0.2.2"
-out = root/"src/canopy/internal/unicode_tables.nim"
+out = root/"src/canopy/internal/unicode/tables.nim"
 source = """
 #[allow(dead_code, non_snake_case)] #[path=SEG] mod seg;
 #[allow(dead_code)] mod width {
@@ -50,7 +50,7 @@ const unicodeProperties*: array[COUNT, UnicodeProperty] = [
 """.replace("COUNT",str(len(data.splitlines())))
 out.write_text(header+data+"]\n")
 constants = re.findall(r"const ([A-Z_0-9]+): Self = Self\((0b[01_]+|0)\);",(width/"src/tables.rs").read_text())
-(root/"src/canopy/internal/unicode_widthinfo.nim").write_text("# Generated from unicode-width 0.2.2; see licenses/unicode/.\nconst\n"+"".join(f"  wi{name}* = {value}\n" for name,value in constants))
+(root/"src/canopy/internal/unicode/widthinfo.nim").write_text("# Generated from unicode-width 0.2.2; see licenses/unicode/.\nconst\n"+"".join(f"  wi{name}* = {value}\n" for name,value in constants))
 for crate in (seg,width):
     target=root/"licenses/unicode"/crate.name
     target.mkdir(parents=True,exist_ok=True)

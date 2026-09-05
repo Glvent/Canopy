@@ -1,5 +1,8 @@
+## Layout solver and flex distribution tests.
 import std/[unittest, json, strutils, options]
-import canopy/[geometry, layout]
+
+import canopy/core/layout/geometry
+import canopy/core/layout/index as layout
 
 suite "Cassowary layout":
   test "fixed arrays and constraint helper semantics":
@@ -21,8 +24,10 @@ suite "Cassowary layout":
   test "start end center":
     let l = initLayout(Direction.Horizontal, [length(2), length(2)])
     check l.split(initRect(0, 0, 10, 1)) == @[initRect(0, 0, 2, 1), initRect(2, 0, 2, 1)]
-    check l.withFlex(Flex.End).split(initRect(0, 0, 10, 1)) == @[initRect(6, 0, 2, 1), initRect(8, 0, 2, 1)]
-    check l.withFlex(Flex.Center).split(initRect(0, 0, 10, 1)) == @[initRect(3, 0, 2, 1), initRect(5, 0, 2, 1)]
+    check l.withFlex(Flex.End).split(initRect(0, 0, 10, 1)) == @[initRect(6, 0, 2, 1), initRect(8,
+        0, 2, 1)]
+    check l.withFlex(Flex.Center).split(initRect(0, 0, 10, 1)) == @[initRect(3, 0, 2, 1), initRect(
+        5, 0, 2, 1)]
   test "spacing and overlap have clipped spacer extents":
     let l = initLayout(Direction.Horizontal, [length(4), length(4)]).withSpacing(-2)
     let r = l.splitWithSpacers(initRect(0, 0, 10, 1))
@@ -64,7 +69,8 @@ suite "Cassowary layout":
         of "Fill": constraints.add fill(c[1].getInt)
         else: raise newException(ValueError, "Unknown upstream constraint")
       let width = item["width"].getInt
-      let l = initLayout(Direction.Horizontal, constraints).withFlex(parseEnum[Flex](item["flex"].getStr))
+      let l = initLayout(Direction.Horizontal, constraints).withFlex(parseEnum[Flex](item[
+          "flex"].getStr))
       var actual = repeat(' ', width)
       for i, rect in l.split(initRect(0, 0, width, 1)):
         for x in rect.x..<rect.right: actual[x] = char(ord('a') + i)
@@ -89,12 +95,15 @@ suite "Cassowary layout":
         of "ratio": constraints.add ratio(c["numerator"].getInt, c["denominator"].getInt)
         of "fill": constraints.add fill(c["value"].getInt)
         else: raise newException(ValueError, "Unknown constraint")
-      let direction = if input["direction"].getStr == "horizontal": Direction.Horizontal else: Direction.Vertical
+      let direction = if input["direction"].getStr ==
+          "horizontal": Direction.Horizontal else: Direction.Vertical
       let l = initLayout(direction, constraints).withFlex(parseEnum[Flex](input["flex"].getStr))
         .withSpacing(input["spacing"].getInt)
-        .withMargin(initMargin(input["margin"]["horizontal"].getInt, input["margin"]["vertical"].getInt))
+        .withMargin(initMargin(input["margin"]["horizontal"].getInt, input["margin"][
+            "vertical"].getInt))
       let a = input["area"]
-      let actual = l.splitWithSpacers(initRect(a["x"].getInt, a["y"].getInt, a["width"].getInt, a["height"].getInt))
+      let actual = l.splitWithSpacers(initRect(a["x"].getInt, a["y"].getInt, a["width"].getInt, a[
+          "height"].getInt))
       let encoded = %*{"segments": actual.segments, "spacers": actual.spacers}
       var matches = encoded == item["expected"]
       if item.hasKey("expectedAlternatives"):

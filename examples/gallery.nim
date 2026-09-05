@@ -1,10 +1,12 @@
 ## Noninteractive widget gallery. Run: nim c -r --path:src examples/gallery.nim
 import std/math
+
 import canopy
-import canopy/widgets/[canvas, chart]
+import canopy/ui/widgets/[canvas, chart]
 
 let accent = initStyle().withFg(ColorKind.Cyan)
 let selected = initStyle().withFg(ColorKind.Black).withBg(ColorKind.Cyan)
+
 proc panel(title: string): Block = borderedBlock().withTitle(title).withBorderStyle(accent)
 
 var terminal = initTerminal(initTestBackend(120, 47))
@@ -41,10 +43,10 @@ discard terminal.draw(proc(frame: var Frame) =
   let middle = horizontal([length(66), fill(1)]).split(rows[2])
   frame.renderWidget(initChart([
     initDataset(wave).withName("sin(x / 4)").withGraphType(GraphType.Line)
-      .withMarker(Marker.Braille).withStyle(accent),
+    .withMarker(Marker.Braille).withStyle(accent),
     initDataset([(0.0, 0.0), (40.0, 0.0)]).withName("zero").withGraphType(GraphType.Line)
-      .withMarker(Marker.Dot).withStyle(initStyle().withFg(ColorKind.Yellow))])
-    .withXAxis(initAxis().withBounds([0.0, 40.0]).withLabels(["0", "20", "40"]))
+    .withMarker(Marker.Dot).withStyle(initStyle().withFg(ColorKind.Yellow))])
+  .withXAxis(initAxis().withBounds([0.0, 40.0]).withLabels(["0", "20", "40"]))
     .withYAxis(initAxis().withBounds([-1.2, 1.2]).withLabels(["-1", "0", "1"]))
     .withHiddenLegendConstraints((percentage(45), percentage(50)))
     .withBlock(panel("Chart")), middle[0])
@@ -65,7 +67,8 @@ discard terminal.draw(proc(frame: var Frame) =
     initRow(["Backend", "Test", "deterministic"])]
   frame.renderStatefulWidget(initTable(tableRows, [length(10), length(7), fill(1)])
     .withHeader(initRow(["Module", "Cases", "Details"]).withStyle(accent))
-    .withRowHighlightStyle(selected).withHighlightSymbol("› ").withBlock(panel("Table")), lower[1], tableSelection)
+    .withRowHighlightStyle(selected).withHighlightSymbol("› ").withBlock(panel("Table")), lower[
+        1], tableSelection)
   frame.renderWidget(panel("Logo / Mascot / Fill + Clear"), lower[2])
   let art = panel("").inner(lower[2])
   frame.renderWidget(tinyLogo(), initRect(art.x, art.y, art.width, 2))

@@ -1,9 +1,10 @@
+## Windows-specific terminal behavior tests.
 import std/unittest
 
 when defined(windows):
   import std/[options, winlean]
-  import ../src/canopy/backends/ansi
-  import ../src/canopy/input
+  import ../src/canopy/runtime/backends/ansi
+  import ../src/canopy/runtime/terminal/input
 
   type
     NativeKeyEvent {.importc: "KEY_EVENT_RECORD", header: "<windows.h>".} = object

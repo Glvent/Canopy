@@ -12,8 +12,8 @@ invoke Python, Rust, Cargo, or network services.
 `generate.py` compiles a temporary development-only Rust program against the
 pinned crate sources. It evaluates all scalar property lookups and coalesces
 identical adjacent properties into 2,567 ranges, then writes native Nim tables.
-The contextual algorithms remain readable Nim in `unicode.nim` and
-`internal/unicode_width.nim`; those algorithms never call Rust.
+The contextual algorithms remain readable Nim in `core/text/unicode.nim` and
+`internal/unicode/width.nim`; those algorithms never call Rust.
 
 `fixtures.py` runs upstream non-CJK width tests and records observed string
 inputs/expected widths. Three exhaustive scalar loops are reduced to every

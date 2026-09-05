@@ -1,5 +1,33 @@
 # Ratatui 0.30.2 → Canopy
 
+## Canopy import-path changes
+
+The source reorganization removes the old flat module paths without forwarding
+modules. `import canopy` is unchanged. Update focused imports as follows:
+
+- `canopy/animation` → `canopy/ui/animation/index as animation`
+- `canopy/buffer`, `canopy/symbols` → `canopy/core/rendering/buffer`, `canopy/core/rendering/symbols`
+- `canopy/geometry` → `canopy/core/layout/geometry`
+- `canopy/layout` → `canopy/core/layout/index as layout`
+- `canopy/colors`, `canopy/style`, `canopy/stylize`, `canopy/theme` → the same names under `canopy/core/styling/`
+- `canopy/text` → `canopy/core/text/index as text`
+- `canopy/unicode` → `canopy/core/text/unicode`
+- `canopy/terminal` → `canopy/runtime/terminal/index as terminal`
+- `canopy/input` → `canopy/runtime/terminal/input`
+- `canopy/widgets` → `canopy/ui/widgets/index as widgets`
+
+Aliases distinguish the `index` modules when importing several together.
+For already grouped imports, add the parent folder:
+
+- `canopy/layout/`, `canopy/rendering/`, `canopy/styling/`, and `canopy/text/` move under `canopy/core/`.
+- `canopy/animation/` and `canopy/widgets/` move under `canopy/ui/`.
+- `canopy/backends/` and `canopy/terminal/` move under `canopy/runtime/`.
+
+For example, `canopy/widgets/canvas` becomes `canopy/ui/widgets/canvas`.
+The `canopy/internal/` paths are unchanged by this parent-folder grouping.
+
+## Ratatui equivalents
+
 Canopy preserves immediate-mode rendering and logical cell behavior. Its APIs use Nim value objects, camelCase and chainable `withX` configuration.
 
 | Ratatui | Canopy |
@@ -24,7 +52,7 @@ Canopy preserves immediate-mode rendering and logical cell behavior. Its APIs us
 | `table::Cell` / `canvas::Line` | `TableCell` / `CanvasLine` |
 | `Marker::Custom(ch)` | `Marker.Custom` plus `withMarker(symbol)` or `customSymbol` |
 | Rust text/layout macros | `initSpan`, `initLine`, `initText`, constraint arrays, `areas[N]` |
-| Backend adapters and crossterm events | native `AnsiBackend` and optional `canopy/input` |
+| Backend adapters and crossterm events | native `AnsiBackend` and optional `canopy/runtime/terminal/input` |
 
 Public fields replace Rust accessors and ownership-conversion traits where appropriate. For example, use `state.selected`, `buffer.content`, `frame.area`, `terminal.backend`, and `widget.style`. `Frame.buffer` is a scoped pointer; `bufferMut` returns its mutable target. Nim sequences and strings own their values; there are no Rust borrow/lifetime parameters.
 

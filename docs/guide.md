@@ -1,10 +1,10 @@
 # Using Canopy
 
-Install a local checkout with `nimble install`. Nim 2.2.0 or newer and a C compiler are sufficient; no Rust or external runtime library is needed. `import canopy` includes the standard widgets and ANSI/Test backends. Import `canopy/input` separately when you want its event decoder.
+Install a local checkout with `nimble install`. Nim 2.2.0 or newer and a C compiler are sufficient; no Rust or external runtime library is needed. `import canopy` includes the standard widgets and ANSI/Test backends. Import `canopy/runtime/terminal/input` separately when you want its event decoder.
 
 ```nim
 import canopy
-import canopy/input
+import canopy/runtime/terminal/input
 
 withTerminal(terminal, initAnsiBackend()):
   withInput(events, initInput(rawMode=false)):
@@ -78,6 +78,6 @@ A `Theme` is a string-to-Style table. `theme.toJson`, `themeFromJson`, `loadThem
 `nimble docs` builds browsable API documentation under `build/docs`. [Migration](migration.md), [input](input.md), [parity](parity.md), and [reference regeneration](reference.md) provide additional details.
 ## Optional animation
 
-Import `canopy/animation` explicitly for tweens, timelines, springs and buffer
+Import `canopy/ui/animation/index` explicitly for tweens, timelines, springs and buffer
 transitions. Applications supply monotonic timestamps and combine animation
 deadlines with input polling. See [animation contracts and examples](animation.md).

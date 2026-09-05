@@ -1,4 +1,6 @@
+## Chart and sparkline rendering tests.
 import std/unittest
+
 import ./canvas_test_support
 
 suite "Chart":

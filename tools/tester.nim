@@ -1,5 +1,6 @@
 ## Portable Nim-only test/example runner; Rust fixture generation is separate.
 import std/[os, osproc, strutils, algorithm]
+
 let examples = paramCount() > 0 and paramStr(1) == "examples"
 let folder = if examples: "examples" else: "tests"
 var files: seq[string]
@@ -9,7 +10,7 @@ files.sort()
 let manager = if defined(gcArc): "arc" else: "orc"
 let outputDir = "build" / (NimVersion & "-" & manager)
 createDir(outputDir)
-echo "Nim ",NimVersion," / ",manager
+echo "Nim ", NimVersion, " / ", manager
 for file in files:
   let output = outputDir / splitFile(file).name
   let command = "nim c " & (if examples: "" else: "-r ") &

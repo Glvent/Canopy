@@ -1,11 +1,15 @@
 ## Native-only fixture comparator; accepts a schema root or an array of cases.
 import std/[json, os, strutils, sequtils]
-import canopy/[geometry, layout]
+
+import canopy/core/layout/geometry
+import canopy/core/layout/index as layout
 
 proc rectangle(node: JsonNode): Rect =
   initRect(node["x"].getInt, node["y"].getInt, node["width"].getInt, node["height"].getInt)
+
 proc decode(node: JsonNode): Layout =
-  result = initLayout(if node["direction"].getStr == "horizontal": Direction.Horizontal else: Direction.Vertical)
+  result = initLayout(if node["direction"].getStr ==
+      "horizontal": Direction.Horizontal else: Direction.Vertical)
   result.flex = parseEnum[Flex](node["flex"].getStr)
   result.spacing = node["spacing"].getInt
   result.margin = initMargin(node["margin"]["horizontal"].getInt, node["margin"]["vertical"].getInt)
@@ -26,7 +30,8 @@ var nativeResults = newJArray()
 for item in cases:
   let layout = decode(item["input"])
   let actual = layout.splitWithSpacers(rectangle(item["input"]["area"]))
-  nativeResults.add %*{"name": item["name"], "expected": {"segments": actual.segments, "spacers": actual.spacers}}
+  nativeResults.add %*{"name": item["name"], "expected": {"segments": actual.segments,
+      "spacers": actual.spacers}}
   var expected: LayoutResult
   for r in item["expected"]["segments"]: expected.segments.add rectangle(r)
   for r in item["expected"]["spacers"]: expected.spacers.add rectangle(r)

@@ -8,7 +8,7 @@ backend operation succeeds.
 
 ## ANSI backend
 
-Import `canopy/backends/ansi` and construct it with:
+Import `canopy/runtime/backends/ansi` and construct it with:
 
 ```nim
 var backend = initAnsiBackend(
@@ -55,7 +55,7 @@ characters, input translations, and output post-processing. Restore applies
 the saved state immediately so cleanup cannot block on an undrained terminal
 output queue.
 
-Cursor-position replies share the input descriptor with `canopy/input`. Bytes
+Cursor-position replies share the input descriptor with `canopy/runtime/terminal/input`. Bytes
 read beside the terminal's reply are retained by the platform layer and are
 returned by the next input poll.
 

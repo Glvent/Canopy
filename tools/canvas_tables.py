@@ -4,7 +4,7 @@ import re
 import sys
 
 upstream = pathlib.Path(sys.argv[1])
-out = pathlib.Path(__file__).resolve().parent.parent / 'src/canopy/internal/canvas_tables.nim'
+out = pathlib.Path(__file__).resolve().parent.parent / 'src/canopy/internal/widgets/canvas_tables.nim'
 lines = ['## Generated from Ratatui 0.30.2 (MIT); see tools/canvas-NOTICE.md.', 'const']
 content = (upstream / 'ratatui-widgets/src/canvas/world.rs').read_text()
 for name in ['WORLD_HIGH_RESOLUTION', 'WORLD_LOW_RESOLUTION']:

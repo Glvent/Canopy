@@ -4,7 +4,7 @@ Terminal input is optional and is not re-exported by `canopy`. Import it
 explicitly:
 
 ```nim
-import canopy/input
+import canopy/runtime/terminal/input
 
 var source = initInput(
   input = stdin,

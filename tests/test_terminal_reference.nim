@@ -1,6 +1,9 @@
+## Terminal output parity against reference harness.
 import std/[json, os, options, strformat, strutils, unittest]
-import ../src/canopy/[terminal, style]
-import ../src/canopy/backends/test
+
+import ../src/canopy/runtime/terminal/index as terminal
+import ../src/canopy/core/styling/style
+import ../src/canopy/runtime/backends/test
 
 const Fixture = currentSourcePath.parentDir / "fixtures" / "terminal.json"
 
@@ -67,14 +70,14 @@ proc scrollbackJson(backend: TestBackend): JsonNode =
       result["cells"].add(cellJson(if x < row.len: row[x] else: initCell()))
 
 proc fillCell(cell: var Cell, tag, x, y: int) =
-    var modifiers: Modifiers
-    if (tag + x + y) mod 3 == 0: modifiers.incl Modifier.Bold
-    if (tag + x + y) mod 5 == 0: modifiers.incl Modifier.Italic
-    cell = initCell($(char(ord('A') + (tag + x + y * 7) mod 26)))
-    cell.fg = indexedColor((tag + x + y) mod 32)
-    cell.bg = indexedColor((tag * 3 + y) mod 16)
-    cell.underlineColor = indexedColor((tag + x * 2) mod 16)
-    cell.modifiers = modifiers
+  var modifiers: Modifiers
+  if (tag + x + y) mod 3 == 0: modifiers.incl Modifier.Bold
+  if (tag + x + y) mod 5 == 0: modifiers.incl Modifier.Italic
+  cell = initCell($(char(ord('A') + (tag + x + y * 7) mod 26)))
+  cell.fg = indexedColor((tag + x + y) mod 32)
+  cell.bg = indexedColor((tag * 3 + y) mod 16)
+  cell.underlineColor = indexedColor((tag + x * 2) mod 16)
+  cell.modifiers = modifiers
 
 proc fill(buffer: var Buffer, tag: int) =
   let width = max(1, buffer.area.width)
@@ -144,7 +147,7 @@ proc applyAction(terminal: var Terminal[TestBackend], action: JsonNode): Option[
     none(JsonNode)
   else: raise newException(ValueError, "unknown action")
 
-proc firstDifference(actual, expected: JsonNode, path = "$" ): string =
+proc firstDifference(actual, expected: JsonNode, path = "$"): string =
   if actual.kind != expected.kind: return &"{path}: kind {actual.kind} != {expected.kind}"
   case actual.kind
   of JObject:

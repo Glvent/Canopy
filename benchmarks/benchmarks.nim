@@ -1,6 +1,7 @@
 ## Deterministic wall-clock workloads, with an observable checksum.
 ## Run a release build; optional positional argument multiplies iteration counts.
 import std/[monotimes, times, strformat, strutils, os]
+
 import canopy
 
 let scale = if paramCount() == 0: 1 else: parseInt(paramStr(1))
@@ -9,9 +10,11 @@ const manager = when defined(gcOrc): "orc" elif defined(gcArc): "arc" else: "oth
 echo &"Nim {NimVersion}; {hostOS}/{hostCPU}; mm={manager}; seed=302; scale={scale}"
 var checksum = 0'u64
 var seed = 302'u32
+
 proc nextInt(limit: int): int =
   seed = seed * 1664525'u32 + 1013904223'u32
   int(seed mod uint32(limit))
+
 template measure(name: string, count: int, body: untyped) =
   block:
     let iterations = count * scale

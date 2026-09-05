@@ -26,7 +26,7 @@ body=(width/"tests/tests.rs").read_text().replace("use unicode_width::", "use wr
 body=body.replace('dbg!(&emoji);','')
 body=body.replace('File::open("tests/emoji-test.txt")','File::open('+json.dumps(str(width/"tests/emoji-test.txt"))+')')
 points=set()
-for first,last in re.findall(r"^  \((\d+), (\d+),",(root/"src/canopy/internal/unicode_tables.nim").read_text(),re.M):
+for first,last in re.findall(r"^  \((\d+), (\d+),",(root/"src/canopy/internal/unicode/tables.nim").read_text(),re.M):
     for p in (int(first),int(last)):
         points.update(q for q in (p-1,p,p+1) if 0<=q<=0x10FFFF and not 0xD800<=q<=0xDFFF)
 body=body.replace("for c in '\\0'..=char::MAX", "for c in PROBES.iter().filter_map(|cp|char::from_u32(*cp))")

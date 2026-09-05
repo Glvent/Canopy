@@ -7,7 +7,7 @@ SHA-256 and random seed 302.
 
 ## Public contracts
 
-Import `canopy/widgets/canvas` for `Canvas`, `CanvasContext`, `Painter`,
+Import `canopy/ui/widgets/canvas` for `Canvas`, `CanvasContext`, `Painter`,
 `CanvasLine`, `FilledLine`, `Points`, `Rectangle`, `Circle`, `Map`, and
 `MapResolution.Low/High`. `CanvasLine` avoids colliding with the text `Line`.
 `CanvasPoint` is `(x, y: float64)` and `CanvasBounds` is `array[2, float64]`.
@@ -35,7 +35,7 @@ one Unicode scalar, including a wide scalar. The scalar is stored separately
 in `customSymbol`; Canvas/context marker setters and grid construction reject
 invalid strings with `ValueError`. Dataset construction defers that check until rendering.
 
-Import `canopy/widgets/chart` for `Axis`, `Dataset`, `Chart`, `GraphType`, and
+Import `canopy/ui/widgets/chart` for `Axis`, `Dataset`, `Chart`, `GraphType`, and
 `LegendPosition`. All configuration fields are public, with value-returning
 builders. Axis supports title (string or text Line), bounds, labels (strings or
 Lines), style, and labels alignment. Dataset supports optional name (string or

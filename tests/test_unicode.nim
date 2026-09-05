@@ -1,5 +1,7 @@
+## Unicode width and grapheme segmentation tests.
 import std/[unittest, strutils, os]
-import canopy/unicode
+
+import canopy/core/text/unicode
 
 proc unhex(s: string): string =
   var i = 0

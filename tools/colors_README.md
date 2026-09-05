@@ -1,6 +1,6 @@
 # Native color conversions
 
-`canopy/colors` exposes `colorFromU32(uint32)`, `colorFromHsl(hue,saturation,lightness)`
+`canopy/core/styling/colors` exposes `colorFromU32(uint32)`, `colorFromHsl(hue,saturation,lightness)`
 and `colorFromHsluv(hue,saturation,lightness)`. They return ordinary `Color`
 values; no Rust runtime, FFI or external native library is used.
 

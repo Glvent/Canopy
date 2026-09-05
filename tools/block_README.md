@@ -31,7 +31,7 @@ Titles vary collision priority, positions, alignment and Unicode truncation.
 Shadows vary all effects, offsets, clipped areas, named/RGB backgrounds and
 style precedence. Padding constructors have native saturation checks.
 
-`mergeSymbol(previous, next, strategy)` is exported through `canopy/symbols`.
+`mergeSymbol(previous, next, strategy)` is exported through `canopy/core/rendering/symbols`.
 Cell merging separately preserves upstream unset-symbol behavior through
 `Cell.symbolSet`. Block renders titles left, center, then right: later groups
 overwrite earlier groups when their areas collide.

@@ -1,16 +1,16 @@
 ## Run in a terminal; q, Escape or Ctrl-C exits. Input remains application-owned.
 import canopy
-import canopy/input
+import canopy/runtime/terminal/input
 
-withTerminal(terminal,initAnsiBackend()):
-  withInput(events,initInput(rawMode=false)):
+withTerminal(terminal, initAnsiBackend()):
+  withInput(events, initInput(rawMode = false)):
     var message = "Press any key; q or Escape exits."
     var running = true
     while running:
-      discard terminal.draw(proc(frame:var Frame) =
+      discard terminal.draw(proc(frame: var Frame) =
         let border = borderedBlock().withTitle("Canopy · keyboard")
-        frame.renderWidget(border,frame.area)
-        frame.renderWidget(initParagraph(message).withWrap(initWrap(true)),border.inner(frame.area)))
+        frame.renderWidget(border, frame.area)
+        frame.renderWidget(initParagraph(message).withWrap(initWrap(true)), border.inner(frame.area)))
       let event = events.read()
       case event.kind
       of EventKind.Key:

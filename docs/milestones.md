@@ -43,8 +43,8 @@ Implementation and available-platform validation cover the complete plan. The un
 
 ## Ownership
 - Lead: package, geometry, style, text, buffer, umbrella exports, terminal integration, documentation, CI, final validation.
-- Unicode worker: `src/canopy/internal/unicode*`, `src/canopy/unicode.nim`, Unicode generation assets/tests/notices.
-- Layout worker: `src/canopy/layout.nim`, `src/canopy/internal/solver*`, layout tests.
+- Unicode worker: `src/canopy/internal/unicode/`, `src/canopy/core/text/unicode.nim`, Unicode generation assets/tests/notices.
+- Layout worker: `src/canopy/core/layout/index.nim`, `src/canopy/internal/layout/solver.nim`, layout tests.
 - Reference worker: `reference/`, `tests/fixtures/`, `tests/test_reference.nim`, `docs/reference.md`, `docs/upstream-inventory.md`.
 
 Workers own only assigned paths. Reassignment is recorded here or in the worker message; shared API changes go through lead.

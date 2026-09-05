@@ -15,7 +15,7 @@ specific fixture evidence are separated in [upstream-inventory.md](upstream-inve
   catalog, alongside the original `ScrollbarSymbols` convenience type.
   `orientation_and_symbol` maps to `withOrientation(...).withSymbols(...)`.
 - Stable packed RGB and optional palette color conversions are implemented as
-  `colorFromU32`, `colorFromHsl`, and `colorFromHsluv` in `canopy/colors`, with
+  `colorFromU32`, `colorFromHsl`, and `colorFromHsluv` in `canopy/core/styling/colors`, with
   native algorithms and a pinned palette-enabled oracle. They were absent from
   the original inventory and are included in the stable target.
 
@@ -91,7 +91,7 @@ optima. See `tools/layout-validation.md`. Canvas/Chart finite-float coverage
 and non-finite JSON limitations are in `tools/chart-validation.md`.
 ## Canopy animation extension
 
-`canopy/animation` adds native tweens, easing, timelines, analytical springs,
+`canopy/ui/animation/index` adds native tweens, easing, timelines, analytical springs,
 scheduling, buffer transitions and reduced motion. These are Canopy extensions,
 not Ratatui compatibility claims. See [animation contracts](animation.md) and
 [validation](animation-validation.md); Windows runtime acceptance remains open.

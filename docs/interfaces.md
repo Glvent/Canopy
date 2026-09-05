@@ -1,6 +1,23 @@
 # Shared interfaces (integrated)
 
-All runtime modules live under `src/canopy/`; `src/canopy.nim` re-exports rendering modules, never input. Imports may use `canopy/[geometry, style, text, buffer, unicode]`. Public objects use value semantics. Coordinates/lengths use `int`, constrained to nonnegative u16 range at geometry boundaries. Nim 2.2.0+, no runtime Rust/C dependency beyond standard OS APIs.
+All runtime modules live under `src/canopy/`; `src/canopy.nim` re-exports rendering modules, never input. Focused imports include `canopy/core/layout/geometry`, `canopy/core/styling/style`, `canopy/core/text/index`, and `canopy/core/rendering/buffer`. Public objects use value semantics. Coordinates/lengths use `int`, constrained to nonnegative u16 range at geometry boundaries. Nim 2.2.0+, no runtime Rust/C dependency beyond standard OS APIs.
+
+## Source organization
+
+Public modules are grouped by responsibility:
+
+- `core/`: `layout/`, `rendering/`, `styling/`, and `text/` provide layout and logical-cell rendering.
+- `ui/`: `animation/` and `widgets/` build on those foundations.
+- `runtime/`: `backends/` and `terminal/` handle terminal output, input, and lifecycle.
+
+The `index.nim` modules provide the animation, layout, terminal, text, and widget entry points;
+use aliases such as `import canopy/core/text/index as text` when importing several
+entry points together. `import canopy` remains the rendering umbrella; input
+and animation require explicit imports. Implementation-only modules live
+under `internal/input/`, `internal/layout/`, `internal/symbols/`,
+`internal/unicode/`, and `internal/widgets/`. Keep generated tables beside the
+algorithms that consume them. `internal/platform.nim` is shared by input and the
+ANSI backend. Applications should import public modules, not `internal/` paths.
 
 ## Geometry (lead)
 `Rect = object x,y,width,height: int`; `Position = object x,y: int`; `Size = object width,height: int`; `Margin = object horizontal,vertical: int`.
@@ -38,7 +55,7 @@ Every widget implements `proc render*(widget: T, area: Rect, buffer: var Buffer)
 ## Backend and terminal (subsequent assignments)
 Backend generic contract: `draw(var B, openArray[CellUpdate])`, `flush(var B)`, `size(var B): Size`, `getCursorPosition(var B): Position`, `setCursorPosition(var B, Position)`, `hideCursor`, `showCursor`, `clear`, `scrollRegionUp/Down(var B, top,bottom,lines:int)` (bottom exclusive), `appendLines(var B,int)`. Raise on errors. `init`/`restore` manage modes explicitly. Terminal commits previous buffer only after all draw/flush/cursor operations succeed. Backends must not import widgets/terminal.
 
-`canopy/backends/types` exports `ClearType.All/AfterCursor/BeforeCursor/CurrentLine/UntilNewLine` and `WindowSize(columnsRows:Size,pixels:Size)`. Built-in backends additionally implement `clearRegion(var B,ClearType)`, `clearRegion(var B,Rect)`, and `windowSize(var B): WindowSize`. Terminal uses those capabilities when available, with drawing/cell-size fallbacks for custom backends. The custom-backend example demonstrates the required contract.
+`canopy/runtime/backends/types` exports `ClearType.All/AfterCursor/BeforeCursor/CurrentLine/UntilNewLine` and `WindowSize(columnsRows:Size,pixels:Size)`. Built-in backends additionally implement `clearRegion(var B,ClearType)`, `clearRegion(var B,Rect)`, and `windowSize(var B): WindowSize`. Terminal uses those capabilities when available, with drawing/cell-size fallbacks for custom backends. The custom-backend example demonstrates the required contract.
 
 `initTerminal(backend,options=TerminalOptions())` initializes the backend. `TerminalOptions.viewport` uses `fullscreenViewport()`, `fixedViewport(Rect)`, or `inlineViewport(height)`. `withTerminal(name,backend[,options])` scopes restoration in `finally`. `Terminal[B]` exposes `backend`, `viewportArea` and `frameCount`; `draw` takes `proc(frame:var Frame)` and returns an owning `CompletedFrame`.
 
@@ -47,7 +64,7 @@ Backend generic contract: `draw(var B, openArray[CellUpdate])`, `flush(var B)`, 
 `draw` resets/autoresizes before rendering; `applyBuffer`/`applyBufferWithCursor` present the existing current buffer. Both commit only after successful output. `getFrame`, `currentBufferMut`, `flush`, and `swapBuffers` support manual presentation: terminal `flush` emits differences only, backend `flush` flushes output, and `swapBuffers` commits without counting a frame. Cursor access, `size`, `windowSize`, `resize`, `autoresize`, `clear`, `invalidate`, and inline `insertBefore(height,proc(buffer:var Buffer))` are public. Initial blank buffers emit only actual differences, matching upstream; `invalidate` requests an explicit repaint.
 
 ## Optional input
-`canopy/input` exports `Input`, `InputParser`, `Event`, keyboard/mouse enums, and `InputCapabilities`. `initInput`, `init`/`restore` and `withInput` manage native modes and event reporting. `read` blocks; `poll(timeoutMs)` returns `Option[Event]` (zero nonblocking, negative blocking). `feed`, `nextEvent` and `drain` expose the incremental parser. Unsupported sequences retain their raw bytes. See [input](input.md) for event and capability semantics.
+`canopy/runtime/terminal/input` exports `Input`, `InputParser`, `Event`, keyboard/mouse enums, and `InputCapabilities`. `initInput`, `init`/`restore` and `withInput` manage native modes and event reporting. `read` blocks; `poll(timeoutMs)` returns `Option[Event]` (zero nonblocking, negative blocking). `feed`, `nextEvent` and `drain` expose the incremental parser. Unsupported sequences retain their raw bytes. See [input](input.md) for event and capability semantics.
 
 ## Reference schema (reference worker)
 Checked-in JSON fixtures: versioned root with pinned dependencies and cases. Each case has `name`, `kind`, `input`, and `expected`. Rendering expected includes `area`, row-major complete cells (`symbol`, named/tagged colors, modifiers, `skip`), `cursor` nullable, and `state` when applicable. Layout expected includes segments and spacers. Unicode expected includes graphemes and width. Define exact serialization in `docs/reference.md`; reference adapter tests translate JSON explicitly, independent of runtime JSON format.

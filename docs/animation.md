@@ -1,6 +1,6 @@
 # Animation (Canopy extension)
 
-Use `import canopy/animation` explicitly. The toolkit has no threads, sleeps,
+Use `import canopy/ui/animation/index` explicitly. The toolkit has no threads, sleeps,
 terminal ownership, input handling, or dependency on a renderer. Existing
 rendering and Ratatui compatibility contracts are unchanged.
 
@@ -15,8 +15,8 @@ the latest sample on the next draw.
 
 ```nim
 import canopy
-import canopy/input
-import canopy/animation
+import canopy/runtime/terminal/input
+import canopy/ui/animation/index as animation
 
 let animator = initAnimator() # 60 FPS; fps is configurable
 let progress = initTween(0.0, 1.0, initDuration(seconds=2), easing=cubicInOut)

@@ -18,5 +18,5 @@ task bench, "Run native benchmarks":
 
 task docs, "Generate API documentation":
   exec "nim doc --project --index:on --path:src --outdir:build/docs src/canopy.nim"
-  exec "nim doc --index:on --path:src --outdir:build/docs src/canopy/input.nim"
-  exec "nim doc --project --index:on --path:src --outdir:build/docs src/canopy/animation.nim"
+  exec "nim doc --index:on --path:src --outdir:build/docs src/canopy/runtime/terminal/input.nim"
+  exec "nim doc --project --index:on --path:src --outdir:build/docs/animation src/canopy/ui/animation/index.nim"
