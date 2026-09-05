@@ -12,3 +12,5 @@
 *.exe
 *.out
 .DS_Store
+/PLAN.md
+/AGENTS.md
