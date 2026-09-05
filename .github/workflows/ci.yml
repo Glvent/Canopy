@@ -1,0 +1,18 @@
+name: Nim
+on: [push, pull_request]
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        nim: ['2.2.0', '2.2.10']
+        mm: [arc, orc]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jiro4989/setup-nim-action@v2
+        with:
+          nim-version: ${{ matrix.nim }}
+      - run: nim r --mm:${{ matrix.mm }} tools/tester.nim
+      - run: nim r --mm:${{ matrix.mm }} tools/tester.nim examples

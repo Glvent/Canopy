@@ -1,0 +1,9 @@
+[package]
+name = "canopy-terminal-reference"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+ratatui-core = { version = "=0.1.2", features = ["scrolling-regions", "underline-color"] }
+serde_json = "=1.0.143"

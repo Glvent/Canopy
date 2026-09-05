@@ -1,0 +1,141 @@
+{
+  "cases": [
+    {
+      "expected": {
+        "graphemes": [
+          "A",
+          "S",
+          "C",
+          "I",
+          "I"
+        ],
+        "width": 5
+      },
+      "input": {
+        "text": "ASCII"
+      },
+      "kind": "unicode",
+      "name": "unicode-0"
+    },
+    {
+      "expected": {
+        "graphemes": [
+          "é"
+        ],
+        "width": 1
+      },
+      "input": {
+        "text": "é"
+      },
+      "kind": "unicode",
+      "name": "unicode-1"
+    },
+    {
+      "expected": {
+        "graphemes": [
+          "界"
+        ],
+        "width": 2
+      },
+      "input": {
+        "text": "界"
+      },
+      "kind": "unicode",
+      "name": "unicode-2"
+    },
+    {
+      "expected": {
+        "graphemes": [
+          "👩‍💻"
+        ],
+        "width": 2
+      },
+      "input": {
+        "text": "👩‍💻"
+      },
+      "kind": "unicode",
+      "name": "unicode-3"
+    },
+    {
+      "expected": {
+        "graphemes": [
+          "🇺🇳"
+        ],
+        "width": 2
+      },
+      "input": {
+        "text": "🇺🇳"
+      },
+      "kind": "unicode",
+      "name": "unicode-4"
+    },
+    {
+      "expected": {
+        "graphemes": [
+          "👨‍👩‍👧‍👦"
+        ],
+        "width": 2
+      },
+      "input": {
+        "text": "👨‍👩‍👧‍👦"
+      },
+      "kind": "unicode",
+      "name": "unicode-5"
+    },
+    {
+      "expected": {
+        "graphemes": [
+          "क्‍ष"
+        ],
+        "width": 2
+      },
+      "input": {
+        "text": "क्‍ष"
+      },
+      "kind": "unicode",
+      "name": "unicode-6"
+    },
+    {
+      "expected": {
+        "graphemes": [
+          "\r\n"
+        ],
+        "width": 1
+      },
+      "input": {
+        "text": "\r\n"
+      },
+      "kind": "unicode",
+      "name": "unicode-7"
+    },
+    {
+      "expected": {
+        "graphemes": [
+          "\u0000",
+          "a"
+        ],
+        "width": 2
+      },
+      "input": {
+        "text": "\u0000a"
+      },
+      "kind": "unicode",
+      "name": "unicode-8"
+    }
+  ],
+  "dependencies": {
+    "kasuari": "0.4.12",
+    "ratatui": "0.30.2",
+    "ratatuiCore": "0.1.2",
+    "ratatuiWidgets": "0.3.2",
+    "unicodeSegmentation": "1.13.3",
+    "unicodeVersion": "17.0.0",
+    "unicodeWidth": "0.2.2"
+  },
+  "generatedBy": {
+    "command": "cargo run --manifest-path reference/Cargo.toml --locked -- generate",
+    "crate": "canopy-ratatui-reference",
+    "version": "0.1.0"
+  },
+  "schemaVersion": 1
+}

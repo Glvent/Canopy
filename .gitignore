@@ -1,0 +1,14 @@
+/build/
+/nimcache/
+/reference/target/
+**/target/
+/reference/vendor/
+/tools/tester
+/tests/test_*
+!/tests/test_*.nim
+/examples/*
+!/examples/*.nim
+/benchmarks/benchmarks
+*.exe
+*.out
+.DS_Store

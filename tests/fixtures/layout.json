@@ -1,0 +1,1413 @@
+{
+  "cases": [
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 5,
+            "width": 4,
+            "x": 3,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 3,
+            "x": 7,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 16,
+            "x": 10,
+            "y": 2
+          }
+        ],
+        "spacers": [
+          {
+            "height": 5,
+            "width": 0,
+            "x": 3,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 0,
+            "x": 7,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 0,
+            "x": 10,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 0,
+            "x": 26,
+            "y": 2
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 5,
+          "width": 23,
+          "x": 3,
+          "y": 2
+        },
+        "constraints": [
+          {
+            "kind": "length",
+            "value": 4
+          },
+          {
+            "kind": "length",
+            "value": 3
+          },
+          {
+            "kind": "length",
+            "value": 5
+          }
+        ],
+        "direction": "horizontal",
+        "flex": "Legacy",
+        "margin": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "spacing": 0
+      },
+      "kind": "layout",
+      "name": "flex-legacy"
+    },
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 5,
+            "width": 4,
+            "x": 3,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 3,
+            "x": 7,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 5,
+            "x": 10,
+            "y": 2
+          }
+        ],
+        "spacers": [
+          {
+            "height": 5,
+            "width": 0,
+            "x": 3,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 0,
+            "x": 7,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 0,
+            "x": 10,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 11,
+            "x": 15,
+            "y": 2
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 5,
+          "width": 23,
+          "x": 3,
+          "y": 2
+        },
+        "constraints": [
+          {
+            "kind": "length",
+            "value": 4
+          },
+          {
+            "kind": "length",
+            "value": 3
+          },
+          {
+            "kind": "length",
+            "value": 5
+          }
+        ],
+        "direction": "horizontal",
+        "flex": "Start",
+        "margin": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "spacing": 0
+      },
+      "kind": "layout",
+      "name": "flex-start"
+    },
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 5,
+            "width": 4,
+            "x": 14,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 3,
+            "x": 18,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 5,
+            "x": 21,
+            "y": 2
+          }
+        ],
+        "spacers": [
+          {
+            "height": 5,
+            "width": 11,
+            "x": 3,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 0,
+            "x": 18,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 0,
+            "x": 21,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 0,
+            "x": 26,
+            "y": 2
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 5,
+          "width": 23,
+          "x": 3,
+          "y": 2
+        },
+        "constraints": [
+          {
+            "kind": "length",
+            "value": 4
+          },
+          {
+            "kind": "length",
+            "value": 3
+          },
+          {
+            "kind": "length",
+            "value": 5
+          }
+        ],
+        "direction": "horizontal",
+        "flex": "End",
+        "margin": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "spacing": 0
+      },
+      "kind": "layout",
+      "name": "flex-end"
+    },
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 5,
+            "width": 4,
+            "x": 9,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 3,
+            "x": 13,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 5,
+            "x": 16,
+            "y": 2
+          }
+        ],
+        "spacers": [
+          {
+            "height": 5,
+            "width": 6,
+            "x": 3,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 0,
+            "x": 13,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 0,
+            "x": 16,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 5,
+            "x": 21,
+            "y": 2
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 5,
+          "width": 23,
+          "x": 3,
+          "y": 2
+        },
+        "constraints": [
+          {
+            "kind": "length",
+            "value": 4
+          },
+          {
+            "kind": "length",
+            "value": 3
+          },
+          {
+            "kind": "length",
+            "value": 5
+          }
+        ],
+        "direction": "horizontal",
+        "flex": "Center",
+        "margin": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "spacing": 0
+      },
+      "kind": "layout",
+      "name": "flex-center"
+    },
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 5,
+            "width": 4,
+            "x": 3,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 3,
+            "x": 13,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 5,
+            "x": 21,
+            "y": 2
+          }
+        ],
+        "spacers": [
+          {
+            "height": 5,
+            "width": 0,
+            "x": 3,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 6,
+            "x": 7,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 5,
+            "x": 16,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 0,
+            "x": 26,
+            "y": 2
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 5,
+          "width": 23,
+          "x": 3,
+          "y": 2
+        },
+        "constraints": [
+          {
+            "kind": "length",
+            "value": 4
+          },
+          {
+            "kind": "length",
+            "value": 3
+          },
+          {
+            "kind": "length",
+            "value": 5
+          }
+        ],
+        "direction": "horizontal",
+        "flex": "SpaceBetween",
+        "margin": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "spacing": 0
+      },
+      "kind": "layout",
+      "name": "flex-spacebetween"
+    },
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 5,
+            "width": 4,
+            "x": 5,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 3,
+            "x": 13,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 5,
+            "x": 19,
+            "y": 2
+          }
+        ],
+        "spacers": [
+          {
+            "height": 5,
+            "width": 2,
+            "x": 3,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 4,
+            "x": 9,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 3,
+            "x": 16,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 2,
+            "x": 24,
+            "y": 2
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 5,
+          "width": 23,
+          "x": 3,
+          "y": 2
+        },
+        "constraints": [
+          {
+            "kind": "length",
+            "value": 4
+          },
+          {
+            "kind": "length",
+            "value": 3
+          },
+          {
+            "kind": "length",
+            "value": 5
+          }
+        ],
+        "direction": "horizontal",
+        "flex": "SpaceAround",
+        "margin": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "spacing": 0
+      },
+      "kind": "layout",
+      "name": "flex-spacearound"
+    },
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 5,
+            "width": 4,
+            "x": 6,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 3,
+            "x": 13,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 5,
+            "x": 18,
+            "y": 2
+          }
+        ],
+        "spacers": [
+          {
+            "height": 5,
+            "width": 3,
+            "x": 3,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 3,
+            "x": 10,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 2,
+            "x": 16,
+            "y": 2
+          },
+          {
+            "height": 5,
+            "width": 3,
+            "x": 23,
+            "y": 2
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 5,
+          "width": 23,
+          "x": 3,
+          "y": 2
+        },
+        "constraints": [
+          {
+            "kind": "length",
+            "value": 4
+          },
+          {
+            "kind": "length",
+            "value": 3
+          },
+          {
+            "kind": "length",
+            "value": 5
+          }
+        ],
+        "direction": "horizontal",
+        "flex": "SpaceEvenly",
+        "margin": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "spacing": 0
+      },
+      "kind": "layout",
+      "name": "flex-spaceevenly"
+    },
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 5,
+            "width": 4,
+            "x": 5,
+            "y": 8
+          },
+          {
+            "height": 5,
+            "width": 3,
+            "x": 10,
+            "y": 8
+          },
+          {
+            "height": 5,
+            "width": 7,
+            "x": 14,
+            "y": 8
+          },
+          {
+            "height": 5,
+            "width": 6,
+            "x": 22,
+            "y": 8
+          },
+          {
+            "height": 5,
+            "width": 8,
+            "x": 29,
+            "y": 8
+          },
+          {
+            "height": 5,
+            "width": 2,
+            "x": 38,
+            "y": 8
+          }
+        ],
+        "spacers": [
+          {
+            "height": 5,
+            "width": 0,
+            "x": 5,
+            "y": 8
+          },
+          {
+            "height": 5,
+            "width": 1,
+            "x": 9,
+            "y": 8
+          },
+          {
+            "height": 5,
+            "width": 1,
+            "x": 13,
+            "y": 8
+          },
+          {
+            "height": 5,
+            "width": 1,
+            "x": 21,
+            "y": 8
+          },
+          {
+            "height": 5,
+            "width": 1,
+            "x": 28,
+            "y": 8
+          },
+          {
+            "height": 5,
+            "width": 1,
+            "x": 37,
+            "y": 8
+          },
+          {
+            "height": 5,
+            "width": 0,
+            "x": 40,
+            "y": 8
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 9,
+          "width": 37,
+          "x": 4,
+          "y": 6
+        },
+        "constraints": [
+          {
+            "kind": "length",
+            "value": 4
+          },
+          {
+            "kind": "min",
+            "value": 3
+          },
+          {
+            "kind": "max",
+            "value": 7
+          },
+          {
+            "kind": "percentage",
+            "value": 17
+          },
+          {
+            "denominator": 9,
+            "kind": "ratio",
+            "numerator": 2
+          },
+          {
+            "kind": "fill",
+            "value": 2
+          }
+        ],
+        "direction": "horizontal",
+        "flex": "Legacy",
+        "margin": {
+          "horizontal": 1,
+          "vertical": 2
+        },
+        "spacing": 1
+      },
+      "kind": "layout",
+      "name": "all-constraints"
+    },
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 4,
+            "width": 8,
+            "x": 7,
+            "y": 11
+          },
+          {
+            "height": 3,
+            "width": 8,
+            "x": 7,
+            "y": 15
+          },
+          {
+            "height": 4,
+            "width": 8,
+            "x": 7,
+            "y": 18
+          }
+        ],
+        "spacers": [
+          {
+            "height": 0,
+            "width": 8,
+            "x": 7,
+            "y": 11
+          },
+          {
+            "height": 0,
+            "width": 8,
+            "x": 7,
+            "y": 15
+          },
+          {
+            "height": 0,
+            "width": 8,
+            "x": 7,
+            "y": 18
+          },
+          {
+            "height": 0,
+            "width": 8,
+            "x": 7,
+            "y": 22
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 11,
+          "width": 8,
+          "x": 7,
+          "y": 11
+        },
+        "constraints": [
+          {
+            "kind": "percentage",
+            "value": 33
+          },
+          {
+            "kind": "percentage",
+            "value": 33
+          },
+          {
+            "kind": "percentage",
+            "value": 34
+          }
+        ],
+        "direction": "vertical",
+        "flex": "Legacy",
+        "margin": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "spacing": 0
+      },
+      "kind": "layout",
+      "name": "vertical-rounding"
+    },
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 1,
+            "width": 5,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "height": 1,
+            "width": 2,
+            "x": 5,
+            "y": 0
+          },
+          {
+            "height": 1,
+            "width": 0,
+            "x": 7,
+            "y": 0
+          }
+        ],
+        "spacers": [
+          {
+            "height": 1,
+            "width": 0,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "height": 1,
+            "width": 0,
+            "x": 5,
+            "y": 0
+          },
+          {
+            "height": 1,
+            "width": 0,
+            "x": 7,
+            "y": 0
+          },
+          {
+            "height": 1,
+            "width": 0,
+            "x": 7,
+            "y": 0
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 1,
+          "width": 7,
+          "x": 0,
+          "y": 0
+        },
+        "constraints": [
+          {
+            "kind": "length",
+            "value": 5
+          },
+          {
+            "kind": "length",
+            "value": 5
+          },
+          {
+            "kind": "length",
+            "value": 5
+          }
+        ],
+        "direction": "horizontal",
+        "flex": "Legacy",
+        "margin": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "spacing": 0
+      },
+      "kind": "layout",
+      "name": "conflicting-lengths"
+    },
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 1,
+            "width": 2,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "height": 1,
+            "width": 2,
+            "x": 2,
+            "y": 0
+          }
+        ],
+        "spacers": [
+          {
+            "height": 1,
+            "width": 0,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "height": 1,
+            "width": 0,
+            "x": 2,
+            "y": 0
+          },
+          {
+            "height": 1,
+            "width": 0,
+            "x": 4,
+            "y": 0
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 1,
+          "width": 4,
+          "x": 0,
+          "y": 0
+        },
+        "constraints": [
+          {
+            "kind": "min",
+            "value": 3
+          },
+          {
+            "kind": "min",
+            "value": 3
+          }
+        ],
+        "direction": "horizontal",
+        "flex": "Start",
+        "margin": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "spacing": 0
+      },
+      "kind": "layout",
+      "name": "conflicting-minimums"
+    },
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 3,
+            "width": 5,
+            "x": 2,
+            "y": 4
+          },
+          {
+            "height": 3,
+            "width": 5,
+            "x": 5,
+            "y": 4
+          },
+          {
+            "height": 3,
+            "width": 5,
+            "x": 8,
+            "y": 4
+          }
+        ],
+        "spacers": [
+          {
+            "height": 3,
+            "width": 0,
+            "x": 2,
+            "y": 4
+          },
+          {
+            "height": 3,
+            "width": 0,
+            "x": 7,
+            "y": 4
+          },
+          {
+            "height": 3,
+            "width": 0,
+            "x": 10,
+            "y": 4
+          },
+          {
+            "height": 3,
+            "width": 1,
+            "x": 13,
+            "y": 4
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 3,
+          "width": 12,
+          "x": 2,
+          "y": 4
+        },
+        "constraints": [
+          {
+            "kind": "length",
+            "value": 5
+          },
+          {
+            "kind": "length",
+            "value": 5
+          },
+          {
+            "kind": "length",
+            "value": 5
+          }
+        ],
+        "direction": "horizontal",
+        "flex": "Start",
+        "margin": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "spacing": -2
+      },
+      "kind": "layout",
+      "name": "overlap"
+    },
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 3,
+            "width": 3,
+            "x": 2,
+            "y": 4
+          },
+          {
+            "height": 3,
+            "width": 7,
+            "x": 7,
+            "y": 4
+          },
+          {
+            "height": 3,
+            "width": 3,
+            "x": 16,
+            "y": 4
+          }
+        ],
+        "spacers": [
+          {
+            "height": 3,
+            "width": 0,
+            "x": 2,
+            "y": 4
+          },
+          {
+            "height": 3,
+            "width": 2,
+            "x": 5,
+            "y": 4
+          },
+          {
+            "height": 3,
+            "width": 2,
+            "x": 14,
+            "y": 4
+          },
+          {
+            "height": 3,
+            "width": 0,
+            "x": 19,
+            "y": 4
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 3,
+          "width": 17,
+          "x": 2,
+          "y": 4
+        },
+        "constraints": [
+          {
+            "kind": "fill",
+            "value": 1
+          },
+          {
+            "kind": "fill",
+            "value": 2
+          },
+          {
+            "kind": "fill",
+            "value": 1
+          }
+        ],
+        "direction": "horizontal",
+        "flex": "Legacy",
+        "margin": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "spacing": 2
+      },
+      "kind": "layout",
+      "name": "spacing"
+    },
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 0,
+            "width": 0,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "height": 0,
+            "width": 0,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "spacers": [
+          {
+            "height": 0,
+            "width": 0,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "height": 0,
+            "width": 0,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "height": 0,
+            "width": 0,
+            "x": 0,
+            "y": 0
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 2,
+          "width": 3,
+          "x": 5,
+          "y": 8
+        },
+        "constraints": [
+          {
+            "kind": "fill",
+            "value": 1
+          },
+          {
+            "kind": "fill",
+            "value": 1
+          }
+        ],
+        "direction": "horizontal",
+        "flex": "SpaceEvenly",
+        "margin": {
+          "horizontal": 4,
+          "vertical": 3
+        },
+        "spacing": 0
+      },
+      "kind": "layout",
+      "name": "margin-clamped"
+    },
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 0,
+            "width": 0,
+            "x": 9,
+            "y": 9
+          },
+          {
+            "height": 0,
+            "width": 0,
+            "x": 9,
+            "y": 9
+          }
+        ],
+        "spacers": [
+          {
+            "height": 0,
+            "width": 0,
+            "x": 9,
+            "y": 9
+          },
+          {
+            "height": 0,
+            "width": 0,
+            "x": 9,
+            "y": 9
+          },
+          {
+            "height": 0,
+            "width": 0,
+            "x": 9,
+            "y": 9
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 0,
+          "width": 0,
+          "x": 9,
+          "y": 9
+        },
+        "constraints": [
+          {
+            "kind": "length",
+            "value": 1
+          },
+          {
+            "kind": "fill",
+            "value": 1
+          }
+        ],
+        "direction": "vertical",
+        "flex": "Center",
+        "margin": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "spacing": 0
+      },
+      "kind": "layout",
+      "name": "zero-area"
+    },
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 0,
+            "width": 5,
+            "x": 65530,
+            "y": 65531
+          },
+          {
+            "height": 0,
+            "width": 5,
+            "x": 65530,
+            "y": 65533
+          },
+          {
+            "height": 0,
+            "width": 5,
+            "x": 65530,
+            "y": 65534
+          }
+        ],
+        "spacers": [
+          {
+            "height": 1,
+            "width": 5,
+            "x": 65530,
+            "y": 65530
+          },
+          {
+            "height": 2,
+            "width": 5,
+            "x": 65530,
+            "y": 65531
+          },
+          {
+            "height": 1,
+            "width": 5,
+            "x": 65530,
+            "y": 65533
+          },
+          {
+            "height": 1,
+            "width": 5,
+            "x": 65530,
+            "y": 65534
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 5,
+          "width": 5,
+          "x": 65530,
+          "y": 65530
+        },
+        "constraints": [
+          {
+            "kind": "max",
+            "value": 0
+          },
+          {
+            "kind": "fill",
+            "value": 0
+          },
+          {
+            "denominator": 0,
+            "kind": "ratio",
+            "numerator": 1
+          }
+        ],
+        "direction": "vertical",
+        "flex": "SpaceAround",
+        "margin": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "spacing": 1
+      },
+      "kind": "layout",
+      "name": "tiny"
+    },
+    {
+      "expected": {
+        "segments": [
+          {
+            "height": 2,
+            "width": 5,
+            "x": 65530,
+            "y": 1
+          },
+          {
+            "height": 2,
+            "width": 0,
+            "x": 65535,
+            "y": 1
+          }
+        ],
+        "spacers": [
+          {
+            "height": 2,
+            "width": 0,
+            "x": 65530,
+            "y": 1
+          },
+          {
+            "height": 2,
+            "width": 0,
+            "x": 65535,
+            "y": 1
+          },
+          {
+            "height": 2,
+            "width": 0,
+            "x": 65535,
+            "y": 1
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 2,
+          "width": 5,
+          "x": 65530,
+          "y": 1
+        },
+        "constraints": [
+          {
+            "kind": "length",
+            "value": 65535
+          },
+          {
+            "kind": "max",
+            "value": 65535
+          }
+        ],
+        "direction": "horizontal",
+        "flex": "End",
+        "margin": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "spacing": 0
+      },
+      "kind": "layout",
+      "name": "u16-edge"
+    },
+    {
+      "expected": {
+        "segments": [],
+        "spacers": [
+          {
+            "height": 4,
+            "width": 9,
+            "x": 1,
+            "y": 1
+          }
+        ]
+      },
+      "input": {
+        "area": {
+          "height": 4,
+          "width": 9,
+          "x": 1,
+          "y": 1
+        },
+        "constraints": [],
+        "direction": "horizontal",
+        "flex": "Legacy",
+        "margin": {
+          "horizontal": 0,
+          "vertical": 0
+        },
+        "spacing": 0
+      },
+      "kind": "layout",
+      "name": "empty-constraints"
+    }
+  ],
+  "dependencies": {
+    "kasuari": "0.4.12",
+    "ratatui": "0.30.2",
+    "ratatuiCore": "0.1.2",
+    "ratatuiWidgets": "0.3.2",
+    "unicodeSegmentation": "1.13.3",
+    "unicodeVersion": "17.0.0",
+    "unicodeWidth": "0.2.2"
+  },
+  "generatedBy": {
+    "command": "cargo run --manifest-path reference/Cargo.toml --locked -- generate",
+    "crate": "canopy-ratatui-reference",
+    "version": "0.1.0"
+  },
+  "schemaVersion": 1
+}

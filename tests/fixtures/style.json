@@ -1,0 +1,130 @@
+{
+  "cases": [
+    {
+      "expected": {
+        "addModifiers": [],
+        "bg": null,
+        "fg": null,
+        "subModifiers": [],
+        "underlineColor": null
+      },
+      "input": {
+        "operation": "default"
+      },
+      "kind": "style",
+      "name": "style-default"
+    },
+    {
+      "expected": {
+        "addModifiers": [],
+        "bg": {
+          "kind": "named",
+          "name": "reset"
+        },
+        "fg": {
+          "kind": "named",
+          "name": "reset"
+        },
+        "subModifiers": [
+          "bold",
+          "dim",
+          "italic",
+          "underlined",
+          "slowBlink",
+          "rapidBlink",
+          "reversed",
+          "hidden",
+          "crossedOut"
+        ],
+        "underlineColor": {
+          "kind": "named",
+          "name": "reset"
+        }
+      },
+      "input": {
+        "operation": "reset"
+      },
+      "kind": "style",
+      "name": "style-reset"
+    },
+    {
+      "expected": {
+        "addModifiers": [
+          "bold",
+          "underlined"
+        ],
+        "bg": {
+          "index": 17,
+          "kind": "indexed"
+        },
+        "fg": {
+          "b": 3,
+          "g": 2,
+          "kind": "rgb",
+          "r": 1
+        },
+        "subModifiers": [
+          "italic"
+        ],
+        "underlineColor": {
+          "kind": "named",
+          "name": "blue"
+        }
+      },
+      "input": {
+        "base": {
+          "addModifiers": [
+            "bold",
+            "italic"
+          ],
+          "bg": {
+            "index": 17,
+            "kind": "indexed"
+          },
+          "fg": {
+            "kind": "named",
+            "name": "red"
+          },
+          "subModifiers": [],
+          "underlineColor": null
+        },
+        "overlay": {
+          "addModifiers": [
+            "underlined"
+          ],
+          "bg": null,
+          "fg": {
+            "b": 3,
+            "g": 2,
+            "kind": "rgb",
+            "r": 1
+          },
+          "subModifiers": [
+            "italic"
+          ],
+          "underlineColor": {
+            "kind": "named",
+            "name": "blue"
+          }
+        }
+      },
+      "kind": "style",
+      "name": "style-patch"
+    }
+  ],
+  "dependencies": {
+    "kasuari": "0.4.12",
+    "ratatui": "0.30.2",
+    "ratatuiCore": "0.1.2",
+    "ratatuiWidgets": "0.3.2",
+    "unicodeSegmentation": "1.13.3",
+    "unicodeVersion": "17.0.0",
+    "unicodeWidth": "0.2.2"
+  },
+  "generatedBy": {
+    "command": "cargo run --manifest-path reference/Cargo.toml --locked -- generate",
+    "crate": "canopy-ratatui-reference",
+    "version": "0.1.0"
+  },
+  "schemaVersion": 1
+}

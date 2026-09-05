@@ -1,0 +1,67 @@
+{
+  "cases": [
+    {
+      "expected": {
+        "area": 40,
+        "bottom": 9,
+        "containsEdge": false,
+        "containsInside": true,
+        "inner": {
+          "height": 3,
+          "width": 4,
+          "x": 5,
+          "y": 5
+        },
+        "intersection": {
+          "height": 3,
+          "width": 4,
+          "x": 7,
+          "y": 4
+        },
+        "isEmpty": false,
+        "right": 11,
+        "union": {
+          "height": 7,
+          "width": 13,
+          "x": 3,
+          "y": 2
+        }
+      },
+      "input": {
+        "a": {
+          "height": 5,
+          "width": 8,
+          "x": 3,
+          "y": 4
+        },
+        "b": {
+          "height": 5,
+          "width": 9,
+          "x": 7,
+          "y": 2
+        },
+        "margin": {
+          "horizontal": 2,
+          "vertical": 1
+        }
+      },
+      "kind": "geometry",
+      "name": "rect-operations"
+    }
+  ],
+  "dependencies": {
+    "kasuari": "0.4.12",
+    "ratatui": "0.30.2",
+    "ratatuiCore": "0.1.2",
+    "ratatuiWidgets": "0.3.2",
+    "unicodeSegmentation": "1.13.3",
+    "unicodeVersion": "17.0.0",
+    "unicodeWidth": "0.2.2"
+  },
+  "generatedBy": {
+    "command": "cargo run --manifest-path reference/Cargo.toml --locked -- generate",
+    "crate": "canopy-ratatui-reference",
+    "version": "0.1.0"
+  },
+  "schemaVersion": 1
+}

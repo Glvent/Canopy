@@ -1,0 +1,749 @@
+{
+  "cases": [
+    {
+      "expected": {
+        "area": {
+          "height": 2,
+          "width": 8,
+          "x": 2,
+          "y": 3
+        },
+        "cells": [
+          {
+            "bg": {
+              "kind": "named",
+              "name": "blue"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "red"
+            },
+            "modifiers": [
+              "bold"
+            ],
+            "skip": false,
+            "symbol": "A",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "blue"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "red"
+            },
+            "modifiers": [
+              "bold"
+            ],
+            "skip": false,
+            "symbol": "界",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": " ",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "blue"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "red"
+            },
+            "modifiers": [
+              "bold"
+            ],
+            "skip": false,
+            "symbol": "B",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "red"
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": "p",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "red"
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": "e",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "red"
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": "d",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "red"
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": "-",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": " ",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "b": 6,
+              "g": 5,
+              "kind": "rgb",
+              "r": 4
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": "é",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "b": 6,
+              "g": 5,
+              "kind": "rgb",
+              "r": 4
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": "x",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "b": 6,
+              "g": 5,
+              "kind": "rgb",
+              "r": 4
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": "y",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": " ",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": " ",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": " ",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": " ",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          }
+        ],
+        "cursor": null,
+        "state": null
+      },
+      "input": {
+        "area": {
+          "height": 2,
+          "width": 8,
+          "x": 2,
+          "y": 3
+        }
+      },
+      "kind": "buffer",
+      "name": "buffer-clipping-style-graphemes"
+    },
+    {
+      "expected": {
+        "area": {
+          "height": 1,
+          "width": 5,
+          "x": 0,
+          "y": 0
+        },
+        "cells": [
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "yellow"
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": "a",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": " ",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "green"
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": "x",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": " ",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          },
+          {
+            "bg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "diffOption": {
+              "kind": "none"
+            },
+            "fg": {
+              "kind": "named",
+              "name": "reset"
+            },
+            "modifiers": [],
+            "skip": false,
+            "symbol": " ",
+            "underlineColor": {
+              "kind": "named",
+              "name": "reset"
+            }
+          }
+        ],
+        "cursor": null,
+        "state": null
+      },
+      "input": {
+        "area": {
+          "height": 1,
+          "width": 5,
+          "x": 0,
+          "y": 0
+        }
+      },
+      "kind": "buffer",
+      "name": "buffer-wide-overwrite"
+    },
+    {
+      "expected": {
+        "updates": [
+          {
+            "cell": {
+              "bg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "diffOption": {
+                "kind": "none"
+              },
+              "fg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "modifiers": [
+                "underlined"
+              ],
+              "skip": false,
+              "symbol": "x",
+              "underlineColor": {
+                "kind": "named",
+                "name": "reset"
+              }
+            },
+            "x": 0,
+            "y": 0
+          },
+          {
+            "cell": {
+              "bg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "diffOption": {
+                "kind": "none"
+              },
+              "fg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "modifiers": [
+                "underlined"
+              ],
+              "skip": false,
+              "symbol": "y",
+              "underlineColor": {
+                "kind": "named",
+                "name": "reset"
+              }
+            },
+            "x": 1,
+            "y": 0
+          }
+        ]
+      },
+      "input": {
+        "next": {
+          "area": {
+            "height": 1,
+            "width": 4,
+            "x": 0,
+            "y": 0
+          },
+          "cells": [
+            {
+              "bg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "diffOption": {
+                "kind": "none"
+              },
+              "fg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "modifiers": [
+                "underlined"
+              ],
+              "skip": false,
+              "symbol": "x",
+              "underlineColor": {
+                "kind": "named",
+                "name": "reset"
+              }
+            },
+            {
+              "bg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "diffOption": {
+                "kind": "none"
+              },
+              "fg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "modifiers": [
+                "underlined"
+              ],
+              "skip": false,
+              "symbol": "y",
+              "underlineColor": {
+                "kind": "named",
+                "name": "reset"
+              }
+            },
+            {
+              "bg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "diffOption": {
+                "kind": "none"
+              },
+              "fg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "modifiers": [],
+              "skip": false,
+              "symbol": "a",
+              "underlineColor": {
+                "kind": "named",
+                "name": "reset"
+              }
+            },
+            {
+              "bg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "diffOption": {
+                "kind": "none"
+              },
+              "fg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "modifiers": [],
+              "skip": false,
+              "symbol": "b",
+              "underlineColor": {
+                "kind": "named",
+                "name": "reset"
+              }
+            }
+          ],
+          "cursor": null,
+          "state": null
+        },
+        "previous": {
+          "area": {
+            "height": 1,
+            "width": 4,
+            "x": 0,
+            "y": 0
+          },
+          "cells": [
+            {
+              "bg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "diffOption": {
+                "kind": "none"
+              },
+              "fg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "modifiers": [],
+              "skip": false,
+              "symbol": "界",
+              "underlineColor": {
+                "kind": "named",
+                "name": "reset"
+              }
+            },
+            {
+              "bg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "diffOption": {
+                "kind": "none"
+              },
+              "fg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "modifiers": [],
+              "skip": false,
+              "symbol": " ",
+              "underlineColor": {
+                "kind": "named",
+                "name": "reset"
+              }
+            },
+            {
+              "bg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "diffOption": {
+                "kind": "none"
+              },
+              "fg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "modifiers": [],
+              "skip": false,
+              "symbol": "a",
+              "underlineColor": {
+                "kind": "named",
+                "name": "reset"
+              }
+            },
+            {
+              "bg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "diffOption": {
+                "kind": "none"
+              },
+              "fg": {
+                "kind": "named",
+                "name": "reset"
+              },
+              "modifiers": [],
+              "skip": false,
+              "symbol": "b",
+              "underlineColor": {
+                "kind": "named",
+                "name": "reset"
+              }
+            }
+          ],
+          "cursor": null,
+          "state": null
+        }
+      },
+      "kind": "diff",
+      "name": "buffer-diff-wide"
+    }
+  ],
+  "dependencies": {
+    "kasuari": "0.4.12",
+    "ratatui": "0.30.2",
+    "ratatuiCore": "0.1.2",
+    "ratatuiWidgets": "0.3.2",
+    "unicodeSegmentation": "1.13.3",
+    "unicodeVersion": "17.0.0",
+    "unicodeWidth": "0.2.2"
+  },
+  "generatedBy": {
+    "command": "cargo run --manifest-path reference/Cargo.toml --locked -- generate",
+    "crate": "canopy-ratatui-reference",
+    "version": "0.1.0"
+  },
+  "schemaVersion": 1
+}
