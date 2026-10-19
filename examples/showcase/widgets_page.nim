@@ -1,6 +1,6 @@
 ## Core widgets: stateful List, Table and Scrollbar, Calendar, Paragraph, Logo, Mascot,
 ## Fill, Clear, Shadow, filled blocks and a custom widget.
-import std/[monotimes, times]
+import std/[monotimes, strutils, times]
 
 import canopy
 import canopy/runtime/terminal/input
@@ -14,11 +14,11 @@ type Badge = object
   style: Style
 
 proc render(badge: Badge, area: Rect, buffer: var Buffer) =
-  # A filled block gives the badge a solid background with soft half-block corners.
-  let card = filledBlock(badge.style.fg.get(color(ColorKind.White)))
-  card.render(area, buffer)
-  initLine(initSpan(badge.text, initStyle().withFg(ColorKind.Black).bold())).centered()
-    .render(card.inner(area), buffer)
+  # A one-row pill on the middle row, rounded at both ends like the selected tab.
+  let fill = badge.style.fg.get(color(ColorKind.White))
+  let row = initRect(area.x, area.y + area.height div 2, area.width, min(1, area.height))
+  initLine(pill(" " & badge.text & " ", initStyle().withFg(ColorKind.Black).withBg(fill).bold()))
+    .centered().render(row, buffer)
 
 const catalog = [
   ("Block", "Borders, titles and padding around any widget.", "no"),
@@ -37,7 +37,7 @@ const catalog = [
   ("Logo / Mascot", "Canopy and Ratatui artwork drawn from block glyphs.", "no"),
   ("Fill / Clear", "Fill paints a region with one symbol; Clear resets it.", "no"),
   ("Shadow", "Darkens or paints the cells a widget offset exposes. Press p.", "no"),
-  ("Filled block", "Solid background with soft corners; the badges and popup use it.", "no"),
+  ("Filled block", "Solid background with soft corners; the popup and buttons use it.", "no"),
   ("Custom widget", "Any type with render(widget, area, buffer) can be drawn.", "no")]
 
 var
@@ -67,12 +67,19 @@ proc render*(frame: var Frame, area: Rect) =
   let top = horizontal([length(26), fill(), length(25)]).split(rows[0])
   let selected = listState.selected.get(0)
 
-  var items: seq[ListItem]
-  for entry in catalog: items.add(initListItem(entry[0]))
+  # Selected rows carry the highlight as their own style, so the end caps can keep the terminal
+  # background; a highlight style would paint over them.
+  let accentFill = accentColor()
   let listBlock = panel("List + Scrollbar")
-  frame.renderStatefulWidget(initList(items).withBlock(listBlock)
-    .withHighlightSymbol("› ").withHighlightStyle(highlight()), top[0], listState)
   listHit = listBlock.inner(top[0])
+  var items: seq[ListItem]
+  for i, entry in catalog:
+    if i == selected:
+      items.add(initListItem(initLine([initSpan(entry[0].alignLeft(max(0, listHit.width - 4))),
+        rightCap(accentFill)])).withStyle(highlight()))
+    else: items.add(initListItem(entry[0]))
+  frame.renderStatefulWidget(initList(items).withBlock(listBlock)
+    .withHighlightSymbol(initLine([leftCap(accentFill), initSpan("› ")])), top[0], listState)
   scroll = scroll.withViewportContentLength(listHit.height)
   # The scrollbar replaces the panel's right border: a gray track with an accent thumb.
   let rail = initRect(top[0].x, top[0].y + 1, top[0].width, max(0, top[0].height - 2))
@@ -81,10 +88,15 @@ proc render*(frame: var Frame, area: Rect) =
     .withThumbSymbol("┃").withThumbStyle(accent()), rail, scroll)
 
   var tableRows: seq[Row]
-  for i, entry in catalog: tableRows.add(initRow([$(i + 1), entry[0], entry[2]]))
+  for i, entry in catalog:
+    if i == selected:
+      tableRows.add(initRow([initTableCell($(i + 1)), initTableCell(entry[0]),
+        initTableCell(initLine([initSpan(entry[2].alignLeft(7)), rightCap(accentFill)]))])
+        .withStyle(highlight()))
+    else: tableRows.add(initRow([$(i + 1), entry[0], entry[2]]))
   frame.renderStatefulWidget(initTable(tableRows, [length(3), fill(), length(8)])
     .withHeader(initRow(["#", "Widget", "Stateful"]).withStyle(accent().bold()))
-    .withRowHighlightStyle(highlight()).withHighlightSymbol("› ")
+    .withHighlightSymbol(initText([initLine([leftCap(accentFill), initSpan("› ")])]))
     .withBlock(panel("Table")), top[1], tableState)
 
   var dates = todayEvents(highlight())

@@ -91,9 +91,10 @@ proc render*(frame: var Frame, area: Rect) =
     startHit)
   frame.renderWidget(initParagraph(initText([buttonLabel("Reset", false)]))
     .withBlock(button(false)), resetHit)
-  frame.renderWidget(initGauge().withRatio(clamp(progress[i].value, 0.0, 1.0)).withUseUnicode()
-    .withLabel(jobNames[i] & " · " & $jobs[i].progress & "%").withGaugeStyle(meter())
-    .withBlock(panel("Progress")), rows[2])
+  let meterPanel = panel("Progress")
+  frame.renderWidget(meterPanel, rows[2])
+  frame.renderMeter(meterPanel.inner(rows[2]), progress[i].value,
+    jobNames[i] & " · " & $jobs[i].progress & "%")
 
 proc handle*(event: input.Event): bool =
   result = true

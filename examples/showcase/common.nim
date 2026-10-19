@@ -37,23 +37,47 @@ proc meter*(): Style =
   ## Gauge colors: accent fill on a black track, so the label inverts cleanly over both.
   initStyle().withFg(accentColor()).withBg(ColorKind.Black)
 
+proc leftCap*(fill: Color): Span =
+  ## One cell that rounds the left end of a run filled with `fill`: a Powerline half circle on
+  ## the terminal background, or a filled space when round caps are off.
+  if roundPills: initSpan("\uE0B6", initStyle().withFg(fill).withBg(ColorKind.Reset))
+  else: initSpan(" ", initStyle().withBg(fill))
+
+proc rightCap*(fill: Color): Span =
+  if roundPills: initSpan("\uE0B4", initStyle().withFg(fill).withBg(ColorKind.Reset))
+  else: initSpan(" ", initStyle().withBg(fill))
+
+proc pill*(text: string, style = highlight()): seq[Span] =
+  ## Text on a filled run with a cap at each end; the fill is the style's background.
+  let fill = style.bg.get(accentColor())
+  @[leftCap(fill), initSpan(text, style), rightCap(fill)]
+
 proc pillTitles(names: openArray[string], selected: int, numbered: bool): seq[Line] =
-  # Every pill keeps one cell on each side, filled by a rounded cap or a space when selected
-  # and by a plain space otherwise, so widths never change with the selection.
+  # Every pill keeps one cell on each side, filled by a cap when selected and by a plain
+  # space otherwise, so widths never change with the selection.
   for i, name in names:
     let number = if numbered: $(i + 1) & " " else: ""
-    if i != selected:
-      result.add(initLine([initSpan(" " & number, muted()), initSpan(name & " ")]))
-    elif roundPills:
-      let cap = initStyle().withFg(accentColor())
-      result.add(initLine([initSpan("\uE0B6", cap), initSpan(number & name, highlight()),
-        initSpan("\uE0B4", cap)]))
-    else:
-      result.add(initLine(initSpan(" " & number & name & " ", highlight())))
+    if i == selected: result.add(initLine(pill(number & name)))
+    else: result.add(initLine([initSpan(" " & number, muted()), initSpan(name & " ")]))
 
 proc pillsWidth*(names: openArray[string], numbered = false): int =
   for title in pillTitles(names, -1, numbered): result += title.width
   result += max(0, names.len - 1)
+
+proc renderMeter*(frame: var Frame, area: Rect, ratio: float64, label: string) =
+  ## A gauge in the meter colors. On a single row with round caps, its ends are rounded too:
+  ## each cap takes the color of the bar part it closes.
+  let ratio = clamp(ratio, 0.0, 1.0)
+  var bar = area
+  if roundPills and area.height == 1 and area.width > 2:
+    let track = color(ColorKind.Black)
+    frame.renderWidget(initLine([leftCap(if ratio > 0: accentColor() else: track)]),
+      initRect(area.x, area.y, 1, 1))
+    frame.renderWidget(initLine([rightCap(if ratio >= 1: accentColor() else: track)]),
+      initRect(area.x + area.width - 1, area.y, 1, 1))
+    bar = initRect(area.x + 1, area.y, area.width - 2, 1)
+  frame.renderWidget(initGauge().withRatio(ratio).withUseUnicode().withLabel(label)
+    .withGaugeStyle(meter()), bar)
 
 proc renderPills*(frame: var Frame, area: Rect, names: openArray[string], selected: int,
     hits: var openArray[Rect], numbered = false) =
@@ -76,14 +100,14 @@ proc buttonLabel*(label: string, primary: bool): Line =
     .bold())).centered()
 
 proc keyHints*(text: string): seq[Span] =
-  ## Styles "key: action · key: action" help text with accent keys and gray actions.
+  ## Styles "key: action · key: action" help text with keys as gray keycap pills.
   let hints = text.split(" · ")
   for i, hint in hints:
     if i > 0: result.add(initSpan("  ", muted()))
     let colon = hint.find(": ")
     if colon < 0: result.add(initSpan(hint, muted()))
     else:
-      result.add(initSpan(hint[0..<colon], accent().bold()))
+      result.add(pill(hint[0..<colon], accent().withBg(ColorKind.DarkGray).bold()))
       result.add(initSpan(" " & hint[colon + 2..^1], muted()))
 
 func isPress*(event: input.Event): bool =
