@@ -58,7 +58,7 @@ proc resetJob() =
   syncProgress(selected())
 
 proc render*(frame: var Frame, area: Rect) =
-  let rows = vertical([fill(), length(3), length(3)]).split(area)
+  let rows = vertical([fill(), length(3), length(3)]).withSpacing(1).split(area)
   let columns = horizontal([length(30), fill()]).withSpacing(1).split(rows[0])
   let i = selected()
 
@@ -81,15 +81,19 @@ proc render*(frame: var Frame, area: Rect) =
       initRow(["Reduced motion (m)", if animator.reducedMotion: "On" else: "Off"])],
     [length(20), fill()]).withBlock(panel("Settings")), right[1])
 
-  let buttons = horizontal([fill(), fill()]).withSpacing(1).split(rows[1])
+  let buttons = horizontal([fill(), fill()]).withSpacing(2).split(rows[1])
   startHit = buttons[0]
   resetHit = buttons[1]
-  let action = if jobs[i].running: "Pause" elif jobs[i].progress == 100: "Run again" else: "Start / resume"
-  frame.renderWidget(initParagraph(action).centered().withStyle(accent().bold())
-    .withBlock(borderedBlock()), startHit)
-  frame.renderWidget(initParagraph("Reset").centered().withBlock(borderedBlock()), resetHit)
-  frame.renderWidget(initGauge().withRatio(clamp(progress[i].value, 0.0, 1.0))
-    .withLabel(jobNames[i] & " · " & $jobs[i].progress & "%").withGaugeStyle(accent()), rows[2])
+  let action = if jobs[i].running: "Pause"
+               elif jobs[i].progress == 100: "Run again"
+               else: "Start / resume"
+  frame.renderWidget(initParagraph(initText([buttonLabel(action, true)])).withBlock(button(true)),
+    startHit)
+  frame.renderWidget(initParagraph(initText([buttonLabel("Reset", false)]))
+    .withBlock(button(false)), resetHit)
+  frame.renderWidget(initGauge().withRatio(clamp(progress[i].value, 0.0, 1.0)).withUseUnicode()
+    .withLabel(jobNames[i] & " · " & $jobs[i].progress & "%").withGaugeStyle(meter())
+    .withBlock(panel("Progress")), rows[2])
 
 proc handle*(event: input.Event): bool =
   result = true

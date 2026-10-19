@@ -86,7 +86,7 @@ procedures:
 - Jobs (`jobs_page.nim`): simulated jobs with tweened progress and session settings.
 - Input (`input_page.nim`): a log of every key, mouse, paste, focus and resize event.
 
-The status line shows the cells sent for the last frame. They are counted by
+The header shows the cells sent for the last frame. They are counted by
 `recording.nim`, a custom backend that wraps the ANSI backend. `--inline` runs
 `inline_demo.nim`, which draws a progress viewport in normal scrollback and inserts log lines
 above it.

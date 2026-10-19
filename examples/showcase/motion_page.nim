@@ -58,38 +58,41 @@ proc setPaused(paused: bool) =
     if paused: transition.pause() else: transition.resume()
 
 proc render*(frame: var Frame, area: Rect) =
-  let areas = vertical([length(3), fill(), length(3), length(3), length(3), length(3)]).split(area)
-  let tabsBlock = panel("Transition effect")
-  frame.renderWidget(initTabs(effectNames).withSelected(ord(effect))
-    .withHighlightStyle(accent().bold().reversed()).withBlock(tabsBlock), areas[0])
-  let inner = tabsBlock.inner(areas[0])
-  var x = inner.x
-  for i, name in effectNames:
-    tabHits[i] = initRect(x, inner.y, name.len + 2, 1).intersection(inner)
-    x += name.len + 3
+  let areas = vertical([length(1), length(1), fill(), length(7), length(3)]).split(area)
+  let picker = horizontal([length(9), fill()]).split(areas[0])
+  frame.renderWidget(initLine(initSpan(" Effect", muted())), picker[0])
+  frame.renderPills(picker[1], effectNames, ord(effect), tabHits)
 
-  effectArea = areas[1]
+  # The transition covers only the panel body, so the frame stays put while content changes.
+  let stage = panel(effectNames[ord(effect)] & " · " & $direction)
+  frame.renderWidget(stage, areas[2])
+  effectArea = stage.inner(areas[2])
   let content = if scene: "Incoming forest\n\n世界 · café · 👩‍💻\n\nLive content: "
                 else: "Outgoing canopy\n\n🌿 · é · 界\n\nLive content: "
-  frame.renderWidget(initParagraph(content & $pulse.value).centered()
-    .withStyle(initStyle().withFg(rgbColor(190, 225, 220)).withBg(rgbColor(12, 20, 28)))
-    .withBlock(borderedBlock().withTitle(effectNames[ord(effect)] & " · " & $direction)), effectArea)
+  let body = vertical([fill(), length(5), fill()]).split(effectArea)
+  frame.buffer[].setStyle(effectArea, initStyle().withFg(rgbColor(190, 225, 220))
+    .withBg(rgbColor(12, 20, 28)))
+  frame.renderWidget(initParagraph(content & $pulse.value).centered(), body[1])
   if transition != nil: transition.apply(frame.buffer[], effectArea)
 
-  frame.renderWidget(initGauge().withRatio(first.value).withGaugeStyle(accent())
-    .withLabel("Timeline step 1 · cubicInOut").withBlock(borderedBlock()), areas[2])
-  frame.renderWidget(initGauge().withRatio(clamp(second.value, 0.0, 1.0)).withGaugeStyle(accent())
-    .withLabel("Timeline step 2 · bounceOut").withBlock(borderedBlock()), areas[3])
-  frame.renderWidget(initGauge().withRatio(clamp(spring.value, 0.0, 1.0)).withGaugeStyle(accent())
-    .withLabel("Spring · s retargets mid-flight").withBlock(borderedBlock()), areas[4])
+  let curves = panel("Timeline · spring")
+  frame.renderWidget(curves, areas[3])
+  let meters = vertical([length(1), length(1), length(1), length(1), length(1)])
+    .split(curves.inner(areas[3]))
+  let values = [first.value, second.value, spring.value]
+  let names = ["Step 1 · cubicInOut", "Step 2 · bounceOut", "Spring · s retargets mid-flight"]
+  for i in 0..2:
+    frame.renderWidget(initGauge().withRatio(clamp(values[i], 0.0, 1.0)).withUseUnicode()
+      .withLabel(names[i]).withGaugeStyle(meter()), meters[i * 2])
 
-  let buttons = horizontal([fill(), fill(), fill()]).split(areas[5])
+  let buttons = horizontal([fill(), fill(), fill()]).withSpacing(2).split(areas[4])
   let paused = pulse.state == PlaybackState.Paused
   let labels = [if paused: "Resume" else: "Pause", "Restart", "Direction: " & $direction]
-  for i, button in buttons:
-    buttonHits[i] = button
-    frame.renderWidget(initParagraph(labels[i]).centered().withStyle(accent().bold())
-      .withBlock(borderedBlock()), button)
+  for i, area in buttons:
+    buttonHits[i] = area
+    let primary = i == 1
+    frame.renderWidget(initParagraph(initText([buttonLabel(labels[i], primary)]))
+      .withBlock(button(primary)), area)
 
 proc action(index: int) =
   case index

@@ -74,7 +74,11 @@ proc render*(frame: var Frame, area: Rect) =
     .withHighlightSymbol("› ").withHighlightStyle(highlight()), top[0], listState)
   listHit = listBlock.inner(top[0])
   scroll = scroll.withViewportContentLength(listHit.height)
-  frame.renderStatefulWidget(initScrollbar().withStyle(accent()), listHit, scroll)
+  # The scrollbar replaces the panel's right border: a gray track with an accent thumb.
+  let rail = initRect(top[0].x, top[0].y + 1, top[0].width, max(0, top[0].height - 2))
+  frame.renderStatefulWidget(initScrollbar().withBeginSymbol(none(string))
+    .withEndSymbol(none(string)).withTrackSymbol("│").withTrackStyle(muted())
+    .withThumbSymbol("┃").withThumbStyle(accent()), rail, scroll)
 
   var tableRows: seq[Row]
   for i, entry in catalog: tableRows.add(initRow([$(i + 1), entry[0], entry[2]]))

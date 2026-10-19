@@ -75,7 +75,7 @@ proc render*(frame: var Frame, area: Rect) =
   let gauges = vertical([length(5), length(5)]).split(bottom[2])
   let ratio = (sin(t / 6) + 1) / 2
   frame.renderWidget(initGauge().withRatio(ratio).withUseUnicode()
-    .withLabel("Gauge " & $int(ratio * 100) & "%").withGaugeStyle(highlight())
+    .withLabel("Gauge " & $int(ratio * 100) & "%").withGaugeStyle(meter())
     .withBlock(panel("Gauge")), gauges[0])
   frame.renderWidget(initLineGauge().withRatio(1 - ratio)
     .withLabel("LineGauge " & $int((1 - ratio) * 100) & "%").withFilledStyle(accent())
