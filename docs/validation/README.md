@@ -4,6 +4,8 @@ The animation extension adds two test files and a seventh example. Its executed
 compiler/memory-manager matrix, PTY checks, benchmarks and Windows boundary are
 recorded separately in [animation validation](animation.md). The
 rendering/input release record below describes the earlier six-example baseline.
+All individual examples have since been replaced by `examples/showcase/`; the
+example counts in these records describe the code that existed when they ran.
 
 Final local checks ran on 2026-09-05. This record describes executed checks;
 the configured Windows CI jobs have not run in this workspace. Stable parity

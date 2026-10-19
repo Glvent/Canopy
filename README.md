@@ -12,10 +12,10 @@ nimble examples
 
 `import canopy` provides rendering, geometry, styles, text, buffers, widgets, terminal management and backends. Import `canopy/runtime/terminal/input` explicitly for input; applications own their event loop. Focused imports such as `canopy/core/layout/index` and `canopy/core/rendering/buffer` are supported.
 
-Import `canopy/ui/animation/index` for the native [animation toolkit](docs/animation.md): typed tweens, easing, timelines, springs, buffer transitions and shared reduced motion. Run `nim r examples/animations.nim` for the interactive gallery.
+Import `canopy/ui/animation/index` for the native [animation toolkit](docs/animation.md): typed tweens, easing, timelines, springs, buffer transitions and shared reduced motion.
 
 See the [milestone checklist](docs/planning/milestones.md), [shared interfaces](docs/interfaces.md), [reference generation](docs/reference.md), [upstream inventory](docs/planning/upstream-inventory.md), and [validation record](docs/validation/README.md). API documentation: `nimble docs`.
 
-Start with the [usage guide](docs/guide.md) and [Ratatui migration guide](docs/migration.md). Run `nim r examples/keyboard.nim` for an interactive screen, `nim r examples/dashboard.nim --snapshot` for a terminal-free dashboard, or `nim r examples/gallery.nim` for the widget gallery. `nimble bench` runs the recorded benchmark workloads.
+Start with the [usage guide](docs/guide.md) and [Ratatui migration guide](docs/migration.md). Run `nim r examples/showcase/showcase.nim` in a terminal of at least 80×24 for an interactive tour of every widget, styling, layout, animation and input feature. `nimble bench` runs the recorded benchmark workloads.
 
 Canopy is MIT licensed. Ported algorithms and data retain their upstream notices under `licenses/`; Nimble installations include `canopy/THIRD_PARTY_NOTICES.txt`.

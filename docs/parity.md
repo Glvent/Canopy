@@ -18,7 +18,7 @@ Gates: [milestones](planning/milestones.md). Contracts: [interfaces](interfaces.
 | Optional input | complete | incremental Unicode/escape/paste/mouse/focus/enhanced-key parsing; blocking/timed/EOF/resize PTY checks; cleanup and partial-init failure tests | execute Windows console input tests |
 | ANSI output efficiency, synchronized output and color depth (Canopy extension) | native | exact byte tests for cursor/SGR elision, DEC 2026 bracketing, downsampling and environment detection | not a Ratatui parity claim; terminal rendering of mode 2026 is emulator-dependent |
 | Optional animation (Canopy extension) | native toolkit | deterministic tween/easing/spring/scheduling/ownership tests; complete-cell transition tests; see [animation validation](validation/animation.md) | not a Ratatui parity claim; Windows runtime gate remains open |
-| Documentation/examples/package | complete | generated API docs, guide/migration, six compiled examples, deterministic gallery/dashboard, isolated Nimble consumer, recorded benchmarks | Windows example compilation remains in CI gate |
+| Documentation/examples/package | complete | generated API docs, guide/migration, all-in-one interactive showcase compiled in CI and PTY smoke-tested, isolated Nimble consumer, recorded benchmarks | Windows example compilation remains in CI gate |
 
 All comparisons use independently generated pinned upstream results. Runtime and ordinary tests use Nim only. Generator commands, versions and limitations are in [reference generation](reference.md).
 

@@ -1,4 +1,4 @@
-# Native workloads and gallery
+# Native workloads
 
 Run from the repository root. Benchmarks use only Canopy and Nim's standard
 library; no Rust executable, network, or terminal interaction is needed.
@@ -48,19 +48,13 @@ parent/project Nim configuration files, then selected `--mm:arc`; this caught
 and led to removal of an earlier configuration that forced ORC. Current project
 configuration respects the memory-manager command-line option.
 
-The noninteractive gallery renders through `Terminal[TestBackend]` and prints
-the resulting 120×47 screen as plain text:
-
-```sh
-nim c -r --mm:arc --path:src examples/gallery.nim
-nim c -r --mm:orc --path:src examples/gallery.nim
-```
-
-It demonstrates Block, Clear, Fill, Paragraph, List, Table, Tabs, Gauge,
+The noninteractive gallery example, since replaced by the interactive
+`examples/showcase/`, rendered through `Terminal[TestBackend]` and printed a
+120×47 screen as plain text. It demonstrated Block, Clear, Fill, Paragraph, List, Table, Tabs, Gauge,
 LineGauge, Sparkline, Scrollbar, BarChart, Monthly, Canvas, Chart, RatatuiLogo,
 and RatatuiMascot. Calendar date and all data are fixed. Colors remain in the
-TestBackend buffer; plain output shows symbols only. Wide-character
-continuations are omitted when printing. The ARC and ORC runs produced
+TestBackend buffer; plain output showed symbols only. Wide-character
+continuations were omitted when printing. The ARC and ORC runs produced
 identical 47-line, 10,186-byte UTF-8 output.
 ## Animation workloads
 

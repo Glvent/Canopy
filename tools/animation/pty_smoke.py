@@ -1,6 +1,6 @@
 """Optional POSIX runtime smoke test; normal Nim tests do not require Python.
 
-Compile examples first, then run: python3 tools/animation/pty.py build/2.2.10-orc
+Compile examples first, then run: python3 tools/animation/pty_smoke.py build/2.2.10-orc
 """
 import fcntl
 import os
@@ -15,14 +15,14 @@ import time
 
 
 class Session:
-    def __init__(self, name):
+    def __init__(self, name, *args):
         self.name = name
         self.master, self.slave = pty.openpty()
-        self.resize(90, 30)
+        self.resize(120, 40)
         self.original = termios.tcgetattr(self.slave)
         self.raw = b""
         self.child = subprocess.Popen(
-            [os.path.join(sys.argv[1], name)],
+            [os.path.join(sys.argv[1], name), *args],
             stdin=self.slave, stdout=self.slave, stderr=self.slave,
         )
 
@@ -107,64 +107,72 @@ class Session:
             os.close(self.slave)
 
 
-gallery = Session("animations")
+app = Session("showcase")
 try:
-    gallery.expect("Canopy animation gallery")
-    gallery.send(b"\x1b[D")
-    gallery.expect("Slide")
-    gallery.send(b"d")
-    gallery.expect("Direction: Right")
-    gallery.send(b" ")
-    gallery.idle()
-    gallery.send(b" ")
-    gallery.send(b"s")
-    gallery.send(b"m")
-    gallery.expect("Reduced motion: On")
-    gallery.idle()
-    gallery.send(b"\x1b[<0;5;3M")  # Fade effect tab.
-    gallery.send(b"r")
-    gallery.expect("Fade · Right")
-    gallery.resize(12, 5)
-    gallery.pump(0.2)
-    assert gallery.child.poll() is None
-    gallery.resize(90, 30)
-    gallery.expect("Canopy animation gallery")
-    gallery.send(b"m")
-    gallery.send(b"r")
-    gallery.expect("Reduced motion: Off")
+    app.expect("Canopy showcase")
+    app.expect("List + Scrollbar")
+    app.idle()
+    app.send(b"\x1b[B")
+    app.expect("Styled text with wrapping")
+    app.send(b"p")
+    app.expect("Popup")
+    app.send(b"p")
+    app.send(b"2")
+    app.expect("Chart")
+    app.send(b" ")  # Pausing live data lets the app idle.
+    app.pump(0.4)
+    app.idle()
+    app.send(b"3")
+    app.expect("Unicode widths")
+    app.send(b"4")
+    app.expect("Transition effect")
+    app.send(b"\x1b[D")
+    app.expect("Slide")
+    app.send(b"d")
+    app.expect("Direction: Right")
+    app.send(b"m")
+    app.expect("motion reduced")
+    app.idle()
+    app.send(b"5")
+    app.expect("Settings")
+    app.send(b"\r")
+    app.expect("Status: Running")
+    app.pump(0.5)
+    app.send(b" ")
+    app.expect("Status: Paused")
+    assert "Progress: 0%" not in app.screen(), "reduced motion stopped job simulation"
+    app.send(b"x")
+    app.expect("Status: Ready")
+    app.send(b"t")
+    app.expect("theme Green")
+    app.send(b"6")
+    app.expect("Event log")
+    app.send(b"z")
+    app.expect('"z"')
+    app.send(b"\x1b[<0;5;2M")  # First page tab.
+    app.expect("List + Scrollbar")
+    app.resize(12, 5)
+    app.pump(0.2)
+    assert app.child.poll() is None
+    app.resize(120, 40)
+    app.expect("Canopy showcase")
+    app.idle()
 finally:
-    gallery.close()
-print("PASS gallery: effects, direction, pause/resume, restart, spring, reduced motion, mouse, idle, resize, cleanup")
+    app.close()
+print("PASS showcase: pages, selection, popup, live data, transitions, jobs, theme, reduced motion, input log, mouse, idle, resize, cleanup")
 
-dashboard = Session("dashboard")
+inline = Session("showcase", "--inline")
 try:
-    dashboard.expect("System overview")
-    dashboard.idle()
-    dashboard.send(b"2\r")
-    dashboard.expect("Status: Running")
-    dashboard.pump(0.25)  # A zero-progress stopped job is correctly labelled Ready.
-    dashboard.send(b" ")
-    dashboard.expect("Status: Paused")
-    dashboard.send(b"r")
-    dashboard.expect("Status: Ready")
-    dashboard.send(b"3\x1b[B\x1b[B\x1b[B\r")
-    dashboard.expect("Reduced motion: On")
-    dashboard.send(b"2\r")
-    dashboard.expect("Status: Running")
-    dashboard.pump(0.5)
-    dashboard.send(b" ")
-    dashboard.expect("Status: Paused")
-    assert "Progress: 0%" not in dashboard.screen(), "reduced motion stopped job simulation"
-    dashboard.send(b"r")
-    dashboard.expect("Status: Ready")
-    dashboard.send(b"\x1b[<0;5;3M")  # Overview tab.
-    dashboard.expect("System overview")
-    dashboard.resize(12, 5)
-    dashboard.pump(0.2)
-    assert dashboard.child.poll() is None
-    dashboard.resize(90, 30)
-    dashboard.expect("System overview")
-    dashboard.idle()
+    end = time.monotonic() + 10
+    while inline.child.poll() is None and time.monotonic() < end:
+        inline.pump(0.05)  # Keeps answering cursor-position queries.
+    assert inline.child.returncode == 0, inline.raw[-1000:]
+    assert "Completed task 10" in inline.screen(), inline.screen()
+    assert b"\x1b[?1049h" not in inline.raw, "inline mode switched to the alternate screen"
 finally:
-    dashboard.close()
-print("PASS dashboard: idle start, tabs, progress, pause/reset, reduced motion, mouse, resize, cleanup")
+    if inline.child.poll() is None:
+        inline.child.kill()
+        inline.child.wait()
+    os.close(inline.master)
+    os.close(inline.slave)
+print("PASS showcase --inline: inserted lines, progress viewport, no alternate screen")

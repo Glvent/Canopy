@@ -6,8 +6,9 @@
 /tools/tester
 /tests/**/test_*
 !/tests/**/test_*.nim
-/examples/*
-!/examples/*.nim
+/examples/**
+!/examples/**/
+!/examples/**/*.nim
 /benchmarks/benchmarks
 /benchmarks/layout_benchmark
 *.exe

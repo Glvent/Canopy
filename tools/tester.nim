@@ -5,7 +5,11 @@ let examples = paramCount() > 0 and paramStr(1) == "examples"
 let folder = if examples: "examples" else: "tests"
 var files: seq[string]
 if examples:
+  # Single-file examples, plus multi-module examples whose entry file is named after its folder.
   for file in walkFiles(folder / "*.nim"): files.add(file)
+  for dir in walkDirs(folder / "*"):
+    let entry = dir / extractFilename(dir) & ".nim"
+    if fileExists(entry): files.add(entry)
 else:
   for file in walkDirRec(folder):
     let name = extractFilename(file)
