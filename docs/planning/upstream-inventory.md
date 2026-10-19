@@ -69,6 +69,6 @@ Rendering evidence compares complete logical cells and relevant state. The named
 | Explicit color/style JSON independent of Rust serde | **done**, `test_foundation` |
 | Optional input: blocking/timed keyboard, mouse, resize, focus, bracketed paste; incremental fragmented UTF-8/escape parsing; enhanced capability flags; distinguish unsupported events | **implemented**, `test_input`, real `test_pty`; `test_windows` implemented, execution pending |
 | Fullscreen/fixed/inline viewports, insertion above inline output, scrolling regions | **implemented**, exact terminal oracle plus native backend integration |
-| Examples: dashboard, gallery, inline output, custom widget, custom backend, keyboard input | **implemented**, six examples compiled on macOS/Linux; deterministic snapshots and custom examples run |
+| Examples: dashboard, gallery, inline output, custom widget, custom backend, keyboard input | **implemented** in the all-in-one `examples/showcase/` app (inline output via `--inline`, custom backend as its cell counter); compiled in CI |
 | macOS/Linux/Windows and Nim 2.2.0/2.2.10 ARC/ORC CI; benchmarks for layout/wrapping/table/diff | **configured** 12-job CI; macOS/Linux combinations executed locally; Windows execution pending. Native ARC/ORC workloads recorded in `benchmarks/README.md` |
 | API docs and Ratatui migration guide | **implemented**, `nimble docs`, `docs/guide.md`, `docs/migration.md`, backend/input guides |

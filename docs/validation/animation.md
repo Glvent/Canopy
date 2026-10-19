@@ -20,7 +20,8 @@ record does not change Ratatui parity or the Windows runtime acceptance gate.
   regions, nonzero origins, palettes, seeded dissolve, live destinations and
   resize completion. It also checks zero diffs for unchanged samples and
   terminal recovery after an injected failed flush, with time continuing.
-- `tools/animation/pty.py` exercised gallery and dashboard keyboard/mouse
+- `tools/animation/pty.py` (since renamed `pty_smoke.py` and pointed at the
+  showcase) exercised gallery and dashboard keyboard/mouse
   controls, pause/restart, spring retargeting, reduced motion, continuing job
   progress, idle polling, tiny resizing, Ctrl-C and native mode/cursor/screen
   cleanup. It ran against the final Nim 2.2.10 ORC binaries on macOS. This
@@ -41,7 +42,7 @@ nim r --mm:arc tools/tester.nim
 nim r --mm:arc tools/tester.nim examples
 nim r --mm:orc tools/tester.nim
 nim r --mm:orc tools/tester.nim examples
-python3 tools/animation/pty.py build/2.2.10-orc
+python3 tools/animation/pty_smoke.py build/2.2.10-orc
 nimble docs
 nimble bench
 ```

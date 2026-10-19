@@ -174,12 +174,11 @@ changing the destination. The demo supplies its own explicit palette.
 `Decorative` loops reset to their initial frame and emit cancellation. Functional
 clips continue normally. Re-enabling motion does not resurrect cancelled loops;
 explicitly restart them. Reduced motion is shared by all roots on an animator,
-so applications can use one animator for the workspace. The dashboard marks
-progress smoothing as decorative while leaving its job simulation running.
+so applications can use one animator for the workspace. The showcase's Jobs page
+marks progress smoothing as decorative while its job simulation keeps running.
 
-Run `nim r examples/animations.nim` for effects, direction, pause/restart,
-sequence/spring demos, mouse controls and reduced motion, or add `--snapshot`.
-The dashboard retains job/tab/settings controls and adds reduced motion in
-Settings. `nimble docs` generates the separate animation API alongside the
+Run `nim r examples/showcase/showcase.nim` and open the Motion page for effects, direction,
+pause/restart, sequence/spring demos and mouse controls. `m` toggles reduced motion
+on every page. `nimble docs` generates the separate animation API alongside the
 rendering and input APIs. See [animation validation](validation/animation.md)
 for executed checks and platform limits.

@@ -37,7 +37,7 @@ Styles are patches: an absent color inherits, `ColorKind.Reset` restores the ter
 
 Store `ListState`, `TableState` and `ScrollbarState` in application state. Call `renderStatefulWidget` with a mutable state; rendering may clamp selection or adjust scrolling. `none(int)` clears a selection. Widgets and configuration are value objects with public data and chainable `withX` builders.
 
-A custom widget implements `render(widget, area: Rect, buffer: var Buffer)`. A stateful widget adds `state: var YourState`. Generic dispatch finds these procedures without registration or inheritance. The renderer owns clipping to the buffer. Use `buffer.area.intersection(area)` for direct cell writes and `setStringn` for grapheme-safe text. A canvas shape implements `draw(shape, painter: var Painter)`; see the Canvas API and gallery.
+A custom widget implements `render(widget, area: Rect, buffer: var Buffer)`. A stateful widget adds `state: var YourState`. Generic dispatch finds these procedures without registration or inheritance. The renderer owns clipping to the buffer. Use `buffer.area.intersection(area)` for direct cell writes and `setStringn` for grapheme-safe text. A canvas shape implements `draw(shape, painter: var Painter)`; see the Canvas API and the showcase's Widgets page.
 
 Backends implement the structural contract in [interfaces](interfaces.md). `TestBackend` records updates, screen cells, cursor and scrollback for deterministic tests. `AnsiBackend` uses native OS terminal modes and ANSI/VT output; see [backend behavior](backends.md).
 
@@ -61,19 +61,33 @@ A `Theme` is a string-to-Style table. `theme.toJson`, `themeFromJson`, `loadThem
 
 ## Examples and documentation
 
-`nimble examples` compiles every example. Run individual examples with `nim r examples/<name>.nim`:
+`nimble examples` compiles the examples. The showcase is one interactive app that covers every
+feature; run it from the repository root in a terminal of at least 80×24:
 
-- `keyboard`: minimal cross-platform input loop.
-- `dashboard`: keyboard/mouse tabs, simulated job start/pause/reset, live progress,
-  and session settings for speed, automatic selection and accent color. Use
-  Left/Right or Tab to switch views, Up/Down to select, Enter/Space to act,
-  `r` to reset a job, and `q`/Escape/Ctrl-C to exit. Click tabs, rows and buttons;
-  the mouse wheel changes selection. Jobs simulate work without running commands.
-  `--snapshot` prints a deterministic screen without capturing input.
-- `gallery`: every built-in widget in a deterministic TestBackend screen.
-- `inline_output`: progress UI with log lines inserted above it.
-- `custom_widget`: native generic widget implementation.
-- `custom_backend`: backend adapter that counts changed cells.
+```sh
+nim r examples/showcase/showcase.nim
+nim r examples/showcase/showcase.nim --inline
+```
+
+Switch pages with Tab, Shift-Tab, `1`-`6` or a click on a tab. `t` cycles the accent color,
+`m` toggles reduced motion and `q`, Escape or Ctrl-C exits. The bottom line lists each page's own
+keys. Each page is a module in `examples/showcase/` with `render`, `handle` and `update`
+procedures:
+
+- Widgets (`widgets_page.nim`): List, Table and Scrollbar with shared selection, Calendar,
+  Paragraph, Logo, Mascot, Fill, Clear, a Shadow popup and a custom `Badge` widget.
+- Charts (`charts_page.nim`): live Chart, Canvas with a map and layers, BarChart, Sparkline,
+  Gauge and LineGauge.
+- Text & color (`text_page.nim`): modifiers, alignment, spans, named, indexed, HSL and HSLuv
+  colors, the detected color depth and Unicode display widths.
+- Motion (`motion_page.nim`): transition effects and directions, timelines, easing and a spring.
+- Jobs (`jobs_page.nim`): simulated jobs with tweened progress and session settings.
+- Input (`input_page.nim`): a log of every key, mouse, paste, focus and resize event.
+
+The status line shows the cells sent for the last frame. They are counted by
+`recording.nim`, a custom backend that wraps the ANSI backend. `--inline` runs
+`inline_demo.nim`, which draws a progress viewport in normal scrollback and inserts log lines
+above it.
 
 `nimble docs` builds browsable API documentation under `build/docs`. [Migration](migration.md), [input](input.md), [parity](parity.md), and [reference regeneration](reference.md) provide additional details.
 ## Optional animation
