@@ -61,32 +61,43 @@ proc updatePages(now: MonoTime): int =
   result.wakeWithin(input_page.update(now, page == 5))
 
 proc showcase(frame: var Frame) =
-  let areas = vertical([length(3), fill(), length(1), length(1)]).split(frame.area)
-  var titles: seq[string]
-  for i, name in pageNames: titles.add($(i + 1) & " " & name)
-  let tabsBlock = panel("Canopy showcase")
-  frame.renderWidget(initTabs(titles).withSelected(page)
-    .withHighlightStyle(accent().bold().reversed()).withBlock(tabsBlock), areas[0])
-  let tabsInner = tabsBlock.inner(areas[0])
-  var x = tabsInner.x
-  for i, title in titles:
-    tabHits[i] = initRect(x, tabsInner.y, title.len + 2, 1).intersection(tabsInner)
-    x += title.len + 3
+  # Header, a breathing row, the page, then one row of key hints.
+  let areas = vertical([length(1), length(1), fill(), length(1)]).split(frame.area)
+  let brand = initLine([initSpan(" ◆ ", accent().bold()), initSpan("Canopy", initStyle().bold()),
+    initSpan(" showcase  ", muted())])
+  let dim = muted()
 
-  contentArea = areas[1]
+  let tabsWidth = pillsWidth(pageNames, numbered = true)
+
+  # Live stats sit on the right; drop the less useful ones when the row gets narrow.
+  var stats: seq[Span]
+  template stat(value, label: string) =
+    if stats.len > 0: stats.add(initSpan(" · ", dim))
+    stats.add(initSpan(value, accent()))
+    if label.len > 0: stats.add(initSpan(" " & label, dim))
+  let room = areas[0].width - brand.width - tabsWidth - 2
+  stat($cellUpdates, "cells")
+  if room >= 40: stat($frames, "frames")
+  if room >= 28: stat($screen.width & "×" & $screen.height, "")
+  stat(themeNames[themeIndex], if animator.reducedMotion: "· reduced motion" else: "")
+  stats.add(initSpan(" "))
+  var statsLine = initLine(stats).rightAligned()
+  if statsLine.width > room: statsLine = initLine("")
+  let header = horizontal([length(brand.width), fill(), length(statsLine.width)]).split(areas[0])
+  frame.renderWidget(brand, header[0])
+  frame.renderWidget(statsLine, header[2])
+
+  frame.renderPills(header[1], pageNames, page, tabHits, numbered = true)
+
+  contentArea = areas[2]
   renderPage(frame, contentArea)
   if pageTransition != nil: pageTransition.apply(frame.buffer[], contentArea)
 
-  let dim = initStyle().dim()
-  frame.renderWidget(initLine([
-    initSpan(" Frame ", dim), initSpan($frames, accent()),
-    initSpan(" · cells sent last frame ", dim), initSpan($cellUpdates, accent()),
-    initSpan(" · terminal ", dim), initSpan($screen.width & "×" & $screen.height, accent()),
-    initSpan(" · theme ", dim), initSpan(themeNames[themeIndex], accent()),
-    initSpan(" · motion ", dim), initSpan(if animator.reducedMotion: "reduced" else: "full", accent())]),
-    areas[2])
-  frame.renderWidget(initLine([initSpan(" " & pageHelp(), accent()),
-    initSpan("  │  Tab/1-6: page · t: theme · m: reduced motion · q: quit", dim)]), areas[3])
+  let global = initLine(keyHints("Tab/1-6: page · t: theme · m: motion · q: quit") &
+    @[initSpan(" ", dim)]).rightAligned()
+  let footer = horizontal([fill(), length(global.width)]).split(areas[3])
+  frame.renderWidget(initLine(@[initSpan(" ")] & keyHints(pageHelp())), footer[0])
+  frame.renderWidget(global, footer[1])
 
 proc showPage(index: int) =
   let next = (index + pageNames.len) mod pageNames.len

@@ -1,4 +1,6 @@
 ## State and helpers shared by every showcase page.
+import std/strutils
+
 import canopy
 import canopy/runtime/terminal/input
 import canopy/ui/animation/index as animation
@@ -14,8 +16,61 @@ proc accentColor*(): Color =
   color([ColorKind.Cyan, ColorKind.Green, ColorKind.Magenta, ColorKind.Yellow][themeIndex])
 
 proc accent*(): Style = initStyle().withFg(accentColor())
-proc highlight*(): Style = initStyle().withFg(ColorKind.Black).withBg(accentColor())
-proc panel*(title: string): Block = borderedBlock().withTitle(title).withBorderStyle(accent())
+proc muted*(): Style = initStyle().withFg(ColorKind.DarkGray)
+proc highlight*(): Style = initStyle().withFg(ColorKind.Black).withBg(accentColor()).bold()
+
+proc panel*(title: string): Block =
+  ## Quiet rounded frame: gray lines, an accent title and one column of side padding.
+  result = borderedBlock().withBorderType(BorderType.Rounded).withBorderStyle(muted())
+    .withPadding(horizontalPadding(1))
+  if title.len > 0:
+    result = result.withTitle(initLine([initSpan("─", muted()),
+      initSpan(" " & title & " ", accent().bold())]))
+
+proc meter*(): Style =
+  ## Gauge colors: accent fill on a black track, so the label inverts cleanly over both.
+  initStyle().withFg(accentColor()).withBg(ColorKind.Black)
+
+proc pillTitles(names: openArray[string], selected: int, numbered: bool): seq[Line] =
+  for i, name in names:
+    let number = if numbered: " " & $(i + 1) else: ""
+    # Spaces live inside each title so the highlight covers the whole pill.
+    result.add(if i == selected: initLine(number & " " & name & " ")
+               else: initLine([initSpan(number & " ", muted()), initSpan(name & " ")]))
+
+proc pillsWidth*(names: openArray[string], numbered = false): int =
+  for title in pillTitles(names, -1, numbered): result += title.width
+  result += max(0, names.len - 1)
+
+proc renderPills*(frame: var Frame, area: Rect, names: openArray[string], selected: int,
+    hits: var openArray[Rect], numbered = false) =
+  ## Tabs drawn as pills: the selected one filled with the accent, one space between them.
+  let titles = pillTitles(names, selected, numbered)
+  frame.renderWidget(initTabs(titles).withSelected(selected).withPadding("", "").withDivider(" ")
+    .withHighlightStyle(highlight()), area)
+  var x = area.x
+  for i, title in titles:
+    hits[i] = initRect(x, area.y, title.width, 1).intersection(area)
+    x += title.width + 1
+
+proc button*(primary: bool): Block =
+  ## Filled blocks make buttons read as solid controls rather than more panels.
+  filledBlock(if primary: accentColor() else: color(ColorKind.DarkGray))
+
+proc buttonLabel*(label: string, primary: bool): Line =
+  initLine(initSpan(label, initStyle().withFg(if primary: ColorKind.Black else: ColorKind.White)
+    .bold())).centered()
+
+proc keyHints*(text: string): seq[Span] =
+  ## Styles "key: action · key: action" help text with accent keys and gray actions.
+  let hints = text.split(" · ")
+  for i, hint in hints:
+    if i > 0: result.add(initSpan("  ", muted()))
+    let colon = hint.find(": ")
+    if colon < 0: result.add(initSpan(hint, muted()))
+    else:
+      result.add(initSpan(hint[0..<colon], accent().bold()))
+      result.add(initSpan(" " & hint[colon + 2..^1], muted()))
 
 func isPress*(event: input.Event): bool =
   event.kind == input.EventKind.Key and event.key.kind != KeyEventKind.Release
