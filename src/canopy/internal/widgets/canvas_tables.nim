@@ -1,4 +1,4 @@
-## Generated from Ratatui 0.30.2 (MIT); see tools/canvas-NOTICE.md.
+## Generated from Ratatui 0.30.2 (MIT); see licenses/canvas-NOTICE.md.
 const
   WORLD_HIGH_RESOLUTION* = [
     (-163.7128, -78.5956),

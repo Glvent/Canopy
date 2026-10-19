@@ -8,7 +8,7 @@ The palette-enabled reference pins `ratatui-core` 0.1.2 and `palette` 0.7.7 in
 `colors_reference/Cargo.lock`. Algorithm ports follow palette's `rgb/rgb.rs`,
 `angle.rs`, `lchuv.rs`, `luv_bounds.rs`, `luv.rs`, `xyz.rs`, `encoding/srgb.rs`
 and `stimulus.rs`. Palette is dual MIT/Apache-2.0; this port uses its MIT
-permission and retains the notice in `colors_LICENSE-MIT`. Ratatui attribution
+permission and retains the notice in `licenses/palette.txt`. Ratatui attribution
 is in `licenses/ratatui.txt`.
 
 Hue inputs are degrees. HSL saturation/lightness clamp to 0..1; HSLuv clamps

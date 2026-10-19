@@ -14,8 +14,6 @@
     "tools/**/*LICENSE*": true,
     "tools/**/*NOTICE*": true,
     "tools/**/*validation*": true,
-    "tools/canvas-NOTICE.md": true,
-    "tools/colors_LICENSE-MIT": true,
     "**/nimcache": true
   },
   "files.watcherExclude": {

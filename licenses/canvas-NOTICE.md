@@ -17,8 +17,7 @@ python3 tools/canvas_tables.py /path/to/ratatui-ratatui-v0.30.2
 Line clipping ports `line-clipping` 0.3.8's Cohen–Sutherland implementation,
 including its region priority and floating-point evaluation order. That crate
 is available under MIT OR Apache-2.0. Complete notices are retained in
-`canvas-line-clipping-LICENSE-MIT.txt` and
-`canvas-line-clipping-LICENSE-APACHE.txt` in this directory.
+`line-clipping-MIT.txt` and `line-clipping-APACHE.txt` in this directory.
 
 Marker lookup arrays come from Canopy's shared `core/rendering/symbols.nim`, which separately
 retains its upstream attribution. No Rust code, Rust library, subprocess, or
