@@ -5,7 +5,7 @@ record does not change Ratatui parity or the Windows runtime acceptance gate.
 
 ## Numerical and integration checks
 
-- All 24 native `tests/test_*.nim` files passed under Nim 2.2.0 and 2.2.10,
+- All 24 native `tests/**/test_*.nim` files passed under Nim 2.2.0 and 2.2.10,
   with ARC and ORC. All seven examples compiled in each combination.
 - After the final transition and lifecycle changes, both animation test files passed
   again in all four combinations, and both affected examples were recompiled.

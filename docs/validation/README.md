@@ -12,7 +12,7 @@ known upstream quirks.
 
 ## Package matrix
 
-Each passing combination ran all 22 `tests/test_*.nim` files and compiled all
+Each passing combination ran all 22 `tests/**/test_*.nim` files and compiled all
 six examples. Platform-specific tests execute only on their matching OS; the
 Windows test's non-Windows branch does not count as Windows validation.
 
