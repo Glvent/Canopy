@@ -82,8 +82,7 @@ proc render*(frame: var Frame, area: Rect) =
   let values = [first.value, second.value, spring.value]
   let names = ["Step 1 · cubicInOut", "Step 2 · bounceOut", "Spring · s retargets mid-flight"]
   for i in 0..2:
-    frame.renderWidget(initGauge().withRatio(clamp(values[i], 0.0, 1.0)).withUseUnicode()
-      .withLabel(names[i]).withGaugeStyle(meter()), meters[i * 2])
+    frame.renderMeter(meters[i * 2], values[i], names[i])
 
   let buttons = horizontal([fill(), fill(), fill()]).withSpacing(2).split(areas[4])
   let paused = pulse.state == PlaybackState.Paused
