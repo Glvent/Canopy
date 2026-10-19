@@ -7,23 +7,23 @@
 From the repository root:
 
 ```sh
-cargo run --manifest-path reference/Cargo.toml --locked -- generate
+cargo run --manifest-path tools/reference/Cargo.toml --locked -- generate
 nim c -r --path:src tests/test_reference.nim
 nim c -r --mm:arc --path:src -o:/tmp/canopy-test-reference-arc tests/test_reference.nim
 ```
 
-`reference/Cargo.lock` pins Ratatui 0.30.2, ratatui-core 0.1.2, ratatui-widgets 0.3.2, Kasuari 0.4.12, unicode-segmentation 1.13.3, and unicode-width 0.2.2. Both Unicode crates use Unicode 17.0.0 data. Do not run Cargo from the Nim suite.
+`tools/reference/Cargo.lock` pins Ratatui 0.30.2, ratatui-core 0.1.2, ratatui-widgets 0.3.2, Kasuari 0.4.12, unicode-segmentation 1.13.3, and unicode-width 0.2.2. Both Unicode crates use Unicode 17.0.0 data. Do not run Cargo from the Nim suite.
 
 Additional checked-in matrices have dedicated generators:
 
-- `cargo run --manifest-path reference/Cargo.toml --locked -- widgets-matrix`: 1,890 Gauge/LineGauge/Tabs/BarChart/Sparkline/Scrollbar/Monthly/Logo/Mascot configurations.
-- [Paragraph/List/Table](../tools/widget_text_README.md): `python3 tools/widget_text_generate.py` after the locked reference build.
-- [Block, shadows, symbols](../tools/block_README.md): `python3 tools/block_generate.py` after the locked reference build; regenerating symbol catalogs also takes the tagged upstream source path.
-- [Canvas/Chart](../tools/chart-validation.md): `python3 tools/canvas_fixture_gen.py`.
-- [Palette conversions](../tools/colors_README.md): `python3 tools/colors_generate.py`.
-- [Terminal actions](../tools/terminal-validation.md): dedicated scrolling-regions oracle and adapter.
-- Calendar dimensions: `python3 tools/calendar_metrics_generate.py` verifies 384 literal width/height cases against the locked Rust build, including titles, headers, borders and saturated padding.
-- [Layout differential checks](../tools/layout-validation.md) and [Unicode data](../licenses/unicode/LICENSE-UNICODE) have separate pinned source/test assets.
+- `cargo run --manifest-path tools/reference/Cargo.toml --locked -- widgets-matrix`: 1,890 Gauge/LineGauge/Tabs/BarChart/Sparkline/Scrollbar/Monthly/Logo/Mascot configurations.
+- [Paragraph/List/Table](../tools/widget_text/README.md): `python3 tools/widget_text/generate.py` after the locked reference build.
+- [Block, shadows, symbols](../tools/block/README.md): `python3 tools/block/generate.py` after the locked reference build; regenerating symbol catalogs also takes the tagged upstream source path.
+- [Canvas/Chart](../tools/chart/README.md): `python3 tools/chart/fixture_gen.py`.
+- [Palette conversions](../tools/colors/README.md): `python3 tools/colors/generate.py`.
+- [Terminal actions](../tools/terminal/README.md): dedicated scrolling-regions oracle and adapter.
+- Calendar dimensions: `python3 tools/calendar/generate.py` verifies 384 literal width/height cases against the locked Rust build, including titles, headers, borders and saturated padding.
+- [Layout differential checks](../tools/layout/README.md) and [Unicode data](../licenses/unicode/LICENSE-UNICODE) have separate pinned source/test assets.
 
 These development generators use Rust (and Python for the helper scripts). `nimble test` reads their saved results with Nim only. The base and extended matrices use explicit adapters; schema details for each extended corpus are in its validation document. `nim r tools/update_notices.nim` refreshes the license bundle shipped with Nimble installations.
 
@@ -74,7 +74,7 @@ Cells are complete and row-major; their count is exactly `width * height`. Named
 For differential tests, pipe a JSON array or JSON Lines requests to:
 
 ```sh
-cargo run --quiet --manifest-path reference/Cargo.toml --locked -- layout-oracle
+cargo run --quiet --manifest-path tools/reference/Cargo.toml --locked -- layout-oracle
 ```
 
 Each request uses the same layout `input` shape and returns `{name,expected:{segments,spacers}}`. Degenerate Cassowary systems may have several equally valid solutions. Kasuari 0.4.12 stores rows in a randomly seeded hash table, so a fresh process can choose different tied pivots. Repeated fresh-process trials found multiple upstream outputs for five of seven sampled tied cases. Checked-in differential tests accept only the recorded independently observed alternatives; they do not accept arbitrary equivalent optima.

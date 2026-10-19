@@ -14,7 +14,7 @@ Milestones are gates, not claims of parity. Check a box only after its acceptanc
 
 ## 2. Layout and terminals
 - [x] Constraint solver, all constraints/flex/spacing/margins/spacers/cache.
-- [x] Exact layout fixtures including conflicts, overflow and rounding (upstream randomized alternatives retained; see `../tools/layout-validation.md`).
+- [x] Exact layout fixtures including conflicts, overflow and rounding (upstream randomized alternatives retained; see `../tools/layout/README.md`).
 - [x] Transactional double buffering, cursor, resize, clear/invalidation.
 - [x] Test and ANSI backends, native POSIX/Windows lifecycle and scrolling implementation.
 - [x] Fullscreen/fixed/inline viewports and insertion above; 204-case upstream oracle.

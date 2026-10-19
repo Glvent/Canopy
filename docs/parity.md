@@ -23,11 +23,11 @@ All comparisons use independently generated pinned upstream results. Runtime and
 
 ## Known upstream behavior and evidence limits
 
-- Kasuari's randomized row ordering can choose different tied optima. Five systematic inputs admit only alternatives observed in fresh locked upstream processes; arbitrary equivalent solutions are not accepted. See [layout validation](../tools/layout-validation.md).
+- Kasuari's randomized row ordering can choose different tied optima. Five systematic inputs admit only alternatives observed in fresh locked upstream processes; arbitrary equivalent solutions are not accepted. See [layout validation](../tools/layout/README.md).
 - Paragraph's wrapped mixed-width words can write one cell past the widget area while staying in the backing buffer. The reference cases preserve that behavior. Monthly's row check compares absolute `y` with buffer height, and BarChart group-label styling can extend below its widget area. These are pinned upstream behaviors, not silent native differences.
 - Full-height inline insertion uses the same single-row VT scrolling region as upstream Crossterm. Some terminal emulators do not support that region. The logical TestBackend result is exact; font and emulator behavior is outside logical-cell parity.
 - The Rust TestBackend panics for clearing one particular zero-height inline viewport at screen bottom. Its oracle excludes that panic sequence while covering zero-height draw, insertion and resize. Canopy clips the clear safely.
-- Symbol values and the enumerated merge table are exhaustive for their finite inputs. Layouts, text sequences, floating-point drawing, styles and widget combinations are sampled. Non-finite Canvas/Chart JSON limits are documented in [chart validation](../tools/chart-validation.md).
+- Symbol values and the enumerated merge table are exhaustive for their finite inputs. Layouts, text sequences, floating-point drawing, styles and widget combinations are sampled. Non-finite Canvas/Chart JSON limits are documented in [chart validation](../tools/chart/README.md).
 - Native Windows code and tests have passed semantic/generated-C checks, not execution on Windows. Do not close the release gate until all four Windows CI combinations pass. See [Windows validation](windows-validation.md).
 
 Rust adapters map to native backend capabilities. Rust ABI/integrations, experimental APIs, embedded no_std and third-party widgets are excluded by the accepted plan.

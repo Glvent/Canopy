@@ -11,7 +11,7 @@ from `ratatui-widgets/src/canvas/world.rs`: 5,125 high-resolution points and
 retains the Ratatui license attribution. To regenerate from the tagged checkout:
 
 ```sh
-python3 tools/canvas_tables.py /path/to/ratatui-ratatui-v0.30.2
+python3 tools/chart/canvas_tables.py /path/to/ratatui-ratatui-v0.30.2
 ```
 
 Line clipping ports `line-clipping` 0.3.8's Cohen–Sutherland implementation,

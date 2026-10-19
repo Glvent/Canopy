@@ -1,5 +1,5 @@
 ## Expected literal dimensions evaluated independently by Ratatui 0.30.2,
-## ratatui-widgets 0.3.2, time 0.3.47 (reference/Cargo.lock). The development
+## ratatui-widgets 0.3.2, time 0.3.47 (tools/reference/Cargo.lock). The development
 ## oracle called Monthly::width/height for each configuration below, using
 ## Block::padding/borders/title/title_top/title_bottom/title_position, and
 ## optional show_month_header/show_weekdays_header. No Buffer::inner probe or

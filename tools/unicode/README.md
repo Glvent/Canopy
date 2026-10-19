@@ -42,4 +42,4 @@ segmentation are linear in input length with binary-search property lookup.
 
 Source notices: `licenses/unicode/`. Unicode data license:
 https://www.unicode.org/license.txt. Development source paths are pinned in
-`reference/Cargo.lock`; no runtime dependency is added.
+`tools/reference/Cargo.lock`; no runtime dependency is added.

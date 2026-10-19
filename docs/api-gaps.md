@@ -87,8 +87,8 @@ on wall-clock local date and does not have a deterministic Rust fixture.
 
 Layout fixtures admit only alternatives actually observed in fresh pinned
 upstream processes for tied systems; they do not accept arbitrary equivalent
-optima. See `tools/layout-validation.md`. Canvas/Chart finite-float coverage
-and non-finite JSON limitations are in `tools/chart-validation.md`.
+optima. See `tools/layout/README.md`. Canvas/Chart finite-float coverage
+and non-finite JSON limitations are in `tools/chart/README.md`.
 ## Canopy animation extension
 
 `canopy/ui/animation/index` adds native tweens, easing, timelines, analytical springs,
