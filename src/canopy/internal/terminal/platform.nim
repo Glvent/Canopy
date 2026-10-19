@@ -1,6 +1,6 @@
 ## Native terminal primitives shared by the ANSI backend and optional input.
-import ../core/layout/geometry
-import ../runtime/backends/types
+import ../../core/layout/geometry
+import ../../runtime/backends/types
 
 when defined(windows):
   import std/winlean

@@ -26,6 +26,13 @@ For already grouped imports, add the parent folder:
 For example, `canopy/widgets/canvas` becomes `canopy/ui/widgets/canvas`.
 The `canopy/internal/` paths are unchanged by this parent-folder grouping.
 
+Two later moves take modules out of `internal/`. Neither changes `import canopy` or
+`import canopy/runtime/terminal/input`, which re-exports both input modules:
+
+- `canopy/internal/input/parser` → `canopy/runtime/terminal/events` (event types and
+  constructors) and `canopy/runtime/terminal/parser` (`InputParser`).
+- `canopy/internal/platform` → `canopy/internal/terminal/platform`.
+
 ## Ratatui equivalents
 
 Canopy preserves immediate-mode rendering and logical cell behavior. Its APIs use Nim value objects, camelCase and chainable `withX` configuration.

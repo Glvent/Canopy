@@ -5,7 +5,7 @@ import ../../core/layout/geometry
 import ../../core/styling/style
 import ../../core/rendering/buffer
 import ./types
-import ../../internal/platform
+import ../../internal/terminal/platform
 export types
 
 type AnsiBackend* = object

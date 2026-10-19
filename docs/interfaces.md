@@ -14,9 +14,9 @@ The `index.nim` modules provide the animation, layout, terminal, text, and widge
 use aliases such as `import canopy/core/text/index as text` when importing several
 entry points together. `import canopy` remains the rendering umbrella; input
 and animation require explicit imports. Implementation-only modules live
-under `internal/input/`, `internal/layout/`, `internal/symbols/`,
+under `internal/layout/`, `internal/symbols/`, `internal/terminal/`,
 `internal/unicode/`, and `internal/widgets/`. Keep generated tables beside the
-algorithms that consume them. `internal/platform.nim` is shared by input and the
+algorithms that consume them. `internal/terminal/platform.nim` is shared by input and the
 ANSI backend. Applications should import public modules, not `internal/` paths.
 
 ## Geometry (lead)
