@@ -1,5 +1,5 @@
 ## Core widgets: stateful List, Table and Scrollbar, Calendar, Paragraph, Logo, Mascot,
-## Fill, Clear, Shadow and a custom widget.
+## Fill, Clear, Shadow, filled blocks and a custom widget.
 import std/[monotimes, times]
 
 import canopy
@@ -14,9 +14,11 @@ type Badge = object
   style: Style
 
 proc render(badge: Badge, area: Rect, buffer: var Buffer) =
-  let border = borderedBlock().withBorderStyle(badge.style)
-  border.render(area, buffer)
-  initLine(initSpan(badge.text, badge.style)).centered().render(border.inner(area), buffer)
+  # A filled block gives the badge a solid background with soft half-block corners.
+  let card = filledBlock(badge.style.fg.get(color(ColorKind.White)))
+  card.render(area, buffer)
+  initLine(initSpan(badge.text, initStyle().withFg(ColorKind.Black).bold())).centered()
+    .render(card.inner(area), buffer)
 
 const catalog = [
   ("Block", "Borders, titles and padding around any widget.", "no"),
@@ -35,6 +37,7 @@ const catalog = [
   ("Logo / Mascot", "Canopy and Ratatui artwork drawn from block glyphs.", "no"),
   ("Fill / Clear", "Fill paints a region with one symbol; Clear resets it.", "no"),
   ("Shadow", "Darkens or paints the cells a widget offset exposes. Press p.", "no"),
+  ("Filled block", "Solid background with soft corners; the badges and popup use it.", "no"),
   ("Custom widget", "Any type with render(widget, area, buffer) can be drawn.", "no")]
 
 var
@@ -102,7 +105,7 @@ proc render*(frame: var Frame, area: Rect) =
   frame.renderWidget(panel("Custom widget + Fill/Clear"), bottom[2])
   let side = panel("").inner(bottom[2])
   let badges = horizontal([fill(), fill()]).split(initRect(side.x, side.y, side.width, 3))
-  frame.renderWidget(Badge(text: "Badge", style: accent().bold()), badges[0])
+  frame.renderWidget(Badge(text: "Badge", style: accent()), badges[0])
   frame.renderWidget(Badge(text: "Custom", style: initStyle().withFg(ColorKind.Yellow)), badges[1])
   let tile = initRect(side.x, side.y + 3, side.width, max(0, side.height - 3))
   frame.renderWidget(initFill("░").withStyle(accent().dim()), tile)
@@ -116,7 +119,8 @@ proc render*(frame: var Frame, area: Rect) =
     frame.renderWidget(initClear(), box)
     frame.renderWidget(initParagraph("Clear erased the cells under this box.\n" &
       "The shadow dims the cells it exposes.\n\nPress p again to close.").centered()
-      .withBlock(panel("Popup · Clear + Shadow")), box)
+      .withBlock(filledBlock(color(ColorKind.DarkGray)).withTitle(" Popup · Clear + Shadow ")
+        .withTitleStyle(accent().bold())), box)
 
 proc handle*(event: input.Event): bool =
   result = true

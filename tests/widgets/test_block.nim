@@ -120,3 +120,43 @@ suite "Ratatui block and shadow exact matrix":
     check rightPadding(2) == initPadding(0, 2, 0, 0)
     check topPadding(2) == initPadding(0, 0, 2, 0)
     check bottomPadding(2) == initPadding(0, 0, 0, 2)
+
+suite "native filled blocks":
+  test "filledBlock paints the body and colors half-block edges without touching their background":
+    let blue = color(ColorKind.Blue)
+    let green = color(ColorKind.Green)
+    var buf = initBuffer(initRect(0, 0, 6, 4))
+    for cell in buf.content.mitems: cell.bg = green
+    filledBlock(ColorKind.Blue).render(buf.area, buf)
+    check buf[0, 0].symbol == "▗"
+    check buf[5, 0].symbol == "▖"
+    check buf[0, 3].symbol == "▝"
+    check buf[5, 3].symbol == "▘"
+    check buf[2, 0].symbol == "▄"
+    check buf[0, 1].symbol == "▐"
+    for x in 0..5:
+      check buf[x, 0].fg == blue and buf[x, 0].bg == green
+      check buf[x, 3].fg == blue and buf[x, 3].bg == green
+    for y in 1..2:
+      check buf[0, y].fg == blue and buf[0, y].bg == green
+      check buf[5, y].fg == blue and buf[5, y].bg == green
+      for x in 1..4: check buf[x, y].bg == blue
+  test "fill sits under titles and border style, and covers everything without borders":
+    let red = color(ColorKind.Red)
+    var buf = initBuffer(initRect(0, 0, 8, 3))
+    initBlock().withBorders(AllBorders).withBorderType(BorderType.Rounded).withFill(red)
+      .withBorderStyle(initStyle().withFg(ColorKind.White)).withTitle("Hi")
+      .withTitleStyle(initStyle().withFg(ColorKind.Black)).render(buf.area, buf)
+    check buf[0, 0].symbol == "╭"
+    check buf[0, 0].fg == color(ColorKind.White)
+    check buf[0, 0].bg == color(ColorKind.Reset)
+    check buf[1, 0].symbol == "H"
+    check buf[1, 0].bg == red and buf[1, 0].fg == color(ColorKind.Black)
+    check buf[3, 0].bg == color(ColorKind.Reset)
+    check buf[3, 1].bg == red
+    var plain = initBuffer(initRect(0, 0, 3, 2))
+    initBlock().withFill(red).render(plain.area, plain)
+    for cell in plain.content: check cell.bg == red
+    var tiny = initBuffer(initRect(0, 0, 1, 1))
+    filledBlock(red).render(tiny.area, tiny)
+    check tiny[0, 0].bg == color(ColorKind.Reset)

@@ -35,6 +35,10 @@ type
     padding*: Padding
     mergeBorders*: MergeStrategy
     shadow*: Option[Shadow]
+    fill*: Option[Color]
+      ## Native extension: paints the background inside the borders and colors the border
+      ## glyphs' foreground, leaving their background untouched. With half-block borders this
+      ## draws a solid panel whose edges and corners blend into whatever lies underneath.
 
 const AllBorders* = {Border.Top, Border.Right, Border.Bottom, Border.Left}
 
@@ -144,6 +148,16 @@ func withMergeBorders*(b: Block, strategy: MergeStrategy): Block =
 func withShadow*(b: Block, shadow: Shadow): Block =
   result = b; result.shadow = some(shadow)
 
+func withFill*(b: Block, color: Color): Block =
+  result = b; result.fill = some(color)
+
+func withFill*(b: Block, color: ColorKind): Block = b.withFill(style.color(color))
+func filledBlock*(color: Color): Block =
+  ## Solid panel with softened corners: quadrant half-block borders drawn in the fill color.
+  borderedBlock().withBorderType(BorderType.QuadrantInside).withFill(color)
+
+func filledBlock*(color: ColorKind): Block = filledBlock(style.color(color))
+
 func hasTitle(b: Block, position: TitlePosition): bool =
   for title in b.titles:
     if title.position.get(b.titlePosition) == position: return true
@@ -173,8 +187,16 @@ proc render*(b: Block, area: Rect, buf: var Buffer) =
   let a = area.intersection(buf.area)
   if a.isEmpty: return
   buf.setStyle(a, b.style)
+  if b.fill.isSome:
+    var body = a
+    if Border.Left in b.borders: (body.x += 1; body.width = max(0, body.width-1))
+    if Border.Top in b.borders: (body.y += 1; body.height = max(0, body.height-1))
+    if Border.Right in b.borders: body.width = max(0, body.width-1)
+    if Border.Bottom in b.borders: body.height = max(0, body.height-1)
+    buf.setStyle(body, initStyle().withBg(b.fill.get))
   template put(x, y: int, symbol: string) =
     buf[x, y].mergeSymbol(symbol, b.mergeBorders)
+    if b.fill.isSome: buf[x, y].fg = b.fill.get
     buf[x, y].setStyle(b.borderStyle)
   # When merging, edges stop one cell short of each corner so the corner glyph decides the
   # junction instead of an edge glyph overwriting it.
@@ -228,6 +250,8 @@ proc render*(b: Block, area: Rect, buf: var Buffer) =
           line.alignment = some(if offset > 0: Alignment.Right else: Alignment.Left)
           offset = max(0, offset-w-1)
         let titleArea = initRect(at, ty, w, 1)
+        # A filled title sits on a solid tab so it stays readable over half-block edges.
+        if b.fill.isSome: buf.setStyle(titleArea, initStyle().withBg(b.fill.get))
         buf.setStyle(titleArea, b.titleStyle)
         line.render(titleArea, buf)
         let advance = if alignment == Alignment.Center and total > tw: w+1 else: width+1

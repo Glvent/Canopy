@@ -37,6 +37,8 @@ Styles are patches: an absent color inherits, `ColorKind.Reset` restores the ter
 
 Store `ListState`, `TableState` and `ScrollbarState` in application state. Call `renderStatefulWidget` with a mutable state; rendering may clamp selection or adjust scrolling. `none(int)` clears a selection. Widgets and configuration are value objects with public data and chainable `withX` builders.
 
+`Block.fill` (`withFill(color)`) is a Canopy extension: it paints the background inside the borders, colors the border glyphs' foreground and gives titles a solid tab. `filledBlock(color)` pairs it with quadrant half-block borders for a solid panel with soft corners that blend into whatever lies underneath. Without a fill, blocks render exactly as Ratatui's.
+
 A custom widget implements `render(widget, area: Rect, buffer: var Buffer)`. A stateful widget adds `state: var YourState`. Generic dispatch finds these procedures without registration or inheritance. The renderer owns clipping to the buffer. Use `buffer.area.intersection(area)` for direct cell writes and `setStringn` for grapheme-safe text. A canvas shape implements `draw(shape, painter: var Painter)`; see the Canvas API and the showcase's Widgets page.
 
 Backends implement the structural contract in [interfaces](interfaces.md). `TestBackend` records updates, screen cells, cursor and scrollback for deterministic tests. `AnsiBackend` uses native OS terminal modes and ANSI/VT output; see [backend behavior](backends.md).
@@ -75,7 +77,7 @@ keys. Each page is a module in `examples/showcase/` with `render`, `handle` and 
 procedures:
 
 - Widgets (`widgets_page.nim`): List, Table and Scrollbar with shared selection, Calendar,
-  Paragraph, Logo, Mascot, Fill, Clear, a Shadow popup and a custom `Badge` widget.
+  Paragraph, Logo, Mascot, Fill, Clear, a filled Shadow popup and a custom `Badge` widget drawn as a filled block.
 - Charts (`charts_page.nim`): live Chart, Canvas with a map and layers, BarChart, Sparkline,
   Gauge and LineGauge.
 - Text & color (`text_page.nim`): modifiers, alignment, spans, named, indexed, HSL and HSLuv
