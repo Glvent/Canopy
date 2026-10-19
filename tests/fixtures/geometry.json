@@ -59,7 +59,7 @@
     "unicodeWidth": "0.2.2"
   },
   "generatedBy": {
-    "command": "cargo run --manifest-path reference/Cargo.toml --locked -- generate",
+    "command": "cargo run --manifest-path tools/reference/Cargo.toml --locked -- generate",
     "crate": "canopy-ratatui-reference",
     "version": "0.1.0"
   },

@@ -27,8 +27,8 @@ Regenerate from downloaded crates (defaults to the first Cargo registry source):
 ```sh
 python3 tools/unicode/generate.py [registry-source-directory]
 python3 tools/unicode/fixtures.py [registry-source-directory]
-nim c -r --path:src --mm:arc tests/test_unicode.nim
-nim c -r --path:src --mm:orc tests/test_unicode.nim
+nim c -r --path:src --mm:arc tests/core/test_unicode.nim
+nim c -r --path:src --mm:orc tests/core/test_unicode.nim
 ```
 
 Each malformed UTF-8 byte is interpreted as U+FFFD for measurement and property
@@ -42,4 +42,4 @@ segmentation are linear in input length with binary-search property lookup.
 
 Source notices: `licenses/unicode/`. Unicode data license:
 https://www.unicode.org/license.txt. Development source paths are pinned in
-`reference/Cargo.lock`; no runtime dependency is added.
+`tools/reference/Cargo.lock`; no runtime dependency is added.

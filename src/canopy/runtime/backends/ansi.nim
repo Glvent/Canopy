@@ -5,7 +5,7 @@ import ../../core/layout/geometry
 import ../../core/styling/[style, colordepth]
 import ../../core/rendering/buffer
 import ./types
-import ../../internal/platform
+import ../../internal/terminal/platform
 export types, colordepth
 
 type AnsiBackend* = object

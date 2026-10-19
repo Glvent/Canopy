@@ -26,6 +26,13 @@ For already grouped imports, add the parent folder:
 For example, `canopy/widgets/canvas` becomes `canopy/ui/widgets/canvas`.
 The `canopy/internal/` paths are unchanged by this parent-folder grouping.
 
+Two later moves take modules out of `internal/`. Neither changes `import canopy` or
+`import canopy/runtime/terminal/input`, which re-exports both input modules:
+
+- `canopy/internal/input/parser` → `canopy/runtime/terminal/events` (event types and
+  constructors) and `canopy/runtime/terminal/parser` (`InputParser`).
+- `canopy/internal/platform` → `canopy/internal/terminal/platform`.
+
 ## Ratatui equivalents
 
 Canopy preserves immediate-mode rendering and logical cell behavior. Its APIs use Nim value objects, camelCase and chainable `withX` configuration.
@@ -58,6 +65,6 @@ Public fields replace Rust accessors and ownership-conversion traits where appro
 
 Cell `symbol` distinguishes an unset value internally for border merging while exposing a blank string value (`" "`) by default. Use `setSymbol`, `setStyle`, `setDiffOption` and `mergeSymbol`, or public fields for direct editing. All comparisons and fixtures concern logical terminal cells, not a terminal font's glyph shapes.
 
-The pinned upstream solver has randomized pivot ordering. A few degenerate layouts have multiple valid upstream outputs; [layout validation](../tools/layout-validation.md) records the observed alternatives. Unicode segmentation and width use the lockfile's Unicode 17 tables. Fixture cases preserve documented upstream quirks, including some widget writes beyond their requested rectangle but within the containing buffer; see [parity](parity.md).
+The pinned upstream solver has randomized pivot ordering. A few degenerate layouts have multiple valid upstream outputs; [layout validation](../tools/layout/README.md) records the observed alternatives. Unicode segmentation and width use the lockfile's Unicode 17 tables. Fixture cases preserve documented upstream quirks, including some widget writes beyond their requested rectangle but within the containing buffer; see [parity](parity.md).
 
-Rust-specific ABI, runtime/backend integrations, third-party widgets, embedded `no_std`, deprecated aliases, and unstable APIs are outside the accepted target. Canopy's input event model and theme JSON are native interfaces, not Rust serialization formats. See the [operation inventory](upstream-inventory.md) for explicit mappings and acceptance evidence.
+Rust-specific ABI, runtime/backend integrations, third-party widgets, embedded `no_std`, deprecated aliases, and unstable APIs are outside the accepted target. Canopy's input event model and theme JSON are native interfaces, not Rust serialization formats. See the [operation inventory](planning/upstream-inventory.md) for explicit mappings and acceptance evidence.

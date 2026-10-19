@@ -181,5 +181,5 @@ Run `nim r examples/animations.nim` for effects, direction, pause/restart,
 sequence/spring demos, mouse controls and reduced motion, or add `--snapshot`.
 The dashboard retains job/tab/settings controls and adds reduced motion in
 Settings. `nimble docs` generates the separate animation API alongside the
-rendering and input APIs. See [animation validation](animation-validation.md)
+rendering and input APIs. See [animation validation](validation/animation.md)
 for executed checks and platform limits.

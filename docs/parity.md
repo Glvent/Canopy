@@ -2,7 +2,7 @@
 
 Status: **implementation complete; Windows runtime acceptance remains open. This is a development release, not a stable-parity declaration.**
 
-Specification: [PLAN.md](../PLAN.md). Gates: [milestones](milestones.md). Contracts: [interfaces](interfaces.md). Every stable operation is mapped in the [upstream inventory](upstream-inventory.md); [API adaptations](api-gaps.md) distinguish Nim equivalents from exclusions. The [validation record](validation.md) separates executed checks from configured CI.
+Gates: [milestones](planning/milestones.md). Contracts: [interfaces](interfaces.md). Every stable operation is mapped in the [upstream inventory](planning/upstream-inventory.md); [API adaptations](planning/api-gaps.md) distinguish Nim equivalents from exclusions. The [validation record](validation/README.md) separates executed checks from configured CI.
 
 | Area | Implementation | Exact compatibility evidence | Remaining acceptance |
 | --- | --- | --- | --- |
@@ -17,18 +17,18 @@ Specification: [PLAN.md](../PLAN.md). Gates: [milestones](milestones.md). Contra
 | Colors and supporting APIs | complete | 31,347 exact HSL/HSLuv RGB conversions plus five packed colors; style/theme JSON and public-construction tests | local-date helper is tested as an API mapping, not a fixed-date oracle |
 | Optional input | complete | incremental Unicode/escape/paste/mouse/focus/enhanced-key parsing; blocking/timed/EOF/resize PTY checks; cleanup and partial-init failure tests | execute Windows console input tests |
 | ANSI output efficiency, synchronized output and color depth (Canopy extension) | native | exact byte tests for cursor/SGR elision, DEC 2026 bracketing, downsampling and environment detection | not a Ratatui parity claim; terminal rendering of mode 2026 is emulator-dependent |
-| Optional animation (Canopy extension) | native toolkit | deterministic tween/easing/spring/scheduling/ownership tests; complete-cell transition tests; see [animation validation](animation-validation.md) | not a Ratatui parity claim; Windows runtime gate remains open |
+| Optional animation (Canopy extension) | native toolkit | deterministic tween/easing/spring/scheduling/ownership tests; complete-cell transition tests; see [animation validation](validation/animation.md) | not a Ratatui parity claim; Windows runtime gate remains open |
 | Documentation/examples/package | complete | generated API docs, guide/migration, six compiled examples, deterministic gallery/dashboard, isolated Nimble consumer, recorded benchmarks | Windows example compilation remains in CI gate |
 
 All comparisons use independently generated pinned upstream results. Runtime and ordinary tests use Nim only. Generator commands, versions and limitations are in [reference generation](reference.md).
 
 ## Known upstream behavior and evidence limits
 
-- Kasuari's randomized row ordering can choose different tied optima. Five systematic inputs admit only alternatives observed in fresh locked upstream processes; arbitrary equivalent solutions are not accepted. See [layout validation](../tools/layout-validation.md).
+- Kasuari's randomized row ordering can choose different tied optima. Five systematic inputs admit only alternatives observed in fresh locked upstream processes; arbitrary equivalent solutions are not accepted. See [layout validation](../tools/layout/README.md).
 - Paragraph's wrapped mixed-width words can write one cell past the widget area while staying in the backing buffer. The reference cases preserve that behavior. Monthly's row check compares absolute `y` with buffer height, and BarChart group-label styling can extend below its widget area. These are pinned upstream behaviors, not silent native differences.
 - Full-height inline insertion uses the same single-row VT scrolling region as upstream Crossterm. Some terminal emulators do not support that region. The logical TestBackend result is exact; font and emulator behavior is outside logical-cell parity.
 - The Rust TestBackend panics for clearing one particular zero-height inline viewport at screen bottom. Its oracle excludes that panic sequence while covering zero-height draw, insertion and resize. Canopy clips the clear safely.
-- Symbol values and the enumerated merge table are exhaustive for their finite inputs. Layouts, text sequences, floating-point drawing, styles and widget combinations are sampled. Non-finite Canvas/Chart JSON limits are documented in [chart validation](../tools/chart-validation.md).
-- Native Windows code and tests have passed semantic/generated-C checks, not execution on Windows. Do not close the release gate until all four Windows CI combinations pass. See [Windows validation](windows-validation.md).
+- Symbol values and the enumerated merge table are exhaustive for their finite inputs. Layouts, text sequences, floating-point drawing, styles and widget combinations are sampled. Non-finite Canvas/Chart JSON limits are documented in [chart validation](../tools/chart/README.md).
+- Native Windows code and tests have passed semantic/generated-C checks, not execution on Windows. Do not close the release gate until all four Windows CI combinations pass. See [Windows validation](validation/windows.md).
 
 Rust adapters map to native backend capabilities. Rust ABI/integrations, experimental APIs, embedded no_std and third-party widgets are excluded by the accepted plan.

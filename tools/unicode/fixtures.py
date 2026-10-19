@@ -39,9 +39,9 @@ with tempfile.TemporaryDirectory() as temp:
         subprocess.run(["rustc","--edition=2021","-Awarnings",str(temp/"fixture.rs"),"-o",str(temp/"fixture")],check=True)
         return subprocess.check_output([str(temp/"fixture")],text=True)
     records=sorted(set(run(source).splitlines()))
-    (root/"tests/unicode/width.tsv").write_text("# unicode-width 0.2.2 upstream tests; UTF-8 hex TAB non-CJK string width\n"+"\n".join(records)+"\n")
+    (root/"tests/fixtures/unicode/width.tsv").write_text("# unicode-width 0.2.2 upstream tests; UTF-8 hex TAB non-CJK string width\n"+"\n".join(records)+"\n")
     grapheme=header.split("mod wrapped")[0]+"#[path="+json.dumps(str(seg/"tests/testdata/mod.rs"))+"] mod data;\n"
     grapheme+='fn main(){for (s,g) in data::TEST_SAME {println!("{}\\t{}",hex(s),g.iter().map(|s|hex(s)).collect::<Vec<_>>().join(" "));} for (s,g,_) in data::TEST_DIFF {println!("{}\\t{}",hex(s),g.iter().map(|s|hex(s)).collect::<Vec<_>>().join(" "));}}'
     cases=run(grapheme)
-    (root/"tests/unicode/graphemes.tsv").write_text("# Unicode 17 GraphemeBreakTest.txt via unicode-segmentation 1.13.3; input hex TAB clusters\n"+cases)
+    (root/"tests/fixtures/unicode/graphemes.tsv").write_text("# Unicode 17 GraphemeBreakTest.txt via unicode-segmentation 1.13.3; input hex TAB clusters\n"+cases)
 print(f"Captured {len(records)} width cases at {len(points)} scalar probes, {len(cases.splitlines())} official grapheme cases")

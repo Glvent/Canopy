@@ -14,7 +14,7 @@ nimble examples
 
 Import `canopy/ui/animation/index` for the native [animation toolkit](docs/animation.md): typed tweens, easing, timelines, springs, buffer transitions and shared reduced motion. Run `nim r examples/animations.nim` for the interactive gallery.
 
-See [the accepted plan](PLAN.md), [milestone checklist](docs/milestones.md), [shared interfaces](docs/interfaces.md), [reference generation](docs/reference.md), [upstream inventory](docs/upstream-inventory.md), and [validation record](docs/validation.md). API documentation: `nimble docs`.
+See the [milestone checklist](docs/planning/milestones.md), [shared interfaces](docs/interfaces.md), [reference generation](docs/reference.md), [upstream inventory](docs/planning/upstream-inventory.md), and [validation record](docs/validation/README.md). API documentation: `nimble docs`.
 
 Start with the [usage guide](docs/guide.md) and [Ratatui migration guide](docs/migration.md). Run `nim r examples/keyboard.nim` for an interactive screen, `nim r examples/dashboard.nim --snapshot` for a terminal-free dashboard, or `nim r examples/gallery.nim` for the widget gallery. `nimble bench` runs the recorded benchmark workloads.
 

@@ -2,9 +2,9 @@
 import std/[options, monotimes, times]
 
 import ../../core/layout/geometry
-import ../../internal/input/parser as input_parser
-import ../../internal/platform
-export input_parser
+import ./parser
+import ../../internal/terminal/platform
+export parser
 
 type
   InputCapabilities* = object

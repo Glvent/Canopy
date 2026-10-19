@@ -1,7 +1,7 @@
 ## Native Ratatui palette color conversions (palette 0.7.7, MIT/Apache-2.0).
 ## Inputs use float32 like palette's default Hsl/Hsluv types. Arithmetic order,
 ## clamping, hue normalization and ties-to-even bytes follow the pinned source.
-## Attribution and numerical coverage: tools/colors_README.md.
+## Attribution and numerical coverage: tools/colors/README.md.
 import std/math
 
 import ./style

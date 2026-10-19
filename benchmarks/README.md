@@ -66,4 +66,4 @@ identical 47-line, 10,186-byte UTF-8 output.
 
 `nimble bench` also runs `animation_benchmarks.nim`: 1,000 active tweens and
 80×24 Unicode fade/slide/wipe/dissolve regions. Separate ARC/ORC measurements,
-checksums and timing boundaries are in [animation validation](../docs/animation-validation.md).
+checksums and timing boundaries are in [animation validation](../docs/validation/animation.md).
