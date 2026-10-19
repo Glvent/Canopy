@@ -45,14 +45,14 @@ Implementation and available-platform validation cover the complete plan. The un
 - Lead: package, geometry, style, text, buffer, umbrella exports, terminal integration, documentation, CI, final validation.
 - Unicode worker: `src/canopy/internal/unicode/`, `src/canopy/core/text/unicode.nim`, Unicode generation assets/tests/notices.
 - Layout worker: `src/canopy/core/layout/index.nim`, `src/canopy/internal/layout/solver.nim`, layout tests.
-- Reference worker: `reference/`, `tests/fixtures/`, `tests/test_reference.nim`, `docs/reference.md`, `docs/upstream-inventory.md`.
+- Reference worker: `reference/`, `tests/fixtures/`, `tests/reference/test_reference.nim`, `docs/reference.md`, `docs/upstream-inventory.md`.
 
 Workers own only assigned paths. Reassignment is recorded here or in the worker message; shared API changes go through lead.
 
 ### Second assignments
 - Unicode worker: Paragraph/reflow, List, Table/shared selection state and their compatibility tests.
 - Layout worker: Canvas/Chart, shape data and compatibility tests.
-- Reference worker: ANSI/POSIX/Windows backend, optional input, lifecycle/input platform tests and their documentation. Reference generator handed back to lead; Unicode worker owns `tests/test_reference.nim` while completing text-widget adapters.
+- Reference worker: ANSI/POSIX/Windows backend, optional input, lifecycle/input platform tests and their documentation. Reference generator handed back to lead; Unicode worker owns `tests/reference/test_reference.nim` while completing text-widget adapters.
 
 ### Gate evidence
 - Foundation: Nim 2.2.10 ARC + ORC; official Unicode17 766 grapheme and 36,001 width cases; complete-cell reference adapters.

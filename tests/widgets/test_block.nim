@@ -8,8 +8,9 @@ import canopy/core/rendering/buffer
 import canopy/core/rendering/symbols
 import canopy/ui/widgets/[shadow]
 import "canopy/ui/widgets/block"
+import ../support/paths
 
-let matrix = parseFile(currentSourcePath.parentDir / "fixtures/block_matrix.json")
+let matrix = parseFile(FixturesDir / "block_matrix.json")
 
 func referenceColor(n: JsonNode): Color =
   if n[0].getStr == "Rgb": rgbColor(n[1].getInt, n[2].getInt, n[3].getInt)

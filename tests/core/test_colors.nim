@@ -2,8 +2,9 @@
 import std/[json, os, unittest]
 
 import canopy/core/styling/colors
+import ../support/paths
 
-let fixtures = parseFile(currentSourcePath.parentDir.parentDir / "tools/colors_fixtures.json")
+let fixtures = parseFile(FixturesDir / "colors.json")
 suite "Pinned palette 0.7.7 color conversion":
   test "packed RGB discards high byte":
     for c in fixtures["packed"]:

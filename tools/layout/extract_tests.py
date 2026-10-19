@@ -13,6 +13,6 @@ for flex, width, constraints, expected in re.findall(
     for kind, arguments in re.findall(r'(\w+)\(([^)]*)\)', constraints):
         values.append([kind, *[int(v.strip()) for v in arguments.split(',')]])
     cases.append(dict(flex=flex, width=int(width), constraints=values, expected=expected))
-target = pathlib.Path(__file__).resolve().parents[2] / 'tools/layout_upstream_cases.json'
+target = pathlib.Path(__file__).resolve().parents[2] / 'tests/fixtures/layout_upstream.json'
 target.write_text(json.dumps(cases, indent=2) + '\n')
 print(f'{len(cases)} literal upstream cases -> {target}')

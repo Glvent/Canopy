@@ -116,7 +116,7 @@ for i in range(80):
 subprocess.run(['cargo','build','--quiet','--manifest-path','tools/reference/Cargo.toml','--bin','canopy-chart-reference','--locked','--target-dir','/tmp/canopy-chart-target'],cwd=root,check=True)
 for name,cases in [('canvas',canvas),('chart',chart)]:
     oracle=subprocess.run(['/tmp/canopy-chart-target/debug/canopy-chart-reference'],input=json.dumps(cases),text=True,capture_output=True,check=True)
-    target=root/f'tests/{name}_fixtures.json'
+    target=root/f'tests/fixtures/{name}.json'
     fixture=json.loads(oracle.stdout)
     fixture['seed']=302
     fixture['cargoLockSha256']=hashlib.sha256((root/'tools/reference/Cargo.lock').read_bytes()).hexdigest()

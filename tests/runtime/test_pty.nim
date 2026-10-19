@@ -3,8 +3,8 @@ import std/[options, os, posix, unittest]
 
 when defined(posix):
   import posix/termios
-  import ../src/canopy/runtime/terminal/input
-  import ../src/canopy/runtime/backends/ansi
+  import canopy/runtime/terminal/input
+  import canopy/runtime/backends/ansi
 
   when defined(macosx):
     proc openpty(master, slave: ptr cint, name: pointer, term: ptr Termios, size: ptr IOctl_WinSize): cint {.importc, header: "<util.h>".}

@@ -64,10 +64,10 @@ buffer access. API dimensions outside the unsigned-16-bit domain clamp in
 
 ```sh
 python3 tools/chart/fixture_gen.py
-nim c -r --mm:arc --path:src tests/test_canvas.nim
-nim c -r --mm:arc --path:src tests/test_chart.nim
-nim c -r --mm:orc --path:src tests/test_canvas.nim
-nim c -r --mm:orc --path:src tests/test_chart.nim
+nim c -r --mm:arc --path:src tests/widgets/test_canvas.nim
+nim c -r --mm:arc --path:src tests/widgets/test_chart.nim
+nim c -r --mm:orc --path:src tests/widgets/test_canvas.nim
+nim c -r --mm:orc --path:src tests/widgets/test_chart.nim
 ```
 
 The development-only generator builds `tools/reference/src/bin/canopy-chart-reference.rs` against locked

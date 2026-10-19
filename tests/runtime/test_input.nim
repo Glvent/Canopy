@@ -1,7 +1,7 @@
 ## Input parser and poll loop tests.
 import std/[options, os, unittest]
 
-import ../src/canopy/runtime/terminal/input
+import canopy/runtime/terminal/input
 
 proc pop(parser: var InputParser): Event =
   let event = parser.nextEvent()

@@ -78,5 +78,5 @@ for module,name in arrays:
     nim.extend([f'  for i,v in {label}:',f'    check catalog["{label}"][i].getStr == v'])
 rust.extend(['serde_json::Value::Object(result)','}'])
 (root/'tools/block/block_symbol_catalog.rs').write_text('\n'.join(rust)+'\n')
-(root/'tests/block_symbol_catalog.nim').write_text('\n'.join(nim)+'\n')
+(root/'tests/support/block_symbol_catalog.nim').write_text('\n'.join(nim)+'\n')
 print(f"Generated symbol catalog and {len(entries)} exact box-drawing decompositions")

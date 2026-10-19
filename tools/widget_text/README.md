@@ -10,7 +10,7 @@ Coverage combines zero/tiny/ordinary sizes, whitespace/NBSP/ZWSP, CJK,
 combining marks, emoji, wrapping modes, alignment, scrolling, style layering,
 multiline selection, padding, direction, highlight spacing, column spans,
 header/footer margins, incorrect selection indexes, empty data, and all flex
-modes. `tests/test_reference.nim` explicitly translates each configuration into
+modes. `tests/reference/test_reference.nim` explicitly translates each configuration into
 native Canopy objects and compares all output cells and state.
 
 Regeneration requires development-only Rust:

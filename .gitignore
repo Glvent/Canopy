@@ -4,8 +4,8 @@
 **/target/
 /tools/reference/vendor/
 /tools/tester
-/tests/test_*
-!/tests/test_*.nim
+/tests/**/test_*
+!/tests/**/test_*.nim
 /examples/*
 !/examples/*.nim
 /benchmarks/benchmarks

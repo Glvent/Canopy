@@ -32,12 +32,12 @@ the comparison does not depend on the differing constructors of the two test
 backends. An additional 24 cases begin with partial or no-op draws over sentinel
 backend cells, checking first-frame invalidation and zero-height insertion.
 
-`tests/test_terminal_reference.nim` reconstructs each input through Canopy's
+`tests/reference/test_terminal_reference.nim` reconstructs each input through Canopy's
 public terminal and TestBackend APIs and compares each complete snapshot. Run:
 
 ```sh
-nim c -r --mm:arc --nimcache:/tmp/canopy-terminal-arc tests/test_terminal_reference.nim
-nim c -r --mm:orc --nimcache:/tmp/canopy-terminal-orc tests/test_terminal_reference.nim
+nim c -r --mm:arc --nimcache:/tmp/canopy-terminal-arc tests/reference/test_terminal_reference.nim
+nim c -r --mm:orc --nimcache:/tmp/canopy-terminal-orc tests/reference/test_terminal_reference.nim
 ```
 
 The comparison exposed three parity gaps during development, all corrected in

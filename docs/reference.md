@@ -1,6 +1,6 @@
 # Ratatui reference fixtures
 
-`tests/fixtures/*.json` records behavior from Ratatui 0.30.2. Ordinary Canopy builds and tests read these files with Nim only. Rust is a development tool for regenerating or independently verifying them.
+`tests/fixtures/` records behavior from Ratatui 0.30.2 and its pinned dependencies, including palette conversions and Unicode segmentation and width data. Ordinary Canopy builds and tests read these files with Nim only. Rust is a development tool for regenerating or independently verifying them.
 
 ## Reproduce
 
@@ -8,8 +8,8 @@ From the repository root:
 
 ```sh
 cargo run --manifest-path tools/reference/Cargo.toml --locked -- generate
-nim c -r --path:src tests/test_reference.nim
-nim c -r --mm:arc --path:src -o:/tmp/canopy-test-reference-arc tests/test_reference.nim
+nim c -r --path:src tests/reference/test_reference.nim
+nim c -r --mm:arc --path:src -o:/tmp/canopy-test-reference-arc tests/reference/test_reference.nim
 ```
 
 `tools/reference/Cargo.lock` pins Ratatui 0.30.2, ratatui-core 0.1.2, ratatui-widgets 0.3.2, Kasuari 0.4.12, unicode-segmentation 1.13.3, and unicode-width 0.2.2. Both Unicode crates use Unicode 17.0.0 data. Do not run Cargo from the Nim suite.

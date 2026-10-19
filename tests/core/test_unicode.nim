@@ -2,6 +2,7 @@
 import std/[unittest, strutils, os]
 
 import canopy/core/text/unicode
+import ../support/paths
 
 proc unhex(s: string): string =
   var i = 0
@@ -12,7 +13,7 @@ proc unhex(s: string): string =
 suite "Unicode 17 pinned native compatibility":
   test "every official extended grapheme test":
     var count = 0
-    for line in lines(currentSourcePath.parentDir / "unicode/graphemes.tsv"):
+    for line in lines(FixturesDir / "unicode/graphemes.tsv"):
       if line.startsWith("#"): continue
       let fields = line.split('\t')
       var expected: seq[string]
@@ -25,7 +26,7 @@ suite "Unicode 17 pinned native compatibility":
     check count == 766
   test "upstream contextual width and emoji tests":
     var count = 0
-    for line in lines(currentSourcePath.parentDir / "unicode/width.tsv"):
+    for line in lines(FixturesDir / "unicode/width.tsv"):
       if line.startsWith("#"): continue
       let fields = line.split('\t')
       let actual = displayWidth(unhex(fields[0]))

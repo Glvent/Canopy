@@ -1,21 +1,21 @@
 ## Cross-language reference parity tests.
 import std/[json, options, os, sequtils, strutils, unittest]
 
-import ../src/canopy/core/layout/geometry
-import ../src/canopy/core/styling/style
-import ../src/canopy/core/text/index as text
-import ../src/canopy/core/rendering/buffer
-import ../src/canopy/core/text/unicode
-import ../src/canopy/core/layout/index as layout
-import "../src/canopy/ui/widgets/block"
-import ../src/canopy/ui/widgets/[paragraph, list, table]
+import canopy/core/layout/geometry
+import canopy/core/styling/style
+import canopy/core/text/index as text
+import canopy/core/rendering/buffer
+import canopy/core/text/unicode
+import canopy/core/layout/index as layout
+import "canopy/ui/widgets/block"
+import canopy/ui/widgets/[paragraph, list, table]
+import ../support/paths
 
-const Fixtures = currentSourcePath.parentDir / "fixtures"
 
 proc optionalInt(n: JsonNode): Option[int] =
   if n.kind == JNull: none(int) else: some(n.getInt)
 
-proc fixture(name: string): JsonNode = parseFile(Fixtures / name)
+proc fixture(name: string): JsonNode = parseFile(FixturesDir / name)
 proc rectOf(n: JsonNode): Rect = initRect(n["x"].getInt, n["y"].getInt, n["width"].getInt, n["height"].getInt)
 
 proc colorOf(n: JsonNode): Color =

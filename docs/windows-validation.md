@@ -1,6 +1,6 @@
 # Windows console validation
 
-`tests/test_windows.nim` exercises Canopy against a native Windows console. It
+`tests/runtime/test_windows.nim` exercises Canopy against a native Windows console. It
 opens `CONIN$` and `CONOUT$` from the inherited console, or calls
 `AllocConsole` when the test process has no console. It does not rely on the
 runner's redirected standard handles.
@@ -39,9 +39,9 @@ Windows compile or runtime claim:
 
 ```console
 nim c --compileOnly --os:windows --cpu:amd64 --mm:arc \
-  --nimcache:build/windows-c-arc tests/test_windows.nim
+  --nimcache:build/windows-c-arc tests/runtime/test_windows.nim
 nim c --compileOnly --os:windows --cpu:amd64 --mm:orc \
-  --nimcache:build/windows-c-orc tests/test_windows.nim
+  --nimcache:build/windows-c-orc tests/runtime/test_windows.nim
 ```
 
 These cross-host commands do not run the executable, link the generated C, or

@@ -4,9 +4,18 @@ import std/[os, osproc, strutils, algorithm]
 let examples = paramCount() > 0 and paramStr(1) == "examples"
 let folder = if examples: "examples" else: "tests"
 var files: seq[string]
-for file in walkFiles(folder / "*.nim"):
-  if examples or extractFilename(file).startsWith("test_"): files.add(file)
+if examples:
+  for file in walkFiles(folder / "*.nim"): files.add(file)
+else:
+  for file in walkDirRec(folder):
+    let name = extractFilename(file)
+    if name.startsWith("test_") and name.endsWith(".nim"): files.add(file)
 files.sort()
+var names: seq[string]
+for file in files:
+  let name = splitFile(file).name
+  if name in names: quit("Duplicate test name: " & name, 1)
+  names.add(name)
 let manager = if defined(gcArc): "arc" else: "orc"
 let outputDir = "build" / (NimVersion & "-" & manager)
 createDir(outputDir)

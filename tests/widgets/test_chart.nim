@@ -1,9 +1,9 @@
 ## Chart and sparkline rendering tests.
-import std/unittest
+import std/[unittest, os]
 
-import ./canvas_test_support
+import ../support/[canvas_support, paths]
 
 suite "Chart":
   test "complete upstream cells":
-    const fixtures = staticRead("chart_fixtures.json")
+    const fixtures = staticRead(FixturesDir / "chart.json")
     check checkFixtures(fixtures) == 0

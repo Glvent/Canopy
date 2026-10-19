@@ -33,7 +33,7 @@ def save_cases():
     document = dict(schemaVersion=1, ratatui='0.30.2', ratatuiCore='0.1.2', kasuari='0.4.12',
                     seed=302, initialSamples=1,
                     cargoLockSha256=hashlib.sha256((root / 'tools/reference/Cargo.lock').read_bytes()).hexdigest(), cases=cases)
-    (root / 'tools/layout_differential_cases.json').write_text(json.dumps(document, separators=(',', ':')) + '\n')
+    (root / 'tests/fixtures/layout_differential.json').write_text(json.dumps(document, separators=(',', ':')) + '\n')
 target = pathlib.Path('/tmp/canopy-layout-differential.json')
 target.write_text(json.dumps(cases))
 print(f'{len(cases)} seeded cases -> {target}', flush=True)

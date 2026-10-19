@@ -2,7 +2,7 @@
 
 Target: Ratatui 0.30.2, ratatui-core 0.1.2, Kasuari 0.4.12.
 
-`tests/test_layout.nim` runs without Rust or Python. It includes 391 literal
+`tests/core/test_layout.nim` runs without Rust or Python. It includes 391 literal
 upstream layout cases and 2,000 seeded mixed layouts from the pinned reference.
 Mixed cases cover all seven flex modes, all six constraint kinds, empty inputs,
 u16 extremes, conflicting priorities, negative spacing, margins, zero/tiny areas,
@@ -41,8 +41,8 @@ the separate 18-case reference layout fixture also has zero mismatches.
 Verification commands:
 
 ```
-nim c -r --path:src --mm:arc tests/test_layout.nim
-nim c -r --path:src --mm:orc tests/test_layout.nim
+nim c -r --path:src --mm:arc tests/core/test_layout.nim
+nim c -r --path:src --mm:orc tests/core/test_layout.nim
 nim c -r --path:src tools/layout/compare.nim tests/fixtures/layout.json
 nim c -r -d:release --path:src benchmarks/layout_benchmark.nim
 ```

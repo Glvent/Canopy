@@ -8,7 +8,7 @@ import canopy/core/rendering/buffer
 import canopy/core/rendering/symbols
 import canopy/core/layout/index as layout
 import canopy/ui/widgets/[canvas, chart]
-import "../src/canopy/ui/widgets/block"
+import "canopy/ui/widgets/block"
 
 proc decodeColor(v: JsonNode): Color =
   if v.isNil or v.kind == JNull: return color(ColorKind.Reset)

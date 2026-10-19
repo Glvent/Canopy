@@ -17,8 +17,8 @@ Regenerate after building `tools/reference/Cargo.toml` with its lockfile:
 ```sh
 python3 tools/block/generate_symbols.py /path/to/ratatui-ratatui-v0.30.2
 python3 tools/block/generate.py
-nim c -r --path:src --mm:arc tests/test_symbols.nim
-nim c -r --path:src --mm:arc tests/test_block.nim
+nim c -r --path:src --mm:arc tests/core/test_symbols.nim
+nim c -r --path:src --mm:arc tests/widgets/test_block.nim
 ```
 
 Repeat native checks with `--mm:orc`. Fixture tests require no Rust toolchain.

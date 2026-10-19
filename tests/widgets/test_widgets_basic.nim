@@ -2,10 +2,10 @@
 import std/[unittest, json, os]
 
 import canopy
-import reference_support
+import ../support/[reference_support, paths]
 
 suite "remaining widget reference fixtures":
-  let cases = parseFile(currentSourcePath.parentDir / "fixtures/widgets.json")["cases"]
+  let cases = parseFile(FixturesDir / "widgets.json")["cases"]
   for fixture in cases:
     let name = fixture["name"].getStr
     if fixture["input"]["widget"].getStr in ["paragraph", "list", "table", "chart",

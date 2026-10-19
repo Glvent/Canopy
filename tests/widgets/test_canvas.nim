@@ -1,14 +1,14 @@
 ## Canvas drawing primitive tests.
-import std/[unittest, options]
+import std/[unittest, options, os]
 
 import canopy/core/styling/style
 import canopy/core/rendering/symbols
 import canopy/ui/widgets/canvas
-import ./canvas_test_support
+import ../support/[canvas_support, paths]
 
 suite "Canvas":
   test "complete upstream cells":
-    const fixtures = staticRead("canvas_fixtures.json")
+    const fixtures = staticRead(FixturesDir / "canvas.json")
     check checkFixtures(fixtures) == 0
   test "world to grid coordinates and reversed bounds":
     var ctx = initCanvasContext(2, 2, [1.0, 2.0], [0.0, 2.0], Marker.Braille)

@@ -16,7 +16,7 @@ with tempfile.TemporaryDirectory() as temp:
         command.extend(["--extern", f"{crate}={library}"])
     subprocess.run(command, check=True)
     actual = subprocess.check_output([str(binary)], text=True).strip()
-expected = (root / "tests/test_calendar_metrics.nim").read_text().split("const metricCases = [\n", 1)[1].split("\n]", 1)[0].strip()
+expected = (root / "tests/widgets/test_calendar_metrics.nim").read_text().split("const metricCases = [\n", 1)[1].split("\n]", 1)[0].strip()
 if actual != expected:
     raise SystemExit("Calendar metric literals differ from the pinned Rust oracle")
 print(f"Verified {len(actual.splitlines())} upstream calendar dimensions")

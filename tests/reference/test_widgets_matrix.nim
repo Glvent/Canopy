@@ -2,9 +2,9 @@
 import std/[json, os, options]
 
 import canopy
-import reference_support
+import ../support/[reference_support, paths]
 
-let fixtures = parseFile(currentSourcePath.parentDir / "fixtures/widgets_matrix.json")
+let fixtures = parseFile(FixturesDir / "widgets_matrix.json")
 var failures = 0
 for fixture in fixtures["cases"]:
   let input = fixture["input"]

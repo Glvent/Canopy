@@ -2,7 +2,7 @@
 
 Source baseline: `ratatui` 0.30.2, `ratatui-core` 0.1.2, `ratatui-widgets` 0.3.2. This inventory covers public, stable official APIs. Trait conversions and borrowed/owned duplicate implementations map to the same Nim value operation. Rust ABI, deprecated aliases, unstable-feature APIs, `no_std`, backend-specific crates other than the selected native terminal backend, and third-party widgets are outside scope.
 
-**Implemented** means the listed stable behavior has a native API or an explicitly stated Nim equivalent. Evidence describes the actual checks; it does not assert that every public field or every possible combination has an individual test. `R` means checked-in exact Ratatui fixture comparisons in `tests/test_reference.nim`. See [api-gaps.md](api-gaps.md) for adaptations and limits, and [validation.md](validation.md) for executed platform checks. Windows runtime acceptance is still open.
+**Implemented** means the listed stable behavior has a native API or an explicitly stated Nim equivalent. Evidence describes the actual checks; it does not assert that every public field or every possible combination has an individual test. `R` means checked-in exact Ratatui fixture comparisons in `tests/reference/test_reference.nim`. See [api-gaps.md](api-gaps.md) for adaptations and limits, and [validation.md](validation.md) for executed platform checks. Windows runtime acceptance is still open.
 
 ## Core
 

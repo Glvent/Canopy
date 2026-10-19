@@ -1,10 +1,10 @@
 ## ANSI backend draw and terminal mode tests.
 import std/[os, unittest]
 
-import ../src/canopy/core/layout/geometry
-import ../src/canopy/core/styling/style
-import ../src/canopy/core/rendering/buffer
-import ../src/canopy/runtime/backends/ansi
+import canopy/core/layout/geometry
+import canopy/core/styling/style
+import canopy/core/rendering/buffer
+import canopy/runtime/backends/ansi
 
 proc tempFile(): tuple[path: string, file: File] =
   result.path = getTempDir()/"canopy-ansi-test.tmp"

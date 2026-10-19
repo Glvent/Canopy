@@ -1,11 +1,12 @@
 ## Terminal output parity against reference harness.
 import std/[json, os, options, strformat, strutils, unittest]
 
-import ../src/canopy/runtime/terminal/index as terminal
-import ../src/canopy/core/styling/style
-import ../src/canopy/runtime/backends/test
+import canopy/runtime/terminal/index as terminal
+import canopy/core/styling/style
+import canopy/runtime/backends/test
+import ../support/paths
 
-const Fixture = currentSourcePath.parentDir / "fixtures" / "terminal.json"
+const Fixture = FixturesDir / "terminal.json"
 
 proc rectJson(area: Rect): JsonNode =
   %* {"x": area.x, "y": area.y, "width": area.width, "height": area.height}

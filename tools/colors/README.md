@@ -23,11 +23,11 @@ Regenerate development fixtures:
 
 ```sh
 python3 tools/colors/generate.py
-nim c -r --mm:arc --path:src tests/test_colors.nim
-nim c -r --mm:orc --path:src tests/test_colors.nim
+nim c -r --mm:arc --path:src tests/core/test_colors.nim
+nim c -r --mm:orc --path:src tests/core/test_colors.nim
 ```
 
-The native test reads checked-in `tools/colors_fixtures.json`, so consumer
+The native test reads checked-in `tests/fixtures/colors.json`, so consumer
 tests need no Rust toolchain. It checks 31,347 exact RGB outputs: 24,000 seeded
 cases, 6,072 boundary combinations (including non-finite components), and
 1,275 cases around all 255 grayscale byte rounding transitions. Packed RGB

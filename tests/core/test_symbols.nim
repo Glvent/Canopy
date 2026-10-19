@@ -2,9 +2,10 @@
 import std/[unittest, json, os]
 
 import canopy/core/rendering/symbols
+import ../support/paths
 
-let matrix = parseFile(currentSourcePath.parentDir / "fixtures/block_matrix.json")
-include block_symbol_catalog
+let matrix = parseFile(FixturesDir / "block_matrix.json")
+include ../support/block_symbol_catalog
 suite "Ratatui symbol merge exhaustive compatibility":
   test "all box drawing pairs plus unknown and multicharacter symbols":
     var index = 0

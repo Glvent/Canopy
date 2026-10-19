@@ -1,8 +1,9 @@
 ## Layout solver and flex distribution tests.
-import std/[unittest, json, strutils, options]
+import std/[unittest, json, strutils, options, os]
 
 import canopy/core/layout/geometry
 import canopy/core/layout/index as layout
+import ../support/paths
 
 suite "Cassowary layout":
   test "fixed arrays and constraint helper semantics":
@@ -54,7 +55,7 @@ suite "Cassowary layout":
     check layoutCacheSize() == 0
     setLayoutCacheSize(DefaultLayoutCacheSize)
   test "upstream literal letter cases":
-    const upstreamCases = staticRead("../tools/layout_upstream_cases.json")
+    const upstreamCases = staticRead(FixturesDir / "layout_upstream.json")
     let cases = parseJson(upstreamCases)
     var failures = 0
     for item in cases:
@@ -79,7 +80,7 @@ suite "Cassowary layout":
         if failures <= 10: echo item, " actual=", actual
     check failures == 0
   test "2000 pinned mixed layouts including observed upstream alternatives":
-    const mixedCases = staticRead("../tools/layout_differential_cases.json")
+    const mixedCases = staticRead(FixturesDir / "layout_differential.json")
     let document = parseJson(mixedCases)
     let cases = if document.kind == JArray: document else: document["cases"]
     var failures = 0
