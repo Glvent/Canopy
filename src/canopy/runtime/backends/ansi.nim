@@ -1,36 +1,66 @@
 ## ANSI/VT backend with native terminal mode setup on POSIX and Windows.
-import std/strutils
+import std/[os, strutils]
 
 import ../../core/layout/geometry
-import ../../core/styling/style
+import ../../core/styling/[style, colordepth]
 import ../../core/rendering/buffer
 import ./types
 import ../../internal/terminal/platform
-export types
+export types, colordepth
 
 type AnsiBackend* = object
   ## `cursor` is the backend's belief about the terminal cursor; `cursorKnown` is false until a
   ## move or a query establishes it, because the position at startup is unknown.
+  ## `synchronizedActive` records an open synchronized update that the next `flush` closes.
   output*, input*: File
   alternateScreen*, rawMode*: bool
+  colorDepth*: ColorDepth
+  synchronizedOutput*: bool
   initialized*, cursorVisible*: bool
   cursor*: Position
   cursorKnown: bool
+  synchronizedActive: bool
   platformState: PlatformTerminalState
+
+const
+  BeginSynchronizedUpdate = "\e[?2026h"
+  EndSynchronizedUpdate = "\e[?2026l"
 
 proc writeAll(file: File, data: string) =
   if data.len == 0: return
   let written = file.writeBuffer(unsafeAddr data[0], data.len)
   if written != data.len: raise newException(IOError, "short terminal write: " & $written & "/" & $data.len)
 
-func initAnsiBackend*(output: File = stdout, input: File = stdin, alternateScreen = true, rawMode = true): AnsiBackend =
-  AnsiBackend(output: output, input: input, alternateScreen: alternateScreen, rawMode: rawMode, cursorVisible: true)
+proc detectColorDepth*(lookup: proc(name: string): string): ColorDepth =
+  ## Color depth from environment conventions, read through `lookup`. A non-empty `NO_COLOR` or
+  ## `TERM=dumb` disables color; `COLORTERM=truecolor|24bit` and known truecolor terminals
+  ## enable RGB; a `256color` TERM selects the 256-color palette; anything else gets 16 colors.
+  let term = lookup("TERM").toLowerAscii
+  if lookup("NO_COLOR").len > 0 or term == "dumb": return ColorDepth.Monochrome
+  if lookup("COLORTERM").toLowerAscii in ["truecolor", "24bit"]: return ColorDepth.TrueColor
+  if term.endsWith("-direct") or term in ["xterm-kitty", "xterm-ghostty", "wezterm", "alacritty", "foot", "foot-extra"]:
+    return ColorDepth.TrueColor
+  if lookup("TERM_PROGRAM") in ["iTerm.app", "WezTerm", "ghostty", "vscode"] or lookup("WT_SESSION").len > 0:
+    return ColorDepth.TrueColor
+  if "256color" in term: return ColorDepth.Ansi256
+  # Windows 10+ consoles render RGB through virtual-terminal processing and set no TERM.
+  if term.len == 0 and defined(windows): ColorDepth.TrueColor else: ColorDepth.Ansi16
+
+proc detectColorDepth*(): ColorDepth = detectColorDepth(proc(name: string): string = getEnv(name))
+
+proc initAnsiBackend*(output: File = stdout, input: File = stdin, alternateScreen = true, rawMode = true,
+    colorDepth = detectColorDepth(), synchronizedOutput = true): AnsiBackend =
+  ## `colorDepth` downsamples colors the terminal cannot show. `synchronizedOutput` brackets each
+  ## frame in DEC mode 2026 so supporting terminals paint it at once; others ignore the mode.
+  AnsiBackend(output: output, input: input, alternateScreen: alternateScreen, rawMode: rawMode,
+    colorDepth: colorDepth, synchronizedOutput: synchronizedOutput, cursorVisible: true)
 
 proc init*(backend: var AnsiBackend) =
   ## Idempotent. If entering the alternate screen fails, the terminal mode is restored before the
   ## error propagates so the caller's terminal is not left raw.
   if backend.initialized: return
   backend.cursorKnown = false
+  backend.synchronizedActive = false
   backend.platformState = configureTerminal(backend.input, backend.output, backend.rawMode)
   try:
     if backend.alternateScreen: writeAll(backend.output, "\e[?1049h")
@@ -42,11 +72,14 @@ proc init*(backend: var AnsiBackend) =
     raise
 
 proc restore*(backend: var AnsiBackend) =
-  ## Resets styling and cursor visibility before leaving alternate screen and raw mode.
+  ## Ends any open synchronized update, then resets styling and cursor visibility before leaving
+  ## alternate screen and raw mode.
   if not backend.initialized and not backend.platformState.configured: return
   backend.initialized = false
   var failure: ref CatchableError
   try:
+    if backend.synchronizedActive:
+      writeAll(backend.output, EndSynchronizedUpdate); backend.synchronizedActive = false
     writeAll(backend.output, "\e[0m\e[?25h")
     if backend.alternateScreen: writeAll(backend.output, "\e[?1049l")
     backend.output.flushFile()
@@ -95,33 +128,89 @@ proc addUnderlineColor(parts: var seq[string], c: Color) =
   of ColorKind.Rgb: parts.add("58;2;" & $c.r & ";" & $c.g & ";" & $c.b)
   else: parts.add("58;5;" & $namedIndex(c.kind))
 
-func ansiStyle*(cell: Cell): string =
-  ## Complete SGR sequence for a cell. It always starts with a reset, so cells are independent and
-  ## no state carries over between non-adjacent writes.
+func downsampled(cell: Cell, depth: ColorDepth): Cell =
+  result = cell
+  result.fg = downsample(cell.fg, depth)
+  result.bg = downsample(cell.bg, depth)
+  result.underlineColor = downsample(cell.underlineColor, depth)
+
+func fullStyle(cell: Cell): string =
+  # The leading reset already restores default colors, so Reset colors add no parameters.
   var parts = @["0"]
-  parts.addColor(cell.fg, true); parts.addColor(cell.bg, false); parts.addUnderlineColor(cell.underlineColor)
+  if cell.fg.kind != ColorKind.Reset: parts.addColor(cell.fg, true)
+  if cell.bg.kind != ColorKind.Reset: parts.addColor(cell.bg, false)
+  if cell.underlineColor.kind != ColorKind.Reset: parts.addUnderlineColor(cell.underlineColor)
   for (modifier, code) in [(Modifier.Bold, "1"), (Modifier.Dim, "2"), (Modifier.Italic, "3"), (Modifier.Underlined, "4"),
       (Modifier.SlowBlink, "5"), (Modifier.RapidBlink, "6"), (Modifier.Reversed, "7"), (Modifier.Hidden, "8"), (Modifier.CrossedOut, "9")]:
     if modifier in cell.modifiers: parts.add(code)
   "\e[" & parts.join(";") & "m"
 
-proc setCursorPosition*(backend: var AnsiBackend, position: Position) =
+func styleChange(previous, cell: Cell): string =
+  # Both cells are already downsampled. Equal styles need nothing; changed colors alone are set
+  # directly. Removing a modifier has no general single-attribute undo (22 clears both bold and
+  # dim), so modifier changes fall back to a complete reset sequence.
+  if previous.modifiers != cell.modifiers: return fullStyle(cell)
+  var parts: seq[string]
+  if previous.fg != cell.fg: parts.addColor(cell.fg, true)
+  if previous.bg != cell.bg: parts.addColor(cell.bg, false)
+  if previous.underlineColor != cell.underlineColor: parts.addUnderlineColor(cell.underlineColor)
+  if parts.len > 0: "\e[" & parts.join(";") & "m" else: ""
+
+func ansiStyle*(cell: Cell, depth: ColorDepth): string =
+  ## Complete SGR sequence for a cell at `depth`. It always starts with a reset, so the result
+  ## does not depend on earlier output.
+  fullStyle(cell.downsampled(depth))
+
+func ansiStyle*(cell: Cell): string = ansiStyle(cell, ColorDepth.TrueColor)
+
+func cursorMove(position: Position): string =
   ## CUP is 1-based, unlike Canopy's 0-based positions.
+  "\e[" & $(position.y+1) & ";" & $(position.x+1) & "H"
+
+proc setCursorPosition*(backend: var AnsiBackend, position: Position) =
   let position = initPosition(max(0, position.x), max(0, position.y))
-  writeAll(backend.output, "\e[" & $(position.y+1) & ";" & $(position.x+1) & "H")
+  writeAll(backend.output, cursorMove(position))
   backend.cursor = position
   backend.cursorKnown = true
 
 proc draw*(backend: var AnsiBackend, updates: openArray[CellUpdate]) =
-  ## Emits cursor moves and SGR per changed cell; skipped cells are omitted upstream.
+  ## Writes changed cells in one write. A cursor move is emitted only when a cell does not follow
+  ## the previous single-width cell on the same row, and SGR only when the style changes. Both
+  ## start unknown on every call, so output written between draws cannot desynchronize them.
+  ## With `synchronizedOutput`, the first cell opens a synchronized update that `flush` closes.
+  var output = ""
+  var previous: Cell
+  var written, opened, anchored = false
+  var next, last: Position
   for update in updates:
     if update.cell.diffKind == CellDiffKind.Skip or (update.cell.skip and update.cell.diffKind == CellDiffKind.Normal): continue
-    backend.setCursorPosition(initPosition(update.x, update.y))
-    writeAll(backend.output, ansiStyle(update.cell))
-    writeAll(backend.output, update.cell.symbol)
-    backend.cursor = initPosition(update.x+update.cell.cellWidth, update.y)
+    if not written and backend.synchronizedOutput and not backend.synchronizedActive:
+      output.add(BeginSynchronizedUpdate); opened = true
+    let position = initPosition(max(0, update.x), max(0, update.y))
+    if not anchored or position != next: output.add(cursorMove(position))
+    let cell = update.cell.downsampled(backend.colorDepth)
+    output.add(if written: styleChange(previous, cell) else: fullStyle(cell))
+    output.add(update.cell.symbol)
+    # Re-anchor after wide or width-forced cells: the terminal's idea of their width may differ.
+    let width = update.cell.cellWidth
+    anchored = width == 1 and update.cell.diffKind != CellDiffKind.ForcedWidth
+    next = initPosition(position.x+1, position.y)
+    last = initPosition(position.x+width, position.y)
+    previous = cell; written = true
+  if not written: return
+  # Marked open before writing: if the write fails part way, `flush` or `restore` still closes
+  # it, and closing an update that never opened is harmless.
+  if opened: backend.synchronizedActive = true
+  writeAll(backend.output, output)
+  backend.cursor = last
+  backend.cursorKnown = true
 
-proc flush*(backend: var AnsiBackend) = backend.output.flushFile()
+proc flush*(backend: var AnsiBackend) =
+  ## Closes a synchronized update opened by `draw`, then flushes the output file.
+  if backend.synchronizedActive:
+    writeAll(backend.output, EndSynchronizedUpdate); backend.synchronizedActive = false
+  backend.output.flushFile()
+
 proc size*(backend: var AnsiBackend): Size = terminalSize(backend.output)
 proc windowSize*(backend: var AnsiBackend): WindowSize = terminalWindowSize(backend.output)
 proc getCursorPosition*(backend: var AnsiBackend): Position =

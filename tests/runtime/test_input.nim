@@ -77,8 +77,8 @@ suite "input lifecycle":
   test "capability setup and cleanup are paired and idempotent":
     let path = getTempDir()/"canopy-input-test.tmp"; var file: File
     check open(file, path, fmReadWrite)
-    defer: close(file)
     defer: removeFile(path)
+    defer: close(file)
     let caps = InputCapabilities(focusEvents: true, bracketedPaste: true, mouseCapture: true, enhancedKeyboard: true)
     var source = initInput(file, file, caps, false)
     source.init(); source.init(); source.restore(); source.restore()
@@ -89,8 +89,8 @@ suite "input lifecycle":
     let path = getTempDir()/"canopy-input-read-only.tmp"; var file: File
     writeFile(path, "")
     check open(file, path, fmRead)
-    defer: close(file)
     defer: removeFile(path)
+    defer: close(file)
     var source = initInput(file, file, defaultInputCapabilities(), false)
     expect IOError: source.init()
     check not source.initialized
@@ -99,8 +99,8 @@ suite "input lifecycle":
   test "withInput restores capabilities after an exception":
     let path = getTempDir()/"canopy-input-scope.tmp"; var file: File
     check open(file, path, fmReadWrite)
-    defer: close(file)
     defer: removeFile(path)
+    defer: close(file)
     expect ValueError:
       withInput(source, initInput(file, file, defaultInputCapabilities(), false)):
         raise newException(ValueError, "test")

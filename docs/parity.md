@@ -16,6 +16,7 @@ Gates: [milestones](planning/milestones.md). Contracts: [interfaces](interfaces.
 | Remaining widgets | complete | 1,890 configurations for Tabs/Gauges/BarChart/Sparkline/Scrollbar/Monthly/Logo/Mascot; Clear/Fill base fixtures; 277 Canvas and 230 Chart cases; 384 calendar metrics | finite configuration coverage |
 | Colors and supporting APIs | complete | 31,347 exact HSL/HSLuv RGB conversions plus five packed colors; style/theme JSON and public-construction tests | local-date helper is tested as an API mapping, not a fixed-date oracle |
 | Optional input | complete | incremental Unicode/escape/paste/mouse/focus/enhanced-key parsing; blocking/timed/EOF/resize PTY checks; cleanup and partial-init failure tests | execute Windows console input tests |
+| ANSI output efficiency, synchronized output and color depth (Canopy extension) | native | exact byte tests for cursor/SGR elision, DEC 2026 bracketing, downsampling and environment detection | not a Ratatui parity claim; terminal rendering of mode 2026 is emulator-dependent |
 | Optional animation (Canopy extension) | native toolkit | deterministic tween/easing/spring/scheduling/ownership tests; complete-cell transition tests; see [animation validation](validation/animation.md) | not a Ratatui parity claim; Windows runtime gate remains open |
 | Documentation/examples/package | complete | generated API docs, guide/migration, six compiled examples, deterministic gallery/dashboard, isolated Nimble consumer, recorded benchmarks | Windows example compilation remains in CI gate |
 
