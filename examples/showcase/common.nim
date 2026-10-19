@@ -1,19 +1,25 @@
 ## State and helpers shared by every showcase page.
-import std/strutils
+import std/[os, strutils]
 
 import canopy
 import canopy/runtime/terminal/input
 import canopy/ui/animation/index as animation
 
-const themeNames* = ["Cyan", "Green", "Magenta", "Yellow"]
+const themeNames* = ["Blue", "Magenta", "Green", "Red"]
 
 var
   themeIndex* = 0
   animator* = initAnimator()
     ## One animator drives every page, so reduced motion applies everywhere at once.
+  roundPills* = getEnv("TERM_PROGRAM").toLowerAscii in ["ghostty", "wezterm"] or
+    getEnv("TERM").toLowerAscii.contains("kitty")
+    ## Rounded pill ends use Powerline glyphs. These terminals draw them without a Nerd
+    ## Font; `--round` and `--square` override the guess.
 
 proc accentColor*(): Color =
-  color([ColorKind.Cyan, ColorKind.Green, ColorKind.Magenta, ColorKind.Yellow][themeIndex])
+  ## Bright named colors follow the terminal's palette and keep black pill text readable.
+  color([ColorKind.LightBlue, ColorKind.LightMagenta, ColorKind.LightGreen,
+    ColorKind.LightRed][themeIndex])
 
 proc accent*(): Style = initStyle().withFg(accentColor())
 proc muted*(): Style = initStyle().withFg(ColorKind.DarkGray)
@@ -32,11 +38,18 @@ proc meter*(): Style =
   initStyle().withFg(accentColor()).withBg(ColorKind.Black)
 
 proc pillTitles(names: openArray[string], selected: int, numbered: bool): seq[Line] =
+  # Every pill keeps one cell on each side, filled by a rounded cap or a space when selected
+  # and by a plain space otherwise, so widths never change with the selection.
   for i, name in names:
-    let number = if numbered: " " & $(i + 1) else: ""
-    # Spaces live inside each title so the highlight covers the whole pill.
-    result.add(if i == selected: initLine(number & " " & name & " ")
-               else: initLine([initSpan(number & " ", muted()), initSpan(name & " ")]))
+    let number = if numbered: $(i + 1) & " " else: ""
+    if i != selected:
+      result.add(initLine([initSpan(" " & number, muted()), initSpan(name & " ")]))
+    elif roundPills:
+      let cap = initStyle().withFg(accentColor())
+      result.add(initLine([initSpan("\uE0B6", cap), initSpan(number & name, highlight()),
+        initSpan("\uE0B4", cap)]))
+    else:
+      result.add(initLine(initSpan(" " & number & name & " ", highlight())))
 
 proc pillsWidth*(names: openArray[string], numbered = false): int =
   for title in pillTitles(names, -1, numbered): result += title.width
@@ -45,9 +58,10 @@ proc pillsWidth*(names: openArray[string], numbered = false): int =
 proc renderPills*(frame: var Frame, area: Rect, names: openArray[string], selected: int,
     hits: var openArray[Rect], numbered = false) =
   ## Tabs drawn as pills: the selected one filled with the accent, one space between them.
+  ## The titles carry their own colors, because a highlight would also paint the caps' background.
   let titles = pillTitles(names, selected, numbered)
   frame.renderWidget(initTabs(titles).withSelected(selected).withPadding("", "").withDivider(" ")
-    .withHighlightStyle(highlight()), area)
+    .withHighlightStyle(initStyle()), area)
   var x = area.x
   for i, title in titles:
     hits[i] = initRect(x, area.y, title.width, 1).intersection(area)

@@ -71,9 +71,11 @@ nim r examples/showcase/showcase.nim
 nim r examples/showcase/showcase.nim --inline
 ```
 
-Switch pages with Tab, Shift-Tab, `1`-`6` or a click on a tab. `t` cycles the accent color,
-`m` toggles reduced motion and `q`, Escape or Ctrl-C exits. The bottom line lists each page's own
-keys. Each page is a module in `examples/showcase/` with `render`, `handle` and `update`
+Switch pages with Tab, Shift-Tab, `1`-`6` or a click on a tab. `t` cycles the accent color
+(blue, magenta, green, red), `m` toggles reduced motion and `q`, Escape or Ctrl-C exits. The bottom line lists each page's own
+keys. The selected tab has rounded ends in Ghostty, Kitty and WezTerm, which draw the
+Powerline glyphs themselves; pass `--round` when your font is a Nerd Font, or `--square` when
+the ends show as boxes. Each page is a module in `examples/showcase/` with `render`, `handle` and `update`
 procedures:
 
 - Widgets (`widgets_page.nim`): List, Table and Scrollbar with shared selection, Calendar,

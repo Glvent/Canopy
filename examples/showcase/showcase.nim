@@ -3,6 +3,7 @@
 ##
 ##   nim r examples/showcase/showcase.nim
 ##   nim r examples/showcase/showcase.nim --inline   # inline viewport in normal scrollback
+##   nim r examples/showcase/showcase.nim --square   # square tabs if rounded ends show boxes
 ##
 ## Each page lives in its own module and exposes `help`, `render`, `handle` and `update`.
 import std/[os, monotimes, times]
@@ -156,5 +157,7 @@ proc run() =
           discard animator.advance(getMonoTime())
           if not handle(event.get): break
 
+if "--round" in commandLineParams(): roundPills = true
+if "--square" in commandLineParams(): roundPills = false
 if "--inline" in commandLineParams(): runInlineDemo()
 else: run()
