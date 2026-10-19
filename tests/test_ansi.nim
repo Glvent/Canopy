@@ -28,8 +28,8 @@ proc environment(pairs: openArray[(string, string)]): proc(name: string): string
 suite "ANSI backend":
   test "encodes complete styles and cell updates":
     let tmp = tempFile()
-    defer: close(tmp.file)
     defer: removeFile(tmp.path)
+    defer: close(tmp.file)
     var backend = initAnsiBackend(tmp.file, tmp.file, alternateScreen = false, rawMode = false,
       colorDepth = ColorDepth.TrueColor, synchronizedOutput = false)
     var c = initCell("界"); c.fg = rgbColor(1, 2, 3); c.bg = indexedColor(17); c.underlineColor = color(ColorKind.LightCyan)
@@ -40,8 +40,8 @@ suite "ANSI backend":
 
   test "consecutive cells share cursor moves and styles":
     let tmp = tempFile()
-    defer: close(tmp.file)
     defer: removeFile(tmp.path)
+    defer: close(tmp.file)
     var backend = initAnsiBackend(tmp.file, tmp.file, false, false, ColorDepth.TrueColor, false)
     let red = color(ColorKind.Red); let blue = color(ColorKind.Blue)
     backend.draw([(x: 0, y: 0, cell: styled("a", red)), (x: 1, y: 0, cell: styled("b", red)),
@@ -52,8 +52,8 @@ suite "ANSI backend":
 
   test "wide cells re-anchor the cursor and colors return to defaults":
     let tmp = tempFile()
-    defer: close(tmp.file)
     defer: removeFile(tmp.path)
+    defer: close(tmp.file)
     var backend = initAnsiBackend(tmp.file, tmp.file, false, false, ColorDepth.TrueColor, false)
     backend.draw([(x: 0, y: 0, cell: styled("界", color(ColorKind.Red), color(ColorKind.Blue))),
       (x: 2, y: 0, cell: styled("x"))])
@@ -63,8 +63,8 @@ suite "ANSI backend":
 
   test "synchronized output brackets draw through flush and restore":
     let tmp = tempFile()
-    defer: close(tmp.file)
     defer: removeFile(tmp.path)
+    defer: close(tmp.file)
     var backend = initAnsiBackend(tmp.file, tmp.file, false, false, ColorDepth.TrueColor)
     backend.init()
     backend.draw([(x: 0, y: 0, cell: initCell("a"))]); backend.hideCursor(); backend.flush(); backend.flush()
@@ -74,8 +74,8 @@ suite "ANSI backend":
 
   test "colors are downsampled to the configured depth":
     let tmp = tempFile()
-    defer: close(tmp.file)
     defer: removeFile(tmp.path)
+    defer: close(tmp.file)
     var backend = initAnsiBackend(tmp.file, tmp.file, false, false, ColorDepth.Ansi256, false)
     # Both reds map to palette entry 196, so the second cell needs no SGR.
     backend.draw([(x: 0, y: 0, cell: styled("a", rgbColor(255, 0, 0))), (x: 1, y: 0, cell: styled("b", rgbColor(250, 5, 5)))])
@@ -116,23 +116,23 @@ suite "ANSI backend":
 
   test "skip cells produce no bytes":
     let tmp = tempFile()
-    defer: close(tmp.file)
     defer: removeFile(tmp.path)
+    defer: close(tmp.file)
     var backend = initAnsiBackend(tmp.file, tmp.file, false, false); var c = initCell("x"); c.diffKind = CellDiffKind.Skip
     backend.draw([(x: 0, y: 0, cell: c)]); check tmp.file.contents == ""
 
   test "init and restore are idempotent and honor alternate screen":
     let tmp = tempFile()
-    defer: close(tmp.file)
     defer: removeFile(tmp.path)
+    defer: close(tmp.file)
     var backend = initAnsiBackend(tmp.file, tmp.file, true, false)
     backend.init(); backend.init(); backend.hideCursor(); backend.restore(); backend.restore()
     check tmp.file.contents == "\e[?1049h\e[?25l\e[0m\e[?25h\e[?1049l"
 
   test "clear, region scrolling, and append emit VT commands":
     let tmp = tempFile()
-    defer: close(tmp.file)
     defer: removeFile(tmp.path)
+    defer: close(tmp.file)
     var backend = initAnsiBackend(tmp.file, tmp.file, false, false)
     backend.clear(); backend.clearRegion(initRect(2, 1, 3, 2)); backend.scrollRegionUp(1, 5, 2); backend.scrollRegionDown(0, 4, 1); backend.appendLines(2)
     check tmp.file.contents == "\e[2J\e[H\e[2;3H\e[0m   \e[3;3H\e[0m   \e[2;3H\e[2;5r\e[2S\e[r\e[1;4r\e[1T\e[r\n\n"
@@ -140,8 +140,8 @@ suite "ANSI backend":
 
   test "backend clear types and window dimensions are available":
     let tmp = tempFile()
-    defer: close(tmp.file)
     defer: removeFile(tmp.path)
+    defer: close(tmp.file)
     var backend = initAnsiBackend(tmp.file, tmp.file, false, false)
     backend.clearRegion(ClearType.All); backend.clearRegion(ClearType.AfterCursor)
     backend.clearRegion(ClearType.BeforeCursor); backend.clearRegion(ClearType.CurrentLine)
@@ -151,15 +151,15 @@ suite "ANSI backend":
 
   test "read-only output errors propagate":
     let tmp = readOnlyTemp()
-    defer: close(tmp.file)
     defer: removeFile(tmp.path)
+    defer: close(tmp.file)
     var backend = initAnsiBackend(tmp.file, tmp.file, false, false)
     expect IOError: backend.showCursor()
 
   test "failed initialization rolls native state back":
     let tmp = readOnlyTemp()
-    defer: close(tmp.file)
     defer: removeFile(tmp.path)
+    defer: close(tmp.file)
     var backend = initAnsiBackend(tmp.file, tmp.file, true, false)
     expect IOError: backend.init()
     check not backend.initialized

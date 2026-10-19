@@ -62,8 +62,8 @@ when defined(posix):
       let path = getTempDir()/"canopy-pty-read-only-output.tmp"; var output: File
       writeFile(path, "")
       check open(output, path, fmRead)
-      defer: close(output)
       defer: removeFile(path)
+      defer: close(output)
       var backend = initAnsiBackend(output, pty.slave, true, true)
       expect IOError: backend.init()
       var restored: Termios; check tcGetAttr(cint(pty.slave.getFileHandle), addr restored) == 0
@@ -79,8 +79,8 @@ when defined(posix):
       let path = getTempDir()/"canopy-pty-read-only-input-output.tmp"; var output: File
       writeFile(path, "")
       check open(output, path, fmRead)
-      defer: close(output)
       defer: removeFile(path)
+      defer: close(output)
       var source = initInput(pty.slave, output, defaultInputCapabilities(), true)
       expect IOError: source.init()
       var restored: Termios; check tcGetAttr(cint(pty.slave.getFileHandle), addr restored) == 0
