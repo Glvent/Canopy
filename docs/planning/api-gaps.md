@@ -89,6 +89,12 @@ Layout fixtures admit only alternatives actually observed in fresh pinned
 upstream processes for tied systems; they do not accept arbitrary equivalent
 optima. See `tools/layout/README.md`. Canvas/Chart finite-float coverage
 and non-finite JSON limitations are in `tools/chart/README.md`.
+## Canopy filled-block extension
+
+`Block.fill`, `withFill` and `filledBlock` paint a block's body and color its border glyphs so
+half-block borders form a solid panel with soft corners. They are not Ratatui compatibility
+claims; blocks without a fill render exactly as upstream, which the block matrix covers.
+
 ## Canopy animation extension
 
 `canopy/ui/animation/index` adds native tweens, easing, timelines, analytical springs,
