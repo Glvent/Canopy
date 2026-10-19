@@ -52,7 +52,7 @@ Both animation tests and both affected examples generated Windows amd64 C
 successfully under Nim 2.2.0/2.2.10 and ARC/ORC. This is not C linking or runtime
 validation. The existing CI matrix includes the new tests and example through
 the glob-based runner. No Windows host was available for execution; the existing
-[Windows runtime gate](windows-validation.md) remains open. Linux animation
+[Windows runtime gate](windows.md) remains open. Linux animation
 runtime tests were not executed in this change; prior rendering/input Linux
 results in the main validation record remain historical.
 

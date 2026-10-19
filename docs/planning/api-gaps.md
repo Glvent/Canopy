@@ -93,5 +93,5 @@ and non-finite JSON limitations are in `tools/chart/README.md`.
 
 `canopy/ui/animation/index` adds native tweens, easing, timelines, analytical springs,
 scheduling, buffer transitions and reduced motion. These are Canopy extensions,
-not Ratatui compatibility claims. See [animation contracts](animation.md) and
-[validation](animation-validation.md); Windows runtime acceptance remains open.
+not Ratatui compatibility claims. See [animation contracts](../animation.md) and
+[validation](../validation/animation.md); Windows runtime acceptance remains open.

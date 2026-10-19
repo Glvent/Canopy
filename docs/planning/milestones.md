@@ -1,6 +1,6 @@
 # Canopy implementation checklist
 
-The accepted specification is saved in [`../PLAN.md`](../PLAN.md). Target: Ratatui 0.30.2; minimum Nim 2.2.0; native Nim runtime, optional input.
+Target: Ratatui 0.30.2; minimum Nim 2.2.0; native Nim runtime, optional input.
 
 Milestones are gates, not claims of parity. Check a box only after its acceptance checks pass. `parity.md` records coverage and remaining gaps.
 
@@ -45,7 +45,7 @@ Implementation and available-platform validation cover the complete plan. The un
 - Lead: package, geometry, style, text, buffer, umbrella exports, terminal integration, documentation, CI, final validation.
 - Unicode worker: `src/canopy/internal/unicode/`, `src/canopy/core/text/unicode.nim`, Unicode generation assets/tests/notices.
 - Layout worker: `src/canopy/core/layout/index.nim`, `src/canopy/internal/layout/solver.nim`, layout tests.
-- Reference worker: `reference/`, `tests/fixtures/`, `tests/reference/test_reference.nim`, `docs/reference.md`, `docs/upstream-inventory.md`.
+- Reference worker: `tools/reference/`, `tests/fixtures/`, `tests/reference/test_reference.nim`, `docs/reference.md`, `docs/planning/upstream-inventory.md`.
 
 Workers own only assigned paths. Reassignment is recorded here or in the worker message; shared API changes go through lead.
 
@@ -59,7 +59,7 @@ Workers own only assigned paths. Reassignment is recorded here or in the worker 
 - Layout: ARC + ORC; 391 upstream cases + 2,000 systematic cases + 18 reference cases. Five degenerate inputs have multiple upstream outputs due to randomized solver ordering. Native outputs occur among locked upstream outputs; sampled alternatives retained explicitly.
 - Terminal: 204 upstream cases / 732 snapshots plus transactional errors and counter wrapping; native ANSI/input/PTY suites pass on macOS/Linux. Native Windows lifecycle/input tests are implemented and compile to C with correct Win32 field aliases; execution pending.
 - Widgets: all 17 built-ins, state and supporting symbols have exact reference coverage. Final public-API audit added newline construction, ScrollbarSet interoperability, palette conversions, calendar dimensions and terminal apply-buffer APIs.
-- Release: six examples, isolated Nimble installation/consumer, API docs and benchmarks are delivered. [Validation record](validation.md) lists actual platform/compiler checks; [parity](parity.md) records limits.
+- Release: six examples, isolated Nimble installation/consumer, API docs and benchmarks are delivered. [Validation record](../validation/README.md) lists actual platform/compiler checks; [parity](../parity.md) records limits.
 
 ### Final assignments and handoff
 - Unicode worker: Block/shadows/symbols, stable API audit, palette conversions and calendar metric regression cases; reviewed and integrated by lead.
@@ -76,4 +76,4 @@ Workers own only assigned paths. Reassignment is recorded here or in the worker 
 - [x] Native compiler/ARC/ORC matrix, PTY controls, recovery checks and measured benchmarks.
 - [ ] Windows runtime acceptance remains open; C generation does not close this gate.
 
-See [animation contracts](animation.md) and the [executed validation record](animation-validation.md).
+See [animation contracts](../animation.md) and the [executed validation record](../validation/animation.md).
